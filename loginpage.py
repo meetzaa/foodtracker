@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from main import FoodTrackingApp
 
 def login():
     username = username_entry.get()
@@ -8,7 +9,9 @@ def login():
     #autentificare dummy, trebuie implementat sql/docker
     if username == "admin" and password == "password":
         messagebox.showinfo("Login Successful", "Welcome back, {}!".format(username))
-        #de adaugat cod aici pentru main page
+        root.destroy()
+        app = FoodTrackingApp()
+        app.show_main_window()
     else:
         messagebox.showerror("Login Failed", "Invalid username or password")
 

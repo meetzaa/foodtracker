@@ -18,9 +18,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+<<<<<<< Updated upstream
   <component name="GithubDefaultAccount">
     <option name="defaultAccountId" value="f5631f50-47bf-4fbd-b3b8-9090fc1e0410" />
   </component>
+=======
+>>>>>>> Stashed changes
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -42,7 +45,11 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+<<<<<<< Updated upstream
     "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+=======
+    "settings.editor.selected.configurable": "vcs.Git",
+>>>>>>> Stashed changes
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -117,10 +124,14 @@
       <option name="presentableId" value="Default" />
       <updated>1711292437222</updated>
       <workItem from="1711292438305" duration="9000" />
+<<<<<<< Updated upstream
       <workItem from="1711294183564" duration="100000" />
       <workItem from="1711294297713" duration="71000" />
       <workItem from="1711294376930" duration="710000" />
       <workItem from="1711803596839" duration="881000" />
+=======
+      <workItem from="1711795875993" duration="443000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
@@ -138,8 +149,11 @@
       </map>
     </option>
   </component>
+<<<<<<< Updated upstream
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/foodtracker$main.coverage" NAME="main Coverage Results" MODIFIED="1711803602448" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/foodtracker$loginpage.coverage" NAME="loginpage Coverage Results" MODIFIED="1711294460543" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
+=======
+>>>>>>> Stashed changes
 </project>

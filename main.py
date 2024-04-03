@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 
-
 class FoodTrackingApp(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -46,7 +45,6 @@ class FoodTrackingApp(tk.Tk):
 
     def nutrients_calculator_summary(self):
         pass
-
 
 if __name__ == "__main__":
     app = FoodTrackingApp()
