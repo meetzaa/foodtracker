@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dfcd64a2-c1be-40d5-9a6a-780433b66d36" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/CaloriesCalc.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Read Me" afterDir="false" />
+    <list default="true" id="dfcd64a2-c1be-40d5-9a6a-780433b66d36" name="Changes" comment="def calcul_calorii(proteine, carbohidrati, grasimi):&#10;    calorii = proteine * 4 + carbohidrati * 4 + grasimi * 9&#10;    return calorii&#10;&#10;&#10;def main():&#10;    print(&quot;Calculator de calorii din alimente&quot;)&#10;    proteine = float(input(&quot;Introdu cantitatea de proteine (în grame): &quot;))&#10;    carbohidrati = float(input(&quot;Introdu cantitatea de carbohidrați (în grame): &quot;))&#10;    grasimi = float(input(&quot;Introdu cantitatea de grăsimi (în grame): &quot;))&#10;&#10;    total_calorii = calcul_calorii(proteine, carbohidrati, grasimi)&#10;&#10;    print(&quot;Total calorii: &quot;, total_calorii)&#10;&#10;&#10;if __name__ == &quot;__main__&quot;:&#10;    main()">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CaloriesCalc.py" beforeDir="false" afterPath="$PROJECT_DIR$/CaloriesCalc.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,24 +37,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.CaloriesCalc.executor": "Run",
-    "Python.loginpage.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "Edward",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.CaloriesCalc.executor&quot;: &quot;Run&quot;,
+    &quot;Python.loginpage.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Edward&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Python.CaloriesCalc">
     <configuration name="CaloriesCalc" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="foodtracker" />
@@ -132,7 +132,6 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.CaloriesCalc" />
-        <item itemvalue="Python.loginpage" />
       </list>
     </recent_temporary>
   </component>
@@ -156,8 +155,36 @@
       <workItem from="1711294297713" duration="71000" />
       <workItem from="1711294376930" duration="710000" />
       <workItem from="1711803596839" duration="881000" />
-      <workItem from="1712586238248" duration="369000" />
+      <workItem from="1712586238248" duration="770000" />
+      <workItem from="1712660934064" duration="2000" />
+      <workItem from="1712935775811" duration="175000" />
+      <workItem from="1713001994992" duration="1848000" />
+      <workItem from="1713260584103" duration="1787000" />
+      <workItem from="1713344070069" duration="1000" />
+      <workItem from="1713344102734" duration="190000" />
+      <workItem from="1713344305688" duration="1315000" />
+      <workItem from="1713345647053" duration="24000" />
+      <workItem from="1713605695761" duration="13000" />
+      <workItem from="1713609245975" duration="5000" />
+      <workItem from="1713609270778" duration="429000" />
     </task>
+    <task id="LOCAL-00001" summary="Am creat un program care calculeaza caloriile dintr-un produs.Momentan toate inputurile sunt de la tastatura ,va trebuie sa modific in timp astfel incat sa importam dintr-o libraria automat mancare si sa i se calculeze caloriile.">
+      <option name="closed" value="true" />
+      <created>1712586712551</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1712586712551</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Am creat un program care calculeaza caloriile dintr-un produs.Momentan toate inputurile sunt de la tastatura ,va trebuie sa modific in timp astfel incat sa importam dintr-o libraria automat mancare si sa i se calculeze caloriile.">
+      <option name="closed" value="true" />
+      <created>1712586809562</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1712586809562</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -174,9 +201,14 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Am creat un program care calculeaza caloriile dintr-un produs.Momentan toate inputurile sunt de la tastatura ,va trebuie sa modific in timp astfel incat sa importam dintr-o libraria automat mancare si sa i se calculeze caloriile." />
+    <option name="LAST_COMMIT_MESSAGE" value="Am creat un program care calculeaza caloriile dintr-un produs.Momentan toate inputurile sunt de la tastatura ,va trebuie sa modific in timp astfel incat sa importam dintr-o libraria automat mancare si sa i se calculeze caloriile." />
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/foodtracker$CaloriesCalc.coverage" NAME="CaloriesCalc Coverage Results" MODIFIED="1712586335932" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/foodtracker$main.coverage" NAME="main Coverage Results" MODIFIED="1712586323838" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/foodtracker$CaloriesCalc.coverage" NAME="CaloriesCalc Coverage Results" MODIFIED="1713344273812" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CaloriesCalc_py$CaloriesCalc.coverage" NAME="CaloriesCalc Coverage Results" MODIFIED="1713345596532" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/foodtracker$main.coverage" NAME="main Coverage Results" MODIFIED="1713344123836" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/foodtracker$loginpage.coverage" NAME="loginpage Coverage Results" MODIFIED="1711294460543" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
