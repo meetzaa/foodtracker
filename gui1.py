@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter.font import Font
 from pathlib import Path
-
+from gui_common import setup_signup_page, show_signup
 def setup_login_page(master):
     OUTPUT_PATH = Path(__file__).parent
     ASSETS_PATH = OUTPUT_PATH / "assets/frame1"
@@ -54,12 +54,15 @@ def setup_login_page(master):
     for img_name, x, y in image_details:
         img = PhotoImage(file=relative_to_assets(img_name))
         if "button" in img_name:
-            # Crearea și configurarea butoanelor
-            button = Button(master, image=img, borderwidth=0, highlightthickness=0, command=lambda img_name=img_name: print(f"{img_name.split('.')[0]} clicked"), relief="flat")
-            button.place(x=x, y=y, width=273.0 if "button_1" in img_name else 71.0, height=41.365234375 if "button_1" in img_name else 19.0)
-            button.image = img  # Menține o referință la imagine pentru a evita colectarea de gunoi
+            if img_name == "button_2.png":
+                button = Button(master, image=img, borderwidth=0, highlightthickness=0, command=lambda: show_signup(master),
+                                relief="flat")
+            else:
+                button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
+            button.place(x=x, y=y, width=273.0 if "button_1" in img_name else 71.0,
+                         height=41.365234375 if "button_1" in img_name else 19.0)
+            button.image = img  # Keep a reference to prevent garbage collection
         else:
-            # Crearea imaginilor statice
             canvas.create_image(x, y, image=img)
         master.images.append(img)
     # Crearea și plasarea Entry-urilor
