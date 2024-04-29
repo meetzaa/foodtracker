@@ -5,6 +5,7 @@ from gui1 import setup_login_page
 from gui2 import setup_signup_page
 from tkinter import Tk, Canvas, Frame, Label, Entry, Text, Button, PhotoImage 
 import tkinter as tk
+from tkinter import messagebox
 
 
 OUTPUT_PATH = Path(__file__).parent
@@ -29,6 +30,8 @@ def blink_caret(caret, canvas, delay_ms=600):
 def add_delete_text(word_list, label, caret, canvas, delay_ms=150, is_adding=True):  
     if not word_list:
         return
+    if not label.winfo_exists():  # Check if the label widget exists
+        return
     word = word_list[0]
     if is_adding:
         current_text = label['text']
@@ -51,7 +54,6 @@ def add_delete_text(word_list, label, caret, canvas, delay_ms=150, is_adding=Tru
         else:
             new_word_list = word_list[1:]
             window.after(delay_ms, add_delete_text, new_word_list, label, caret, canvas, delay_ms, True)
-
 def show_login():
     for widget in window.winfo_children():
         widget.destroy()
