@@ -1,0 +1,4 @@
+Se pare că codul este în regulă, iar partea de front-end arată bine.
+Singura mea problemă este citirea codului; multe dintre câmpurile și butoanele nu sunt numite în mod explicit, ci sunt denumite generic, cum ar fi 'entry 1->6'.
+Fără să mă uit prin cod pentru a vedea unde sunt folosite sau fără a rula codul, nu pot să-mi dau seama în prealabil ce reprezintă aceste elemente. 
+Sugerez să îmbunătățim lizibilitatea codului prin redenumirea variabilelor și a elementelor pentru a face codul mai ușor de înțeles.
