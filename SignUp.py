@@ -50,7 +50,7 @@ def setup_signup_page(master):
 
     master.configure(bg="#DAE6E4")
 
-    # Crearea unui canvas pentru plasarea imaginilor
+
     canvas = Canvas(
         master,
         bg="#DAE6E4",
@@ -62,20 +62,18 @@ def setup_signup_page(master):
     )
     canvas.place(x=0, y=0)
 
-    # Păstrarea imaginilor într-o listă de referințe
-    master.images = []
 
-    # Încărcarea și plasarea imaginilor
+    master.images = []
     image_details = [
         ("image_1.png", 469.0, 282.0),
-        ("first_name.png", 273.5, 164.0),  # Fundal pentru primul Entry
-        ("last_name.png", 676.5, 164.0),  # Fundal pentru al doilea Entry
+        ("first_name.png", 273.5, 164.0),
+        ("last_name.png", 676.5, 164.0),
         ("username.png", 274.0, 247.6),
         ("confirm_password.png", 676.5, 247.0),
         ("password.png", 275.0, 330),
         ("mail.png", 676.5, 330.0),
-        ("Submit.png", 438.0, 392.0),
-        ("Log_in.png", 657.0, 441.0)
+        ("Submit.png", 326.0, 392.0),
+        ("Log_In.png", 545.0, 441.0)
     ]
 
     def submit_button_pressed():
@@ -106,50 +104,48 @@ def setup_signup_page(master):
         db.collection("users").add(user_data)
         messagebox.showinfo("Titlu", "Inregistrare cu succes!")
 
-
     for image_name, x, y in image_details:
         img = PhotoImage(file=relative_to_assets(image_name))
-        if "Submit.png" == image_name:  # Modificați numele imaginii pentru butonul "Submit"
+        if "Submit.png" in image_name:
             button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
             button.image = img
-            button.config(command=submit_button_pressed)  # Asociați funcția submit_button_pressed la butonul "Submit"
-            button.place(x=x, y=y, width=296.0, height=43.0)
-        elif "Log_in.png" == image_name:  # Modificați numele imaginii pentru butonul "Log in"
+            if "Submit.png" == image_name:
+                button.config(command=lambda m=master: show_gravity_check_page(m))
+                button.place(x=x, y=y, width=296.0, height=43.0)
+        elif "Log_In.png" in image_name:
             button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
             button.image = img
-            button.config(command=lambda m=master: show_login(m))  # Asociați funcția show_login la butonul "Log in"
-            button.place(x=x, y=y, width=62.0, height=20.0)
+            if "Log_In.png" == image_name:
+                button.config(command=lambda m=master: show_login(m))
+                button.place(x=x, y=y, width=62.0, height=20.0)
         else:
             canvas.create_image(x, y, image=img)
         master.images.append(img)
 
-    # Fonturile pentru texte
+        # Fonturi
     Titlu1Font = Font(family="Consolas", slant="italic", size=20)
     Titlu2Font = Font(family="Consolas", slant="italic", size=20, weight="bold")
     InputFont = Font(family="Consolas", slant="italic", size=12)
     AccFont = Font(family="Consolas", slant="italic", size=11)
 
-    # Crearea și plasarea Entry-urilor
-    first_name = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-    first_name.place(x=143.0, y=149.0, width=261.0, height=27.0)
+    entry_FName = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+    entry_FName.place(x=143.0, y=149.0, width=261.0, height=27.0)
 
-    username = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-    username.place(x=546.0, y=149.0, width=261.0, height=27.0)
+    entry_User = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+    entry_User.place(x=546.0, y=149.0, width=261.0, height=27.0)
 
-    last_name = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-    last_name.place(x=144.0, y=232.0, width=261.0, height=27.0)
+    entry_Pssw = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+    entry_Pssw.place(x=144.0, y=232.0, width=261.0, height=27.0)
 
-    mail = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-    mail.place(x=144.0, y=314.0, width=261.0, height=27.0)  # Ajustarea poziției câmpului "mail"
+    entry_CfPssw = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+    entry_CfPssw.place(x=546.0, y=232.0, width=261.0, height=27.0)
 
-    password = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-    password.place(x=546.0, y=232.0, width=261.0, height=27.0)  # Ajustarea poziției câmpului "password"
+    entry_LName = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+    entry_LName.place(x=148.0, y=314.0, width=261.0, height=27.0)
 
-    confirm_password = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-    confirm_password.place(x=546.0, y=314.0, width=261.0, height=27.0)
+    entry_Email = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+    entry_Email.place(x=546.0, y=314.0, width=261.0, height=27.0)
 
-
-    # Adăugarea textelor pe ecran
     Label(master, text="Bite-sized", font=Titlu1Font, bg="#DAE6E4").place(x=170, y=18)
     Label(master, text="sign-up", font=Titlu2Font, bg="#DAE6E4").place(x=330, y=18)
     Label(master, text="for your", font=Titlu1Font, bg="#DAE6E4").place(x=445, y=18)
@@ -161,8 +157,8 @@ def setup_signup_page(master):
     Label(master, text="Password", font=InputFont, bg="#FFFCF1").place(x=539, y=200)
     Label(master, text="Confirm Password", font=InputFont, bg="#FFFCF1").place(x=539, y=283)
     Label(master, text="Last Name", font=InputFont, bg="#FFFCF1").place(x=137, y=200)
-    Label(master, text="e-mail", font=InputFont, bg="#FFFCF1").place(x=137, y=283)
+    Label(master, text="E-mail", font=InputFont, bg="#FFFCF1").place(x=137, y=283)
 
     Label(master, text="Already have an account?", font=AccFont, bg="#FFFCF1", fg="#5E5858").place(x=345, y=440)
 
-    return canvas  # Returnează canvasul pentru utilizare ulterioară
+    return canvas

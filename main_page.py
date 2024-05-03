@@ -1,11 +1,10 @@
 from tkinter import *
 from tkinter.font import Font
 from pathlib import Path
-from gui1 import setup_login_page
-from gui2 import setup_signup_page
-from tkinter import Tk, Canvas, Frame, Label, Entry, Text, Button, PhotoImage 
+from LogIn import setup_login_page
+from SignUp import setup_signup_page
+from tkinter import Tk, Canvas, Frame, Label, Entry, Text, Button, PhotoImage
 import tkinter as tk
-from tkinter import messagebox
 
 
 OUTPUT_PATH = Path(__file__).parent
@@ -13,6 +12,11 @@ ASSETS_PATH = OUTPUT_PATH / "assets/frame0"
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
+
+import json
+
+with open("serviceAccountKey.json") as f:
+    service_account_info = json.load(f)
 
 def blink_caret(caret, canvas, delay_ms=600):
     current_state = canvas.itemcget(caret, "state")
@@ -27,10 +31,8 @@ def blink_caret(caret, canvas, delay_ms=600):
     canvas.itemconfig(caret, state=new_state)
     canvas.after(delay_ms, blink_caret, caret, canvas, delay_ms)
 
-def add_delete_text(word_list, label, caret, canvas, delay_ms=150, is_adding=True):  
+def add_delete_text(word_list, label, caret, canvas, delay_ms=150, is_adding=True):
     if not word_list:
-        return
-    if not label.winfo_exists():  # Check if the label widget exists
         return
     word = word_list[0]
     if is_adding:
@@ -54,6 +56,7 @@ def add_delete_text(word_list, label, caret, canvas, delay_ms=150, is_adding=Tru
         else:
             new_word_list = word_list[1:]
             window.after(delay_ms, add_delete_text, new_word_list, label, caret, canvas, delay_ms, True)
+
 def show_login():
     for widget in window.winfo_children():
         widget.destroy()
@@ -100,12 +103,12 @@ for text, font,  x, y,bg in labels:
     Label(window, text=text, font=font, bg=bg).place(x=x, y=y)
 
 button_image_1 = PhotoImage(file=relative_to_assets("button_1.png"))
-button_1 = Button(window, image=button_image_1, borderwidth=0, highlightthickness=0, command=show_login, relief="flat")
-button_1.place(x=445.0, y=209.0, width=214.0, height=49.0)
+button_LogIn = Button(window, image=button_image_1, borderwidth=0, highlightthickness=0, command=show_login, relief="flat")
+button_LogIn.place(x=445.0, y=209.0, width=214.0, height=49.0)
 
 button_image_2 = PhotoImage(file=relative_to_assets("button_2.png"))
-button_2 = Button(window, image=button_image_2, borderwidth=0, highlightthickness=0, command=show_signup, relief="flat")
-button_2.place(x=695.0, y=210.0, width=214.0, height=49.0)
+button_SignUp = Button(window, image=button_image_2, borderwidth=0, highlightthickness=0, command=show_signup, relief="flat")
+button_SignUp.place(x=695.0, y=210.0, width=214.0, height=49.0)
 
 text_label = Label(window, font=EatFont, bg="#FFFCF1", fg="#649089", text="")
 text_label.place(x=480, y=119)
