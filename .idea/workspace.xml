@@ -5,6 +5,11 @@
     <list default="true" id="dfcd64a2-c1be-40d5-9a6a-780433b66d36" name="Changes" comment="" />
 =======
     <list default="true" id="dfcd64a2-c1be-40d5-9a6a-780433b66d36" name="Changes" comment="">
+<<<<<<< Updated upstream
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/foodtracker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/foodtracker.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+>>>>>>> Stashed changes
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
 >>>>>>> Stashed changes
@@ -29,11 +34,17 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+<<<<<<< Updated upstream
+=======
+    "WebServerToolWindowFactoryState": "false",
+    "dart.analysis.tool.window.visible": "false",
+>>>>>>> Stashed changes
     "git-widget-placeholder": "main",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+<<<<<<< Updated upstream
 =======
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
@@ -55,6 +66,8 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+=======
+>>>>>>> Stashed changes
   <component name="RunManager" selected="Python.main">
     <configuration name="DailyIntake" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="foodtracker" />
@@ -153,7 +166,11 @@
       <workItem from="1711294376930" duration="710000" />
       <workItem from="1711803596839" duration="881000" />
       <workItem from="1714556172272" duration="1439000" />
+<<<<<<< Updated upstream
       <workItem from="1714676256888" duration="34000" />
+>>>>>>> Stashed changes
+=======
+      <workItem from="1714736850996" duration="1033000" />
 >>>>>>> Stashed changes
     </task>
     <servers />
@@ -179,7 +196,11 @@
     <SUITE FILE_PATH="coverage/foodtracker$main.coverage" NAME="main Coverage Results" MODIFIED="1711803602448" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/foodtracker$loginpage.coverage" NAME="loginpage Coverage Results" MODIFIED="1711294460543" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/CaloriesCalc_py$gui.coverage" NAME="gui Coverage Results" MODIFIED="1714557486938" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+<<<<<<< Updated upstream
     <SUITE FILE_PATH="coverage/CaloriesCalc_py$main.coverage" NAME="main Coverage Results" MODIFIED="1714557427279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+=======
+    <SUITE FILE_PATH="coverage/CaloriesCalc_py$main.coverage" NAME="main Coverage Results" MODIFIED="1714749166770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+>>>>>>> Stashed changes
   </component>
 >>>>>>> Stashed changes
 </project>

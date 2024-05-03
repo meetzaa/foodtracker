@@ -35,27 +35,30 @@ def setup_signup_page(master):
     master.images = []
     image_details = [
         ("image_1.png", 469.0, 282.0),
-        ("entry_1.png", 273.5, 164.0),
-        ("entry_2.png", 676.5, 164.0),
-        ("entry_3.png", 274.0, 247.6),
-        ("entry_4.png", 676.5, 247.0),
-        ("entry_5.png", 275.0, 330),
-        ("entry_6.png", 676.5, 330.0),
-        ("button_1.png", 326.0, 392.0),
-        ("button_2.png", 545.0, 441.0)
+        ("first_name.png", 273.5, 164.0),
+        ("last_name.png", 676.5, 164.0),
+        ("username.png", 274.0, 247.6),
+        ("confirm_password.png", 676.5, 247.0),
+        ("password.png", 275.0, 330),
+        ("mail.png", 676.5, 330.0),
+        ("Submit.png", 326.0, 392.0),
+        ("Log_In.png", 550.0, 441.0)
     ]
 
     for image_name, x, y in image_details:
         img = PhotoImage(file=relative_to_assets(image_name))
-        if "button" in image_name:
+        if "Submit.png" in image_name:
             button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
             button.image = img
-            if "button_1.png" == image_name:     #button_1 este butonul de SignUp
+            if "Submit.png" == image_name:
                 button.config(command=lambda m=master: show_gravity_check_page(m))
                 button.place(x=x, y=y, width=296.0, height=43.0)
-            elif "button_2.png" == image_name:   #button_2 este butonul de LogIn
-                button.config(command=lambda m=master: show_login(m))
-                button.place(x=x, y=y, width=62.0, height=20.0)
+        elif "Log_In.png" in image_name:
+                    button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
+                    button.image = img
+                    if "Log_In.png" == image_name:
+                        button.config(command=lambda m=master: show_login(m))
+                        button.place(x=x, y=y, width=62.0, height=20.0)
         else:
             canvas.create_image(x, y, image=img)
         master.images.append(img)

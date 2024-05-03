@@ -28,10 +28,10 @@ def setup_login_page(master):
     master.images = []
     image_details = [
         ("image_1.png", 467.0, 283.0),
-        ("entry_1.png", 468.5, 199.0),
-        ("entry_2.png", 468.5, 323.0),
-        ("button_1.png", 337.0, 410.6),
-        ("button_2.png", 540.0, 458.0),
+        ("user.png", 468.5, 199.0),
+        ("psswrd.png", 468.5, 323.0),
+        ("LogIn.png", 337.0, 410.6),
+        ("SignUp.png", 540.0, 458.0),
         ("image_2.png", 55.0, 457),
         ("image_3.png", 110.0, 338.0),
         ("image_4.png", 128.0, 411.0),
@@ -50,21 +50,24 @@ def setup_login_page(master):
         ("image_17.png", 856.0, 409.0)
     ]
 
-    for img_name, x, y in image_details:
-        img = PhotoImage(file=relative_to_assets(img_name))
-        if "button" in img_name:
-            if img_name == "button_2.png":  # button_2 este butonul de signUp
-                button = Button(master, image=img, borderwidth=0, highlightthickness=0,
-                                command=lambda: show_signup(master),
-                                relief="flat")
-            else:
-                button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
-            button.place(x=x, y=y, width=273.0 if "button_1" in img_name else 71.0,  # button_1 este butonul de LogIn
-                         height=41.365234375 if "button_1" in img_name else 19.0)
+    for image_name, x, y in image_details:
+        img = PhotoImage(file=relative_to_assets(image_name))
+        if "SignUp.png" in image_name:
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
             button.image = img
+            if "SignUp.png" == image_name:
+                button.config(command=lambda m=master: show_signup(m))
+                button.place(x=x, y=y, width=71.0, height=19.0)
+        elif "LogIn.png" in image_name:
+                    button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
+                    button.image = img
+                    if "LogIn.png" == image_name:
+                        # button.config(command=lambda m=master: show_login(m))
+                        button.place(x=x, y=y, width=273.0, height=41.365234375)
         else:
             canvas.create_image(x, y, image=img)
         master.images.append(img)
+
 
     entry_Username = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
     entry_Username.place(x=294.0, y=177.0, width=349.0, height=43.0)

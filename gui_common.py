@@ -30,10 +30,10 @@ def setup_login_page(master):
 
     image_details = [
         ("image_1.png", 467.0, 283.0),
-        ("entry_1.png", 468.5, 199.0),
-        ("entry_2.png", 468.5, 323.0),
-        ("button_1.png", 337.0, 410.6),
-        ("button_2.png", 540.0, 458.0),
+        ("user.png", 468.5, 199.0),
+        ("psswrd.png", 468.5, 323.0),
+        ("LogIn.png", 337.0, 410.6),
+        ("SignUp.png", 540.0, 458.0),
         ("image_2.png", 55.0, 457),
         ("image_3.png", 110.0, 338.0),
         ("image_4.png", 128.0, 411.0),
@@ -52,18 +52,20 @@ def setup_login_page(master):
         ("image_17.png", 856.0, 409.0)
     ]
 
-    for img_name, x, y in image_details:
-        img = PhotoImage(file=relative_to_assets(img_name, "assets/frame1"))
-        if "button" in img_name:
-            if img_name == "button_2.png":  # button_2 este butonul de "Sign Up"
-                button = Button(master, image=img, borderwidth=0, highlightthickness=0,
-                                command=lambda: show_signup(master),
-                                relief="flat")
-            else:
-                button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
-            button.place(x=x, y=y, width=273.0 if "button_1" in img_name else 71.0,
-                         height=41.365234375 if "button_1" in img_name else 19.0)
+    for image_name, x, y in image_details:
+        img = PhotoImage(file=relative_to_assets(image_name, "assets/frame1"))
+        if "SignUp.png" in image_name:
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
             button.image = img
+            if "SignUp.png" == image_name:
+                button.config(command=lambda: show_signup(master))
+                button.place(x=x, y=y, width=71.0, height=19.0)
+        elif "LogIn.png" in image_name:
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
+            button.image = img
+            if "LogIn.png" == image_name:
+                # button.config(command=lambda m=master: show_login(m))
+                button.place(x=x, y=y, width=273.0, height=41.365234375)
         else:
             canvas.create_image(x, y, image=img)
         master.images.append(img)
@@ -103,26 +105,29 @@ def setup_signup_page(master):
 
     image_details = [
         ("image_1.png", 469.0, 282.0),
-        ("entry_1.png", 273.5, 164.0),
-        ("entry_2.png", 676.5, 164.0),
-        ("entry_3.png", 274.0, 247.6),
-        ("entry_4.png", 676.5, 247.0),
-        ("entry_5.png", 275.0, 330),
-        ("entry_6.png", 676.5, 330.0),
-        ("button_1.png", 326.0, 392.0),
-        ("button_2.png", 545.0, 441.0)
+        ("first_name.png", 273.5, 164.0),
+        ("last_name.png", 676.5, 164.0),
+        ("username.png", 274.0, 247.6),
+        ("confirm_password.png", 676.5, 247.0),
+        ("password.png", 275.0, 330),
+        ("mail.png", 676.5, 330.0),
+        ("Submit.png", 326.0, 392.0),
+        ("Log_In.png", 550.0, 441.0)
     ]
 
     for image_name, x, y in image_details:
         img = PhotoImage(file=relative_to_assets(image_name, "assets/frame2"))
-        if "button" in image_name:
+        if "Submit.png" in image_name:
             button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
             button.image = img
-            if "button_1.png" == image_name:  # Butonul 1 este butonul "Submit"
-                button.config(command=lambda m=master: show_gravity_check_page(m))
+            if "Submit.png" == image_name:
+                button.config(command=lambda: show_gravity_check_page(master))
                 button.place(x=x, y=y, width=296.0, height=43.0)
-            elif "button_2.png" == image_name:  # Butonul 2 este butonul "Log In"
-                button.config(command=lambda m=master: show_login(m))
+        elif "Log_In.png" in image_name:
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
+            button.image = img
+            if "Log_In.png" == image_name:
+                button.config(command=lambda: show_login(master))
                 button.place(x=x, y=y, width=62.0, height=20.0)
         else:
             canvas.create_image(x, y, image=img)
@@ -203,29 +208,33 @@ def setup_gravity_check_page(master):
         ("image_4.png", 478.0, 266.0),
         ("image_5.png", 479.0, 227.0),
         ("image_6.png", 772.0, 266.0),
-        ("entry_1.png", 176.0, 293.0),
-        ("entry_2.png", 471.0, 293.0),
-        ("entry_3.png", 772.0, 293.0),
-        ("button_1.png", 750.0, 405.0),
-        ("button_2.png", 80.0, 405.0),
+        ("entry_kg.png", 176.0, 293.0),
+        ("entry_cm.png", 471.0, 293.0),
+        ("entry_age.png", 772.0, 293.0),
+        ("NextStep.png", 750.0, 405.0),
+        ("GoBack.png", 80.0, 405.0),
         ("image_7.png", 890.0, 418.0),
         ("image_8.png", 65.0, 414.0)
     ]
 
     for image_name, x, y in image_details:
         img = PhotoImage(file=relative_to_assets(image_name, "assets/frame3"))
-        if "button" in image_name:
+        if "GoBack.png" in image_name:
             button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
             button.image = img
-            if "button_1.png" == image_name:  # Buton pentru "Next Step"
-                button.config(command=lambda m=master: show_loading_page(m), bg="#DAE6E4")
-                button.place(x=x, y=y, width=120.0, height=30.0)
-            elif "button_2.png" == image_name:  # Buton pentru "Go Back"
-                button.config(command=lambda m=master: show_signup(m))
+            if "GoBack.png" == image_name:
+                button.config(command=lambda: show_signup(master))
                 button.place(x=x, y=y, width=100.0, height=20.0)
+        elif "NextStep.png" in image_name:
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
+            button.image = img
+            if "NextStep.png" == image_name:
+                button.config(command=lambda: show_loading_page(master))
+                button.place(x=x, y=y, width=120.0, height=30.0)
         else:
             canvas.create_image(x, y, image=img)
         master.images.append(img)
+
 
     font_large = Font(family="Consolas", slant="italic", size=32)
     font_medium = Font(family="Consolas", slant="italic", size=18)
@@ -344,12 +353,12 @@ def setup_ready_page(master):
     image_details = [
         ("image_1.png", 200.0, 10.0),
         ("image_2.png", 590.0, 70.0),
-        ("button_1.png", 360.0, 415.0)
+        ("LetsDoIt.png", 360.0, 415.0)
     ]
 
     for image_name, x, y in image_details:
         img = PhotoImage(file=relative_to_assets(image_name, "assets/frame5"))
-        if "button" in image_name:
+        if "LetsDoIt.png" in image_name:
             button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
             button.place(x=x, y=y, width=230.0, height=38.0)
             button.image = img

@@ -36,12 +36,12 @@ def setup_ready_page(master):
     image_details = [
         ("image_1.png", 200.0, 10.0),
         ("image_2.png", 590.0, 70.0),
-        ("button_1.png", 360.0, 415.0)
+        ("LetsDoIt.png", 360.0, 415.0)
     ]
 
     for image_name, x, y in image_details:
         img = PhotoImage(file=relative_to_assets(image_name, "assets/frame5"))
-        if "button" in image_name:
+        if "LetsDoIt.png" in image_name:
             button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
             button.place(x=x, y=y, width=230.0, height=38.0)
             button.image = img

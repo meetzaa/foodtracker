@@ -46,26 +46,29 @@ def setup_gravity_check_page(master):
         ("image_4.png", 478.0, 266.0),
         ("image_5.png", 479.0, 227.0),
         ("image_6.png", 772.0, 266.0),
-        ("entry_1.png", 176.0, 293.0),
-        ("entry_2.png", 471.0, 293.0),
-        ("entry_3.png", 772.0, 293.0),
-        ("button_1.png", 750.0, 405.0),
-        ("button_2.png", 80.0, 405.0),
+        ("entry_kg.png", 176.0, 293.0),
+        ("entry_cm.png", 471.0, 293.0),
+        ("entry_age.png", 772.0, 293.0),
+        ("NextStep.png", 750.0, 405.0),
+        ("GoBack.png", 80.0, 405.0),
         ("image_7.png", 890.0, 418.0),
         ("image_8.png", 65.0, 414.0)
     ]
 
     for image_name, x, y in image_details:
-        img = PhotoImage(file=relative_to_assets(image_name))
-        if "button" in image_name:
+        img = PhotoImage(file=relative_to_assets(image_name, "assets/frame3"))
+        if "GoBack.png" in image_name:
             button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
             button.image = img
-            if "button_1.png" == image_name:  # button_1 este butonul de "Next Step"
-                button.config(command=lambda m=master: show_loading_page(m), bg="#DAE6E4")
-                button.place(x=x, y=y, width=300.0, height=43.0)
-            elif "button_2.png" == image_name:  # button_2 este butonul de "Go Back"
-                button.config(command=lambda m=master: show_signup(m))
-                button.place(x=x, y=y, width=62.0, height=20.0)
+            if "GoBack.png" == image_name:
+                button.config(command=lambda: show_signup(master))
+                button.place(x=x, y=y, width=100.0, height=20.0)
+        elif "NextStep.png" in image_name:
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
+            button.image = img
+            if "NextStep.png" == image_name:
+                button.config(command=lambda: show_loading_page(master))
+                button.place(x=x, y=y, width=120.0, height=30.0)
         else:
             canvas.create_image(x, y, image=img)
         master.images.append(img)
