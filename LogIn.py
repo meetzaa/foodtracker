@@ -1,9 +1,27 @@
 from tkinter import *
+from tkinter import messagebox
 from tkinter.font import Font
 from pathlib import Path
-from gui_common import setup_signup_page, show_signup
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
+from gui_common import show_gravity_check_page
+from gui_common import setup_signup_page, show_signup,show_gravity_check_page
+cred = credentials.Certificate('serviceAccountKey.json')
+db = firestore.client()
+from gui_common import login
 
-
+# def login(username, password,master):
+#     # Access the 'users' collection in Firestore
+#     users_ref = db.collection('users')
+#     # Query the database for the provided username and password
+#     query = users_ref.where('Utilizator', '==', username).where('Parola', '==', password).stream()
+#     # Check if the query result is not empty
+#     if len(list(query)) > 0:
+#         messagebox.showinfo("Success", "Login successful!")
+#         show_gravity_check_page(master) # Assuming you have a function to show the next page after successful login
+#     else:
+#         messagebox.showerror("Error", "Invalid username or password")
 def setup_login_page(master):
     OUTPUT_PATH = Path(__file__).parent
     ASSETS_PATH = OUTPUT_PATH / "assets/frame1"
@@ -62,7 +80,7 @@ def setup_login_page(master):
             button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
             button.image = img
             if "LogIn.png" == image_name:
-                # button.config(command=lambda m=master: show_login(m))
+                button.config(command=lambda: login(entry_Username.get(), entry_Password.get(),master))
                 button.place(x=x, y=y, width=273.0, height=41.365234375)
         else:
             canvas.create_image(x, y, image=img)
@@ -71,7 +89,7 @@ def setup_login_page(master):
     entry_Username = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
     entry_Username.place(x=294.0, y=177.0, width=349.0, height=43.0)
 
-    entry_Password = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+    entry_Password = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0,show="***")
     entry_Password.place(x=294.0, y=300.0, width=349.0, height=43.0)
 
     # Fonturile
