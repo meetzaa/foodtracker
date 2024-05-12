@@ -513,3 +513,626 @@ def show_ready_page(master):
         widget.destroy()
 
         setup_ready_page(master)
+
+
+
+####PAGINA PRINCIPALA A APLICATIEI
+def setup_app_page1(master):
+    master.configure(bg="#DAE6E4")
+
+    canvas = Canvas(
+        master,
+        bg="#DAE6E4",
+        height=503,
+        width=937,
+        bd=0,
+        highlightthickness=0,
+        relief="ridge"
+    )
+    canvas.place(x=0, y=0)
+
+    master.images = []
+
+    image_details = [
+        ("Profile.png", 870.0, 25.0, 43.0, 45.0, lambda: show_profile_page(master)),
+        ("LogFood.png", 125.0, 102.0, 185.0, 160.0, lambda: show_LogFood_page(master)),
+        ("TodayActivity.png", 381.0, 102.0, 198.0, 154.0, lambda: show_TodayActivity_page(master)),
+        ("Goals.png", 640.0, 102.0, 198.0, 154.0, lambda: show_SetGoal_page(master)),
+        ("SeeMore.png", 759.0, 369.0, 206.0, 69.0, lambda: show_SeeMore_page(master)),
+        ("Calories.png", 531.0, 341.0, 100.0, 33.0, lambda: show_LogFood_page(master)),
+        ("BMI.png", 531.0, 382.0, 100.0, 33.0, lambda: show_LogFood_page(master)),
+        ("Macros.png", 531.0, 423.0, 100.0, 33.0, lambda: show_LogFood_page(master)),
+        ("image_1.png", 313.0, 396.0, None, None, None)
+    ]
+
+    for details in image_details:
+        image_name, x, y, width, height, command = details
+        img = PhotoImage(file=relative_to_assets(image_name, "assets/frame6"))
+
+        if command is not None:
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat", command=command)
+            button.place(x=x, y=y, width=width, height=height)
+            button.image = img
+        else:
+            canvas.create_image(x, y, image=img)
+
+    master.images.append(img)
+
+    font_large = Font(family="Consolas", slant="italic", size=20)
+    font_medium = Font(family="Consolas", slant="italic", size=14)
+
+    Label(master, text="Welcome, ", font=font_large, bg="#DAE6E4").place(x=661, y=33)
+    Label(master, text="Log Food", font=font_medium, bg="#DAE6E4").place(x=171, y=255)
+    Label(master, text="Today's Activity", font=font_medium, bg="#DAE6E4").place(x=398, y=255)
+    Label(master, text="Goals", font=font_medium, bg="#DAE6E4").place(x=715, y=255)
+    return Canvas
+
+
+def show_app_page1(master):
+    for widget in master.winfo_children():
+        widget.destroy()
+    setup_app_page1(master)
+
+
+
+###URMATOAREA PAGINA PRINCIPALA
+def setup_SeeMore_page(master):
+    master.configure(bg="#DAE6E4")
+
+    canvas = Canvas(
+        master,
+        bg="#DAE6E4",
+        height=503,
+        width=937,
+        bd=0,
+        highlightthickness=0,
+        relief="ridge"
+    )
+    canvas.place(x=0, y=0)
+
+    master.images = []
+
+    image_details = [
+        ("Back.png", -50.0, 369.0, 203.0, 67.0, lambda: show_app_page1(master)),
+        ("AddWater.png", 589.0, 74.0, 50.0, 40.0, lambda: placeholder_function("AddWater")),
+        ("RemoveWater.png", 398.0, 80.0, 50.0, 30.0, lambda: placeholder_function("RemoveWater")),
+        ("MyProfile.png", 223.0, 298.0, 160.0, 131.0, lambda: show_profile_page(master)),
+        ("MyMeals.png", 432.0, 298.0, 160.0, 131.0, lambda: show_MyMeals(master)),
+        ("Settings.png", 642.0, 298.0, 160.0, 131.0, lambda: show_settings_page(master)),
+        ("image_1.png", 320.0, 10.0, None, None, None),
+        ("image_2.png", 485.0, 39.0, None, None, None),
+        ("image_3.png", 380.0, 215.0, None, None, None),
+        ("entry_Water.png", 483.0, 136.5, 47.0, 30.0, None)
+    ]
+
+    for details in image_details:
+        image_name, x, y, width, height, command = details
+        img = PhotoImage(file=relative_to_assets(image_name, "assets/frame7"))
+        master.images.append(img)
+
+        if width is None or height is None:
+            width, height = 100, 100
+
+        if command:
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat", command=command)
+            button.place(x=x, y=y, width=width, height=height)
+            button.image = img
+        else:
+            canvas.create_image(x, y, image=img, anchor='nw')
+
+    def placeholder_function(button_name):
+        print(f"{button_name} button pressed. Functionality under construction.")
+
+    font_medium = Font(family="Consolas", slant="italic", size=15)
+
+    Label(master, text="My Profile", font=font_medium, bg="#DAE6E4").place(x=250, y=428)
+    Label(master, text="My Meals", font=font_medium, bg="#DAE6E4").place(x=473, y=428)
+    Label(master, text="Settings", font=font_medium, bg="#DAE6E4").place(x=681, y=428)
+    Label(master, text="Streak", font=font_medium, bg="#DAE6E4").place(x=92, y=21)
+    Label(master, text="days", font=font_medium, bg="#DAE6E4").place(x=101, y=96)
+    Label(master, text="Liters", font=font_medium, bg="#FFFCF1").place(x=572, y=144)
+
+    entry_Water = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+    entry_Water.place(x=500.0, y=145.0, width=53.0, height=22.5)
+
+    return canvas
+
+
+def show_SeeMore_page(master):
+    for widget in master.winfo_children():
+        widget.destroy()
+    setup_SeeMore_page(master)
+
+
+
+
+###LOG FOOD PAGE
+def setup_LogFood_page(master):
+    master.configure(bg="#DAE6E4")
+
+    canvas = Canvas(
+        master,
+        bg="#DAE6E4",
+        height=503,
+        width=937,
+        bd=0,
+        highlightthickness=0,
+        relief="ridge"
+    )
+    canvas.place(x=0, y=0)
+
+    master.images = []
+
+    image_details = [
+        ("image_1.png", 30.0, 70.0, None, None, None),
+        ("image_2.png", 321.0, 70.0, None, None, None),
+        ("image_3.png", 612.0, 70.0, None, None, None),
+        ("image_4.png", 184.0, 329.0, None, None, None),
+        ("AddF_Breakfast.png", 79.0, 145.0, 110.0, 23.0, lambda: Add_Breakfast(master)),
+        ("AddF_Lunch.png", 372.0, 145.0, 110.0, 23.0, lambda: Add_Lunch(master)),
+        ("AddF_Dinner.png", 663.0, 145.0, 110.0, 23.0, lambda: Add_Dinner(master)),
+        ("Back.png", 14.0, 18.0, 59.0, 35.0, lambda: show_app_page1(master)),
+        ("Add_Snack.png", 280.0, 380.0, 118.0, 15.0, lambda: Add_Snack(master))
+
+    ]
+
+    for details in image_details:
+        image_name, x, y, width, height, command = details
+        img = PhotoImage(file=relative_to_assets(image_name, "assets/frame8"))
+        master.images.append(img)
+
+        if width is None or height is None:
+            width, height = 100, 100
+
+        if command:
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat", command=command,
+                            bg="#FFFCF1")
+            button.place(x=x, y=y, width=width, height=height)
+            button.image = img
+        else:
+            canvas.create_image(x, y, image=img, anchor='nw')
+
+    return canvas
+
+
+def show_LogFood_page(master):
+    for widget in master.winfo_children():
+        widget.destroy()
+    setup_LogFood_page(master)
+
+
+
+
+###TODAY'S ACTIVITY PAGE
+def setup_TodayActivity_page(master):
+    master.configure(bg="#DAE6E4")
+
+    canvas = Canvas(
+        master,
+        bg="#DAE6E4",
+        height=503,
+        width=937,
+        bd=0,
+        highlightthickness=0,
+        relief="ridge"
+    )
+    canvas.place(x=0, y=0)
+
+    master.images = []
+
+    image_details = [
+        ("button_1.png", 657.0, 225.0, 30.0, 31.0, lambda: show_nextpage(master)),
+        ("button_2.png", 14.0, 18.0, 59.0, 38.0, lambda: show_app_page1(master)),
+        ("image_1.png", 464.0, 257.0, None, None, None),
+        ("image_2.png", 468.0, 176.99999999999994, None, None, None),
+        ("image_3.png", 468.0, 244.99999999999994, None, None, None),
+        ("image_4.png", 467.0, 312.9999999999999, None, None, None),
+        ("image_5.png", 468.0, 380.9999999999999, None, None, None)
+    ]
+
+    for details in image_details:
+        image_name, x, y, width, height, command = details
+        img = PhotoImage(file=relative_to_assets(image_name, "assets/frame9"))
+        master.images.append(img)
+        if command is not None:
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat", command=command)
+            button.place(x=x, y=y, width=width, height=height)
+            button.image = img
+        else:
+            if width is not None and height is not None:
+                canvas.create_image(x, y, image=img, anchor='nw')
+            else:
+                canvas.create_image(x, y, image=img)
+
+    font_large = Font(family="Consolas", slant="italic", size=20, underline=1)
+    font_medium = Font(family="Consolas", slant="italic", size=16)
+
+    Label(master, text="Today's Activity", font=font_large, bg="#FFFCF1").place(x=360, y=73)
+    Label(master, text="Breakfast Meal:", font=font_medium, bg="#FFFCF1").place(x=324, y=146)
+    Label(master, text="Lunch Meal:", font=font_medium, bg="#FFFCF1").place(x=324, y=214)
+    Label(master, text="Dinner Meal:", font=font_medium, bg="#FFFCF1").place(x=324, y=282)
+    Label(master, text="Water:", font=font_medium, bg="#FFFCF1").place(x=324, y=350)
+
+    return canvas
+
+
+def show_TodayActivity_page(master):
+    for widget in master.winfo_children():
+        widget.destroy()
+    setup_TodayActivity_page(master)
+
+
+current_goal = ""
+
+
+def set_goal_and_show_info(goal, master):
+    global current_goal
+    current_goal = goal
+    show_GoalInfo_page(master)
+
+
+
+###PRIMA PAGINA PT GOALS
+def setup_SetGoal_page(master):
+    master.configure(bg="#DAE6E4")
+
+    canvas = Canvas(
+        master,
+        bg="#DAE6E4",
+        height=503,
+        width=937,
+        bd=0,
+        highlightthickness=0,
+        relief="ridge"
+    )
+    canvas.place(x=0, y=0)
+
+    master.images = []
+
+    image_details = [
+        ("Weight_Loss.png", 289.0, 193.0, 350.0, 81.0, lambda: set_goal_and_show_info("Weight Loss", master)),
+        ("Muscle_Build.png", 289.0, 283.0, 350.0, 81.0, lambda: set_goal_and_show_info("Muscle Build", master)),
+        ("Maintenance.png", 289.0, 373.0, 350.0, 81.0, lambda: set_goal_and_show_info("Maintenance", master))
+    ]
+
+    for details in image_details:
+        image_name, x, y, width, height, command = details
+        img = PhotoImage(file=relative_to_assets(image_name, "assets/frame10"))
+        master.images.append(img)
+        button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat", command=command)
+        button.place(x=x, y=y, width=width, height=height)
+        button.image = img  # Atribuie imaginea la obiectul buton pentru a preveni garbage collection
+
+    font_large = Font(family="Consolas", slant="italic", size=26, weight="bold")
+    font_medium = Font(family="Consolas", slant="italic", size=20)
+
+    Label(master, text="Let’s set your goals!", font=font_large, bg="#DAE6E4", fg="#000000").place(x=267, y=49)
+    Label(master, text="First thing first, what do you want to achieve?", font=font_medium, bg="#DAE6E4",
+          fg="#000000").place(x=147, y=108)
+
+    master.mainloop()
+    return canvas
+
+
+def show_SetGoal_page(master):
+    for widget in master.winfo_children():
+        widget.destroy()
+    setup_SetGoal_page(master)
+
+
+goal_info_texts = {
+    "Weight Loss": {
+        "kcal": "1200 to 1500 kcal",
+        "fats": "~0.3 to 0.5 grams per kg of fats",
+        "protein": "1.0/1.2 grams of protein per kg of body weight",
+        "carbs": "50 to 100 grams of carbohydrates",
+        "reminder": "Increase your water intake to aid in fat loss!"
+    },
+    "Muscle Build": {
+        "kcal": "2500 to 3000 kcal",
+        "fats": "0.8 to 1 grams per kg of fats",
+        "protein": "2.0/2.5 grams of protein per kg of body weight",
+        "carbs": "300 to 350 grams of carbohydrates",
+        "reminder": "Protein is crucial for muscle repair and growth!"
+    },
+    "Maintenance": {
+        "kcal": "2000 to 2500 kcal",
+        "fats": "0.6 to 0.8 grams per kg of fats",
+        "protein": "1.5/2.0 grams of protein per kg of body weight",
+        "carbs": "150 to 200 grams of carbohydrates",
+        "reminder": "Maintaining balance is key to long-term health!"
+    }
+}
+
+
+
+
+###INFO GOALS
+def setup_GoalInfo_page(master):
+    master.configure(bg="#DAE6E4")
+
+    canvas = Canvas(
+        master,
+        bg="#DAE6E4",
+        height=503,
+        width=937,
+        bd=0,
+        highlightthickness=0,
+        relief="ridge"
+    )
+    canvas.place(x=0, y=0)
+
+    master.images = []
+
+    image_details = [
+        ("PlanReady.png", 646.0, 433.0, 265.0, 39.0, lambda: show_GoalFinal_page(master)),
+        ("image_1.png", 150.0, 154.0, None, None, None),
+        ("image_2.png", 150.0, 190.0, None, None, None),
+        ("image_3.png", 150.0, 226.0, None, None, None),
+        ("image_4.png", 150.0, 262.0, None, None, None),
+        ("image_5.png", 170.0, 305.0, None, None, None)
+    ]
+
+    for details in image_details:
+        image_name, x, y, width, height, command = details
+        img = PhotoImage(file=relative_to_assets(image_name, "assets/frame11"))
+        master.images.append(img)
+
+        if width and height:
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat", command=command)
+            button.place(x=x, y=y, width=width, height=height)
+            button.image = img
+        else:
+            canvas.create_image(x, y, image=img, anchor='nw')
+
+    font_large = Font(family="Consolas", slant="italic", size=19)
+
+    Label(master, text="Based on your choice, you should eat aproximatively(per day): ", font=font_large,
+          bg="#DAE6E4").place(x=59, y=80)
+    selected_texts = goal_info_texts.get(current_goal, {
+        "kcal": "Configure your plan",
+        "fats": "",
+        "protein": "",
+        "carbs": "",
+        "reminder": ""
+    })
+
+    canvas.create_text(190.0, 147.0, anchor="nw", text=selected_texts["kcal"], fill="#000000",
+                       font=("Consolas Italic", 18))
+    canvas.create_text(190.0, 183.0, anchor="nw", text=selected_texts["fats"], fill="#000000",
+                       font=("Consolas Italic", 18))
+    canvas.create_text(190.0, 219.0, anchor="nw", text=selected_texts["protein"], fill="#000000",
+                       font=("Consolas Italic", 18))
+    canvas.create_text(190.0, 255.0, anchor="nw", text=selected_texts["carbs"], fill="#000000",
+                       font=("Consolas Italic", 18))
+    canvas.create_text(220.0, 362.0, anchor="nw", text=selected_texts["reminder"], fill="#515151",
+                       font=("Consolas Italic", 16))
+
+    return canvas
+
+
+def show_GoalInfo_page(master):
+    for widget in master.winfo_children():
+        widget.destroy()
+    setup_GoalInfo_page(master)
+
+
+goal_details = {
+    "Weight Loss": {"kcal": "1500 kcal", "fats": "50g", "protein": "60g", "carbs": "100g"},
+    "Muscle Build": {"kcal": "3000 kcal", "fats": "80g", "protein": "150g", "carbs": "350g"},
+    "Maintenance": {"kcal": "2500 kcal", "fats": "70g", "protein": "120g", "carbs": "200g"}
+}
+
+
+
+
+###GOAL-UL FINAL
+def setup_GoalFinal_page(master):
+    global current_goal
+    master.configure(bg="#DAE6E4")
+
+    canvas = Canvas(
+        master,
+        bg="#DAE6E4",
+        height=503,
+        width=937,
+        bd=0,
+        highlightthickness=0,
+        relief="ridge"
+    )
+    canvas.place(x=0, y=0)
+
+    master.images = []
+
+    image_details = [
+        ("Back.png", 14.0, 18.0, 63.0, 41.0, lambda: show_app_page1(master)),
+        ("image_1.png", 70.0, 70.0, None, None, None),
+        ("image_2.png", 70.0, 280.0, None, None, None),
+        ("image_3.png", 500.0, 280.0, None, None, None),
+        ("image_4.png", 500.0, 70.0, None, None, None)
+    ]
+
+    for details in image_details:
+        image_name, x, y, width, height, command = details
+        img = PhotoImage(file=relative_to_assets(image_name, "assets/frame12"))
+        master.images.append(img)
+
+        if width and height:
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat", command=command)
+            button.place(x=x, y=y, width=width, height=height)
+            button.image = img
+        else:
+            canvas.create_image(x, y, image=img, anchor='nw')
+
+    details = goal_details[current_goal]
+
+    canvas.create_text(200.0, 115.0, anchor="nw", text=details["kcal"], fill="#000000", font=("Consolas Italic", 22))
+    canvas.create_text(630.0, 115.0, anchor="nw", text=details["fats"] + " of fat", fill="#000000",
+                       font=("Consolas Italic", 22))
+    canvas.create_text(170.0, 329.0, anchor="nw", text=details["carbs"] + " of carbs", fill="#000000",
+                       font=("Consolas Italic", 22))
+    canvas.create_text(593.0, 329.0, anchor="nw", text=details["protein"] + " of protein", fill="#000000",
+                       font=("Consolas Italic", 22))
+
+    font_m = Font(family="Consolas", slant="italic", size=18)
+
+    Label(master, text="You aet " "      / " + details["kcal"], font=font_m, bg="#FFFCF1", fg="#515151").place(x=115,
+                                                                                                               y=156)
+    Label(master, text="You aet " + "      / " + details["fats"], font=font_m, bg="#FFFCF1", fg="#515151").place(x=580,
+                                                                                                                 y=156)
+    Label(master, text="You aet " + "      / " + details["carbs"], font=font_m, bg="#FFFCF1", fg="#515151").place(x=140,
+                                                                                                                  y=369)
+    Label(master, text="You aet " + "      / " + details["protein"], font=font_m, bg="#FFFCF1", fg="#515151").place(
+        x=580, y=369)
+    return canvas
+
+
+def show_GoalFinal_page(master):
+    for widget in master.winfo_children():
+        widget.destroy()
+    setup_GoalFinal_page(master)
+
+
+
+
+###PAGINA PROFILULUI
+def setup_profile_page(master):
+    master.configure(bg="#DAE6E4")
+
+    canvas = Canvas(
+        master,
+        bg="#DAE6E4",
+        height=503,
+        width=937,
+        bd=0,
+        highlightthickness=0,
+        relief="ridge"
+    )
+    canvas.place(x=0, y=0)
+
+    master.images = []
+
+    image_details = [
+        ("Back.png", 14.0, 18.0, 55.0, 35.0, lambda: show_SeeMore_page(master)),
+        ("next.png", 744.0, 268.0, 32.0, 39.0, lambda: show_next_page(master)),
+        ("image_1.png", 90.0, 35.0),
+        ("image_2.png", 47.0, 65.0),
+        ("image_3.png", 161.0, 459.0),
+        ("image_4.png", 581.0, 42.0),
+        ("image_5.png", 935.0, 354.0),
+        ("image_6.png", 891.0, 300.0),
+        ("image_7.png", 741.0, 82.0),
+        ("image_8.png", 830.0, 5.0),
+        ("image_9.png", 10.0, 354.0),
+        ("image_10.png", 548.0, 491.0),
+        ("image_11.png", 52.0, 180.0),
+        ("image_12.png", 240.0, -75.0),
+        ("image_13.png", 818.0, 429.0),
+        ("image_14.png", 912.0, 85.0),
+        ("image_15.png", 430.0, 50.0),
+        ("image_16.png", 430.0, 50.0),
+        ("image_17.png", 270.0, 230.0),
+        ("image_18.png", 523.0, 230.0),
+        ("image_19.png", 270.0, 299.0),
+        ("image_20.png", 523.0, 299.0),
+        ("image_21.png", 270.0, 368.0),
+        ("image_22.png", 523.0, 368.0)
+    ]
+
+    for details in image_details:
+        image_name, x, y, *args = details
+        img = PhotoImage(file=relative_to_assets(image_name, "assets/frame13"))
+        master.images.append(img)
+
+        if len(args) == 3:
+            width, height, command = args
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief='flat', command=command)
+            button.place(x=x, y=y, width=width, height=height)
+            button.image = img
+        else:
+            canvas.create_image(x, y, image=img, anchor='nw')
+
+    font_large = Font(family="Consolas", slant="italic", size=15)
+    font_medium = Font(family="Consolas", slant="italic", size=12)
+
+    Label(master, text="My Profile", font=font_large, bg="#FFFCF1").place(x=310, y=110)
+    Label(master, text="First Name", font=font_medium, bg="#FFFCF1").place(x=274, y=183)
+    Label(master, text="Password", font=font_medium, bg="#FFFCF1").place(x=527, y=183)
+    Label(master, text="Last Name", font=font_medium, bg="#FFFCF1").place(x=274, y=252)
+    Label(master, text="Username", font=font_medium, bg="#FFFCF1").place(x=527, y=252)
+    Label(master, text="Email", font=font_medium, bg="#FFFCF1").place(x=274, y=321)
+    Label(master, text="Age", font=font_medium, bg="#FFFCF1").place(x=527, y=321)
+    return canvas
+
+
+def show_profile_page(master):
+    for widget in master.winfo_children():
+        widget.destroy()
+    setup_profile_page(master)
+
+
+
+
+###SETTINGS
+def setup_settings_page(master):
+    master.configure(bg="#DAE6E4")
+
+    canvas = Canvas(
+        master,
+        bg="#DAE6E4",
+        height=503,
+        width=937,
+        bd=0,
+        highlightthickness=0,
+        relief="ridge"
+    )
+    canvas.place(x=0, y=0)
+
+    master.images = []
+
+    image_details = [
+        ("Back.png", 14.0, 18.0, 59.0, 37.0, lambda: show_SeeMore_page(master)),
+        ("Edit_profile.png", 333.0, 161.0, 284.0, 47.0, lambda: show_EditProfile_page(master)),
+        ("Change_goal.png", 342.0, 223.0, 275.0, 40.0, lambda: show_SetGoal_page(master)),
+        ("Info_goal.png", 299.0, 274.0, 359.0, 34.0, lambda: show_GoalInfo_page(master)),
+        ("App_details.png", 338.0, 328.0, 285.0, 43.0, lambda: show_AppDetail_page(master)),
+        ("SignOut.png", 340.0, 381.0, 277.0, 43.0, lambda: show_main_page(master)),
+        ("image_1.png", 225.0, 120.0),
+        ("image_2.png", 350.0, 43.0),
+
+        ("image_3.png", 918.0, 78.0),
+        ("image_4.png", 773.0, 210.0),
+        ("image_5.png", 872.0, 354.0),
+        ("image_6.png", 795.0, 60.0),
+        ("image_7.png", 726.0, 436.0),
+        ("image_8.png", 630.0, 125.0),
+        ("image_9.png", 215.0, -15.0),
+        ("image_10.png", 388.0, 503.0),
+        ("image_11.png", -20.0, 100.0),
+        ("image_12.png", 239.0, 105.0),
+        ("image_13.png", 100.0, 240.0),
+        ("image_14.png", 81.0, 429.0)
+    ]
+
+    for details in image_details:
+        image_name, x, y, *args = details
+        img = PhotoImage(file=relative_to_assets(image_name, "assets/frame14"))
+        master.images.append(img)
+
+        if len(args) == 3:
+            width, height, command = args
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief='flat', command=command)
+            button.place(x=x, y=y, width=width, height=height)
+            button.image = img
+        else:
+            canvas.create_image(x, y, image=img, anchor='nw')
+
+    font_large = Font(family="Consolas", slant="italic", size=32)
+
+    Label(master, text="Settings", font=font_large, bg="#DAE6E4").place(x=413, y=42)
+
+
+def show_settings_page(master):
+    for widget in master.winfo_children():
+        widget.destroy()
+    setup_settings_page(master)

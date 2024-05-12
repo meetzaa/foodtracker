@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter.font import Font
 from pathlib import Path
 from LogIn import setup_login_page
-from gui_common import setup_signup_page, show_signup
+from SignUp import setup_signup_page
 from tkinter import Tk, Canvas, Frame, Label, Entry, Text, Button, PhotoImage
 import tkinter as tk
 
