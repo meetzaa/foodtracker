@@ -5,41 +5,101 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfcd64a2-c1be-40d5-9a6a-780433b66d36" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/BMI_inputs.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Loading.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ReadyGo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame3/GoBack.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame3/NextStep.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame3/entry_age.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame3/entry_cm.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame3/entry_kg.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame3/image_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame3/image_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame3/image_3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame3/image_4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame3/image_5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame3/image_6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame3/image_7.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame3/image_8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame4/image_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame4/image_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame4/image_3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame5/LetsDoIt.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame5/image_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/frame5/image_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main_page.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/foodtracker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/foodtracker.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame10/Maintenance.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame10/Muscle_Build.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame10/Weight_Loss.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame11/PlanReady.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame11/image_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame11/image_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame11/image_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame11/image_4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame11/image_5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame12/Back.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame12/image_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame12/image_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame12/image_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame12/image_4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/Back.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_13.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_14.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_15.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_17.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_18.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_19.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_20.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_21.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_22.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/image_9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame13/next.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/App_details.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/Back.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/Change_goal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/Edit_profile.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/Info_goal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/SignOut.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/image_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/image_10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/image_11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/image_12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/image_13.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/image_14.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/image_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/image_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/image_4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/image_5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/image_6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/image_7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/image_8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame14/image_9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame6/BMI.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame6/Calories.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame6/Goals.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame6/LogFood.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame6/Macros.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame6/Profile.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame6/SeeMore.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame6/TodayActivity.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame6/image_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame7/AddWater.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame7/Back.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame7/MyMeals.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame7/MyProfile.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame7/RemoveWater.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame7/Settings.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame7/entry_Water.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame7/image_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame7/image_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame7/image_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame8/AddF_Breakfast.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame8/AddF_Dinner.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame8/AddF_Lunch.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame8/Add_Snack.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame8/Back.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame8/image_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame8/image_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame8/image_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame8/image_4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame9/button_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame9/button_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame9/image_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame9/image_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame9/image_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame9/image_4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frame9/image_5.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/frame1/button_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/frame1/LogIn.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/frame1/button_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/frame1/SignUp.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/frame1/entry_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/frame1/psswrd.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/frame1/entry_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/frame1/user.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui1.py" beforeDir="false" afterPath="$PROJECT_DIR$/LogIn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui2.py" beforeDir="false" afterPath="$PROJECT_DIR$/SignUp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui_common.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui_common.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,31 +130,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.DailyIntake.executor": "Run",
-    "Python.gui.executor": "Run",
-    "Python.loginpage.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.DailyIntake.executor&quot;: &quot;Run&quot;,
+    &quot;Python.gui.executor&quot;: &quot;Run&quot;,
+    &quot;Python.loginpage.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Daria\Desktop\foodtr\foodtracker\assets\frame5" />
-      <recent name="C:\Users\Daria\Desktop\foodtr\foodtracker\assets\frame4" />
-      <recent name="C:\Users\Daria\Desktop\foodtr\foodtracker\assets\frame3" />
+      <recent name="C:\Users\Daria\Desktop\foodtr\foodtracker\assets\frame14" />
+      <recent name="C:\Users\Daria\Desktop\foodtr\foodtracker\assets\frame13" />
+      <recent name="C:\Users\Daria\Desktop\foodtr\foodtracker\assets\frame12" />
+      <recent name="C:\Users\Daria\Desktop\foodtr\foodtracker\assets\frame11" />
+      <recent name="C:\Users\Daria\Desktop\foodtr\foodtracker\assets\frame10" />
     </key>
   </component>
   <component name="RunManager" selected="Python.main_page">
@@ -216,6 +278,7 @@
       <workItem from="1711803596839" duration="881000" />
       <workItem from="1714556172272" duration="1439000" />
       <workItem from="1714755134948" duration="1644000" />
+      <workItem from="1715472380942" duration="985000" />
     </task>
     <servers />
   </component>
@@ -234,7 +297,7 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CaloriesCalc_py$main_page.coverage" NAME="main_page Coverage Results" MODIFIED="1714757097070" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CaloriesCalc_py$main_page.coverage" NAME="main_page Coverage Results" MODIFIED="1715473139873" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/CaloriesCalc_py$DailyIntake.coverage" NAME="DailyIntake Coverage Results" MODIFIED="1714557565123" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/foodtracker$main.coverage" NAME="main Coverage Results" MODIFIED="1711803602448" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/foodtracker$loginpage.coverage" NAME="loginpage Coverage Results" MODIFIED="1711294460543" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
