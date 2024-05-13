@@ -1,5 +1,6 @@
 import pandas as pd
 import CaloriesCalc
+import requests
 
 class Food:
     def __init__(self, category, description, fat, carbohydrates, protein):
@@ -21,43 +22,66 @@ class DailyIntake:
                         row['Data.Protein'])
             self.foods.append(food)
 
+    def get_food_portion(self, food_name):
+        api_endpoint = "https://trackapi.nutritionix.com/v2/natural/nutrients"
+        headers = {
+            "x-app-id": "7809eebb",
+            "x-app-key": "c44b1f48db5ab8f5c94ecf33d57f7093",
+            "x-remote-user-id": "0",
+            "Content-Type": "application/json"
+        }
+        data = {
+            "query": food_name
+        }
+        response = requests.post(api_endpoint, headers=headers, json=data)
+        if response.status_code == 200:
+            data = response.json()
+            if 'foods' in data and len(data['foods']) > 0:
+                # Taking the portion size of the first result
+                food_data = data['foods'][0]
+                portion_size = food_data['serving_weight_grams']
+                return food_name, portion_size
+        print("Portion size not found for this food.")
+        return None, None
+
     def add_meal(self, meal_type):
         while True:
-            food_name = input("Introduceți numele alimentului: ")
-            weight = float(input("Introduceți gramajul (în grame): "))
-            for food in self.foods:
-                if food_name.lower() in food.description.lower():
-                    calories = CaloriesCalc.calculate_calories(food, weight)
-                    self.intake_calories += calories
-                    print(f"{food_name} conține aproximativ {calories:.2f} calorii.")
-                    break
+            food_name = input("Enter the name of the food: ")
+            portion_size = self.get_food_portion(food_name)
+            if portion_size:
+                food_name, weight = portion_size
+                for food in self.foods:
+                    if food_name.lower() in food.description.lower():
+                        calories = CaloriesCalc.calculate_calories(food, weight)
+                        self.intake_calories += calories
+                        print(f"{food_name} contains approximately {calories:.2f} calories.")
+                        break
+                else:
+                    print("Food not found in the database.")
             else:
-                print("Alimentul nu a fost găsit în baza de date.")
+                print("Portion size not available for this food.")
 
-            more_meals = input("Doriți să adăugați și alte alimente la această masă? (da/nu): ")
-            if more_meals.lower() != 'da':
+            more_meals = input("Do you want to add more foods to this meal? (yes/no): ")
+            if more_meals.lower() != 'yes':
                 break
-
 
 def main():
     daily_intake = DailyIntake()
     daily_intake.load_food_data('food.csv')
 
     while True:
-        meal_type = input("Introduceți tipul mesei (Breakfast, lunch sau dinner), sau 'done' pentru a finaliza ziua: ")
+        meal_type = input("Enter the meal type (Breakfast, lunch, or dinner), or 'done' to finish the day: ")
 
         if meal_type.lower() == 'done':
-            print(f"Aportul total de calorii pentru ziua de astăzi este: {daily_intake.intake_calories:.2f} calorii.")
+            print(f"Total calorie intake for today is: {daily_intake.intake_calories:.2f} calories.")
             break
 
         if meal_type.lower() not in ['breakfast', 'lunch', 'dinner']:
-            print(
-                "Tip de masă invalid. Vă rugăm să introduceți 'breakfast', 'lunch', 'dinner', sau 'done' pentru a finaliza ziua.")
+            print("Invalid meal type. Please enter 'breakfast', 'lunch', 'dinner', or 'done' to finish the day.")
             continue
 
-        print(f"Adăugați alimentele pentru {meal_type}:")
+        print(f"Add foods for {meal_type}:")
         daily_intake.add_meal(meal_type)
-
 
 if __name__ == "__main__":
     main()
