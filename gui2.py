@@ -7,7 +7,11 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 
+<<<<<<< Updated upstream:gui2.py
 from gui_common import setup_login_page, show_login
+=======
+from gui_common import setup_login_page, show_login,show_gravity_check_page
+>>>>>>> Stashed changes:SignUp.py
 import re
 from tkinter import messagebox
 
@@ -86,27 +90,37 @@ def setup_signup_page(master):
         password_value = password.get()
         confirm_password_value = confirm_password.get()
         if confirm_password_value != password_value:
-            messagebox.showerror("Eroare","Parolele nu coincid")
+            messagebox.showerror("Eroare", "Parolele nu coincid")
             return
         if check_existing_user(username_value, email_value):
-
-            messagebox.showerror("Eroare","Un utilizator cu același nume  sau aceeași adresă de e-mail există deja!")
+            messagebox.showerror("Eroare", "Un utilizator cu același nume sau aceeași adresă de e-mail există deja!")
             return
         if not is_valid_email(email_value):
-            messagebox.showerror("Eroare","Adresa de e-mail nu este într-un format corect")
+            messagebox.showerror("Eroare", "Adresa de e-mail nu este într-un format corect")
             return
         user_data = {
             "Utilizator": username_value,
             "Nume": last_name_value,
             "Prenume": first_name_value,
             "Email": email_value,
+<<<<<<< Updated upstream:gui2.py
             "Parola": password_value
+=======
+            "Parola": password_value,
+            "Greutate": None,  # Adăugați aici și alte câmpuri pentru varsta, inaltime, etc.
+            "Inaltime": None,
+            "Varsta": None
+>>>>>>> Stashed changes:SignUp.py
         }
         assert isinstance(db, object)
         db.collection("users").add(user_data)
         messagebox.showinfo("Titlu", "Inregistrare cu succes!")
+<<<<<<< Updated upstream:gui2.py
 
 
+=======
+        show_gravity_check_page(master,username_value)
+>>>>>>> Stashed changes:SignUp.py
     for image_name, x, y in image_details:
         img = PhotoImage(file=relative_to_assets(image_name))
         if "Submit.png" == image_name:  # Modificați numele imaginii pentru butonul "Submit"
@@ -163,6 +177,10 @@ def setup_signup_page(master):
     Label(master, text="Last Name", font=InputFont, bg="#FFFCF1").place(x=137, y=200)
     Label(master, text="e-mail", font=InputFont, bg="#FFFCF1").place(x=137, y=283)
 
+<<<<<<< Updated upstream:gui2.py
     Label(master, text="Already have an account?", font=AccFont, bg="#FFFCF1", fg="#5E5858").place(x=345, y=440)
 
     return canvas  # Returnează canvasul pentru utilizare ulterioară
+=======
+    Label(master, text="Already have an account?", font=AccFont, bg="#FFFCF1", fg="#5E5858").place(x=345, y=440)
+>>>>>>> Stashed changes:SignUp.py
