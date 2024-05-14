@@ -9,6 +9,10 @@ from gui_common import show_gravity_check_page, relative_to_assets,setup_signup_
 
 cred = credentials.Certificate('serviceAccountKey.json')
 db = firestore.client()
+<<<<<<< Updated upstream
+=======
+from gui_common import login
+>>>>>>> Stashed changes
 def setup_login_page(master):
     master.configure(bg="#DAE6E4")
 
@@ -61,7 +65,7 @@ def setup_login_page(master):
             button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
             button.image = img
             if "LogIn.png" == image_name:
-                button.config(command=lambda: login(entry_Username.get(), entry_Password.get(),master))
+                button.config(command=lambda: login(master,entry_Username.get(), entry_Password.get()))
                 button.place(x=x, y=y, width=273.0, height=41.365234375)
         else:
             canvas.create_image(x, y, image=img)

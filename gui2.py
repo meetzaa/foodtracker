@@ -8,9 +8,13 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 
 <<<<<<< Updated upstream:gui2.py
+<<<<<<< Updated upstream:gui2.py
 from gui_common import setup_login_page, show_login
 =======
 from gui_common import setup_login_page, show_login,show_gravity_check_page
+>>>>>>> Stashed changes:SignUp.py
+=======
+from gui_common import setup_login_page, show_login,generate_user_key,show_gravity_check_page
 >>>>>>> Stashed changes:SignUp.py
 import re
 from tkinter import messagebox
@@ -116,6 +120,10 @@ def setup_signup_page(master):
         db.collection("users").add(user_data)
         messagebox.showinfo("Titlu", "Inregistrare cu succes!")
 <<<<<<< Updated upstream:gui2.py
+<<<<<<< Updated upstream:gui2.py
+=======
+        show_gravity_check_page(master,user_key)
+>>>>>>> Stashed changes:SignUp.py
 
 
 =======

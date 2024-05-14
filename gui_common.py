@@ -16,6 +16,7 @@ firebase_admin.initialize_app(cred,{
 db = firestore.client()
 
 
+<<<<<<< Updated upstream
 def save_user_details(master, weight, height, age, username):
     # Actualizarea datelor utilizatorului cu greutatea, înălțimea și vârsta
     user_ref = db.collection("users").where("Utilizator", "==", username)
@@ -58,7 +59,41 @@ def login(username, password, master):
         # No user found with the provided credentials
         messagebox.showerror("Error", "Invalid username or password")
 
+=======
+def login(master, username, password):
+    # Interogare pentru a găsi utilizatorul cu numele specificat
+    user_ref = db.collection("users").where("Utilizator", "==", username).limit(1)
+    user = user_ref.get()
+    for doc in user:
+        user_data = doc.to_dict()
+        stored_password = user_data.get("Parola")
+        if stored_password == password:
+            messagebox.showinfo("Success", "Autentificare reușită!")
+            show_app_page1(master)
+            # Aici puteți adăuga logica suplimentară pentru acțiuni după autentificare
+            return True
+        else:
+            messagebox.showerror("Eroare", "Nume de utilizator sau parolă incorecte.")
+            return False
 
+    messagebox.showerror("Eroare", "Nume de utilizator sau parolă incorecte.")
+    return False
+
+
+def save_user_details(master, weight, height, age, user_key):
+>>>>>>> Stashed changes
+
+    # Actualizarea datelor utilizatorului cu greutatea, înălțimea și vârsta
+    user_details_ref = db.collection("UserDetails").where("UserKey", "==", user_key)
+    user_details = user_details_ref.get()
+    for doc in user_details:
+        user_details_data = doc.to_dict()
+        user_details_data["Greutate"] = weight
+        user_details_data["Înălțime"] = height
+        user_details_data["Vârstă"] = age
+        db.collection("UserDetails").document(doc.id).set(user_details_data)
+        print("Date actualizate pentru documentul:", doc.id)
+    show_login(master)
 def is_valid_email(email):
     # Definiți expresia regulată pentru validarea adresei de e-mail
     regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -143,7 +178,11 @@ def relative_to_assets(path: str, frame_directory: str) -> Path:
         assert isinstance(db, object)
         db.collection("users").add(user_data)
         messagebox.showinfo("Titlu", "Inregistrare cu succes!")
+<<<<<<< Updated upstream
         show_gravity_check_page(master,username_value)
+=======
+        show_gravity_check_page(master,user_key)
+>>>>>>> Stashed changes
     for image_name, x, y in image_details:
         img = PhotoImage(file=relative_to_assets(image_name))
         if "Submit.png" == image_name:  # Modificați numele imaginii pentru butonul "Submit"
@@ -245,6 +284,7 @@ def setup_login_page(master):
         ("image_17.png", 856.0, 409.0)
     ]
 
+<<<<<<< Updated upstream
     for img_name, x, y in image_details:
         img = PhotoImage(file=relative_to_assets(img_name))
         if "button" in img_name:
@@ -257,6 +297,22 @@ def setup_login_page(master):
             button.place(x=x, y=y, width=273.0 if "button_1" in img_name else 71.0,
                          height=41.365234375 if "button_1" in img_name else 19.0)
             button.image = img  # Keep a reference to prevent garbage collection
+=======
+    for image_name, x, y in image_details:
+        img = PhotoImage(file=relative_to_assets(image_name, "assets/frame1"))
+        if "SignUp.png" in image_name:
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
+            button.image = img
+            if "SignUp.png" == image_name:
+                button.config(command=lambda: show_signup(master))
+                button.place(x=x, y=y, width=71.0, height=19.0)
+        elif "LogIn.png" in image_name:
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
+            button.image = img
+            if "LogIn.png" == image_name:
+                button.config(command=lambda: login(master,entry_Username.get(), entry_Password.get()))
+                button.place(x=x, y=y, width=273.0, height=41.365234375)
+>>>>>>> Stashed changes
         else:
             canvas.create_image(x, y, image=img)
         master.images.append(img)
