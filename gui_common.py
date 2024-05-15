@@ -19,68 +19,43 @@ def generate_user_key():
     """
     return str(uuid.uuid4())
 
-def login(username, password, master):
-    # Access the 'users' collection in Firestore
-    users_ref = db.collection('users')
-    # Query the database for the provided username and password
-    query = users_ref.where('Utilizator', '==', username).where('Parola', '==', password).stream()
-    # Check if the query result is not empty
-    query_results = list(query)
-    if query_results:
-        user = query_results[0].to_dict()  # Convert the user document to a dictionary
-        user_key = user.get('UserKey')  # Get the user key
 
-        # Check UserDetails collection for user details
-        user_details_ref = db.collection('UserDetails').where('UserKey', '==', user_key).stream()
-
-        # Check if UserDetails document exists
-        user_details_results = list(user_details_ref)
-        if user_details_results:
-            user_details = user_details_results[0].to_dict()  # Convert UserDetails document to a dictionary
-
-            # Check if any of the fields (greutate/inaltime/varsta) is None
-            if (user_details.get('Greutate') is None or
-                user_details.get('Înălțime') is None or
-                user_details.get('Vârstă') is None):
-                messagebox.showinfo("Informație", "Completarea detaliilor este necesară!")
-                show_gravity_check_page(master,user_key)
-            else:
-                # Redirect to the main page (yet to be implemented)
-                pass  # Implement redirection to the main page
-        else:
-            # UserDetails document doesn't exist, redirect to the Check Gravity page
-            messagebox.showinfo("Informație", "Completarea detaliilor este necesară!")
-            show_gravity_check_page(master, user_key) # Assuming you have a function
-    else:
-        # No user found with the provided credentials
-        messagebox.showerror("Error", "Invalid username or password")
 def save_user_details(master, weight, height, age, user_key):
-    # Access the 'UserDetails' collection in Firestore
-    user_details_ref = db.collection('UserDetails').where('UserKey', '==', user_key).stream()
+    user_details_ref = db.collection("UserDetails").where("UserKey", "==", user_key)
+    user_details = user_details_ref.get()
 
-    # Iterate over the generator to access each document reference
-    for user_details_doc in user_details_ref:
-        # Retrieve the document data as a dictionary
-        user_details_data = user_details_doc.to_dict()
+    for doc in user_details:
+        user_details_data = doc.to_dict()
+        user_details_data["Greutate"] = weight
+        user_details_data["Înălțime"] = height
+        user_details_data["Vârstă"] = age
+        db.collection("UserDetails").document(doc.id).set(user_details_data)
 
-        # Update the user details with the provided weight, height, and age
-        user_details_data.update({
-            'Greutate': weight,
-            'Înălțime': height,
-            'Vârstă': age
-        })
+        # Adăugați un print pentru a verifica dacă bucla este parcursă la fiecare iterație
+        print("Date actualizate pentru documentul:", doc.id)
 
-        # Save the updated user details back to the database
-        db.collection('UserDetails').document(user_details_doc.id).set(user_details_data)
+    messagebox.showinfo("Success", "Date actualizate cu succes!")
+    show_login(master)
 
-        # Optional: Show a success message or perform any other actions after saving
-        print("User details saved successfully.")
-        break  # Exit the loop after processing the first document (assuming there's only one)
-    else:
-        # Handle the case where UserDetails document doesn't exist
-        print("UserDetails document not found.")
+def login(master, username, password):
+    # Interogare pentru a găsi utilizatorul cu numele specificat
+    user_ref = db.collection("users").where("Utilizator", "==", username).limit(1)
+    user = user_ref.get()
 
+    for doc in user:
+        user_data = doc.to_dict()
+        stored_password = user_data.get("Parola")
 
+        if stored_password == password:
+            messagebox.showinfo("Success", "Autentificare reușită!")
+            # Aici puteți adăuga logica suplimentară pentru acțiuni după autentificare
+            return True
+        else:
+            messagebox.showerror("Eroare", "Nume de utilizator sau parolă incorecte.")
+            return False
+
+    messagebox.showerror("Eroare", "Nume de utilizator sau parolă incorecte.")
+    return False
 def is_valid_email(email):
     # Definiți expresia regulată pentru validarea adresei de e-mail
     regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -160,9 +135,8 @@ def setup_signup_page(master):
             "Prenume": first_name_value,
             "Email": email_value,
             "Parola": password_value,
-            "UserKey:": user_key
+            "UserKey": user_key
         }
-        assert isinstance(db, object)
         db.collection("users").add(user_data)
         user_details_data = {
             "UserKey": user_key,
@@ -171,8 +145,7 @@ def setup_signup_page(master):
             "Vârstă": None
         }
         db.collection("UserDetails").add(user_details_data)
-        messagebox.showinfo("Titlu", "Inregistrare cu succes!")
-        show_login(master)
+        show_gravity_check_page(master,user_key)
     for image_name, x, y in image_details:
         img = PhotoImage(file=relative_to_assets(image_name))
         if "Submit.png" == image_name:  # Modificați numele imaginii pentru butonul "Submit"

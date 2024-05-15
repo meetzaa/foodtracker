@@ -6,7 +6,7 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 
-from gui_common import setup_login_page, show_login,generate_user_key
+from gui_common import setup_login_page, show_login,generate_user_key,show_gravity_check_page
 import re
 from tkinter import messagebox
 
@@ -80,14 +80,13 @@ def setup_signup_page(master):
         password_value = password.get()
         confirm_password_value = confirm_password.get()
         if confirm_password_value != password_value:
-            messagebox.showerror("Eroare","Parolele nu coincid")
+            messagebox.showerror("Eroare", "Parolele nu coincid")
             return
         if check_existing_user(username_value, email_value):
-
-            messagebox.showerror("Eroare","Un utilizator cu același nume  sau aceeași adresă de e-mail există deja!")
+            messagebox.showerror("Eroare", "Un utilizator cu același nume  sau aceeași adresă de e-mail există deja!")
             return
         if not is_valid_email(email_value):
-            messagebox.showerror("Eroare","Adresa de e-mail nu este într-un format corect")
+            messagebox.showerror("Eroare", "Adresa de e-mail nu este într-un format corect")
             return
         user_key = generate_user_key()
         user_data = {
@@ -96,9 +95,8 @@ def setup_signup_page(master):
             "Prenume": first_name_value,
             "Email": email_value,
             "Parola": password_value,
-            "UserKey:": user_key
+            "UserKey": user_key
         }
-        assert isinstance(db, object)
         db.collection("users").add(user_data)
         user_details_data = {
             "UserKey": user_key,
@@ -107,9 +105,7 @@ def setup_signup_page(master):
             "Vârstă": None
         }
         db.collection("UserDetails").add(user_details_data)
-        messagebox.showinfo("Titlu", "Inregistrare cu succes!")
-        show_login(master)
-
+        show_gravity_check_page(master, user_key)
 
     for image_name, x, y in image_details:
         img = PhotoImage(file=relative_to_assets(image_name))
