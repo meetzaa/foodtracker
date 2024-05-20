@@ -36,29 +36,36 @@ def save_user_details(master, weight, height, age, user_key):
         print("Date actualizate pentru documentul:", doc.id)
 
     messagebox.showinfo("Success", "Date actualizate cu succes!")
-    show_login(master)
+    show_login(master,user_key)
 
 def login(master, username, password):
-    # Interogare pentru a găsi utilizatorul cu numele specificat
-    user_ref = db.collection("users").where(field_path="Utilizator", op_string="==", value=username).limit(1)
+    try:
+        # Interogare pentru a găsi utilizatorul cu numele specificat
+        user_ref = db.collection("users").where("Utilizator", "==", username).limit(1)
 
-    user = user_ref.get()
+        user_docs = user_ref.get()
 
-    for doc in user:
-        user_data = doc.to_dict()
-        stored_password = user_data.get("Parola")
-
-        if stored_password == password:
-            messagebox.showinfo("Success", "Autentificare reușită!")
-            show_app_page1(master)
-            # Aici puteți adăuga logica suplimentară pentru acțiuni după autentificare
-            return True
-        else:
+        if not user_docs:
             messagebox.showerror("Eroare", "Nume de utilizator sau parolă incorecte.")
             return False
 
-    messagebox.showerror("Eroare", "Nume de utilizator sau parolă incorecte.")
-    return False
+        for doc in user_docs:
+            user_data = doc.to_dict()
+            stored_password = user_data.get("Parola")
+
+            if stored_password == password:
+                user_key = user_data.get("UserKey")
+                messagebox.showinfo("Success", f"Autentificare reușită! UserKey: {user_key}")
+                show_app_page1(master,user_key)
+                # Aici puteți adăuga logica suplimentară pentru acțiuni după autentificare
+                return True
+            else:
+                messagebox.showerror("Eroare", "Nume de utilizator sau parolă incorecte.")
+                return False
+
+    except Exception as e:
+        messagebox.showerror("Eroare", f"A apărut o eroare: {e}")
+        return False
 
 def is_valid_email(email):
     # Definiți expresia regulată pentru validarea adresei de e-mail
@@ -353,10 +360,10 @@ def setup_gravity_check_page(master,user_key):
 
 # Definrea paginii de Sign Up
 
-def show_login(master):
+def show_login(master,user_key):
     for widget in master.winfo_children():
         widget.destroy()
-    setup_login_page(master)
+    setup_login_page(master,user_key)
 
 
 def show_signup(master):
@@ -496,7 +503,7 @@ def show_ready_page(master):
 
 
 ####PAGINA PRINCIPALA A APLICATIEI
-def setup_app_page1(master):
+def setup_app_page1(master,user_key):
     master.configure(bg="#DAE6E4")
 
     canvas = Canvas(
@@ -513,9 +520,9 @@ def setup_app_page1(master):
     master.images = []
 
     image_details = [
-        ("Profile.png", 25.0, 25.0, 43.0, 45.0, lambda: show_profile_page(master)),
+        ("Profile.png", 25.0, 25.0, 43.0, 45.0, lambda: show_profile_page(master,user_key)),
         ("LogFood.png", 125.0, 102.0, 185.0, 160.0, lambda: show_LogFood_page(master)),
-        ("TodayActivity.png", 381.0, 102.0, 198.0, 154.0, lambda: show_TodayActivity_page(master)),
+        ("TodayActivity.png", 381.0, 102.0, 198.0, 154.0, lambda: show_TodayActivity_page(master,user_key)),
         ("Goals.png", 640.0, 102.0, 198.0, 154.0, lambda: show_SetGoal_page(master)),
         ("SeeMore.png", 759.0, 369.0, 206.0, 69.0, lambda: show_SeeMore_page(master)),
         ("Calories.png", 531.0, 341.0, 100.0, 33.0, lambda: show_LogFood_page(master)),
@@ -547,10 +554,10 @@ def setup_app_page1(master):
     return Canvas
 
 
-def show_app_page1(master):
+def show_app_page1(master,user_key):
     for widget in master.winfo_children():
         widget.destroy()
-    setup_app_page1(master)
+    setup_app_page1(master,user_key)
 
 
 
@@ -572,7 +579,7 @@ def setup_SeeMore_page(master):
     master.images = []
 
     image_details = [
-        ("Back.png", -50.0, 369.0, 203.0, 67.0, lambda: show_app_page1(master)),
+        ("Back.png", -50.0, 369.0, 203.0, 67.0, lambda: show_app_page1(master, user_key)),
         ("AddWater.png", 509.0, 174.0, 50.0, 40.0, lambda: placeholder_function("AddWater")),
         ("RemoveWater.png", 318.0, 180.0, 50.0, 30.0, lambda: placeholder_function("RemoveWater")),
         ("MyProfile.png", 700.0, 68.0, 160.0, 131.0, lambda: show_profile_page(master)),
@@ -615,7 +622,7 @@ def setup_SeeMore_page(master):
     return canvas
 
 
-def show_SeeMore_page(master):
+def show_SeeMore_page(master,user_key):
     for widget in master.winfo_children():
         widget.destroy()
     setup_SeeMore_page(master)
@@ -815,7 +822,7 @@ def relative_to_assets(path, asset_dir):
 
 
 ###TODAY'S ACTIVITY PAGE
-def setup_TodayActivity_page(master):
+def setup_TodayActivity_page(master,user_key):
     master.configure(bg="#DAE6E4")
 
     canvas = Canvas(
@@ -832,7 +839,7 @@ def setup_TodayActivity_page(master):
     master.images = []
 
     image_details = [
-        ("Back.png", 14.0, 18.0, 59.0, 38.0, lambda: show_app_page1(master)),
+        ("Back.png", 14.0, 18.0, 59.0, 38.0, lambda: show_app_page1(master,user_key)),
         ("image_1.png", 464.0, 257.0, None, None, None),
         ("image_2.png", 468.0, 176.99999999999994, None, None, None),
         ("image_3.png", 468.0, 244.99999999999994, None, None, None),
@@ -866,10 +873,10 @@ def setup_TodayActivity_page(master):
     return canvas
 
 
-def show_TodayActivity_page(master):
+def show_TodayActivity_page(master,user_key):
     for widget in master.winfo_children():
         widget.destroy()
-    setup_TodayActivity_page(master)
+    setup_TodayActivity_page(master,user_key)
 
 
 current_goal = ""
@@ -1085,8 +1092,16 @@ def show_GoalFinal_page(master):
 
 
 ###PAGINA PROFILULUI
-def setup_profile_page(master):
-    master.configure(bg="#DAE6E4")
+def setup_profile_page(master, user_key):
+    user_ref = db.collection("users").where("UserKey", "==", user_key).limit(1).get()
+    user_details_ref = db.collection("UserDetails").where("UserKey", "==", user_key).limit(1).get()
+
+    if user_ref and user_details_ref:
+        user_data = user_ref[0].to_dict()
+        user_details_data = user_details_ref[0].to_dict()
+    else:
+        messagebox.showerror("Eroare", "Utilizatorul nu a fost găsit.")
+        return
 
     canvas = Canvas(
         master,
@@ -1102,8 +1117,8 @@ def setup_profile_page(master):
     master.images = []
 
     image_details = [
-        ("Back.png", 14.0, 18.0, 55.0, 36.0, lambda: show_SeeMore_page(master)),
-        ("next.png", 738.0, 268.0, 32.0, 39.0, lambda: show_profile2_page(master)),
+        ("Back.png", 14.0, 18.0, 55.0, 36.0, lambda: show_app_page1(master, user_key)),
+        ("next.png", 738.0, 268.0, 32.0, 39.0, lambda: show_profile2_page(master, user_key)),
         ("image_1.png", 80.0, 20.0),
 
         ("image_2.png", -10.0, 66.0),
@@ -1142,8 +1157,10 @@ def setup_profile_page(master):
             button.image = img
         else:
             canvas.create_image(x, y, image=img, anchor='nw')
+
     font_large = Font(family="Consolas", slant="italic", size=20)
     font_medium = Font(family="Consolas", slant="italic", size=16)
+    font_small = Font(family="Consolas", slant="italic", size=12)
 
     Label(master, text="Last Name", font=font_medium, bg="#FFFCF1").place(x=262.03289794921875, y=193)
     Label(master, text="First Name", font=font_medium, bg="#FFFCF1").place(x=262.0657958984375, y=262)
@@ -1153,12 +1170,31 @@ def setup_profile_page(master):
     Label(master, text="Email", font=font_medium, bg="#FFFCF1").place(x=262.0657958984375, y=331)
     Label(master, text="Username", font=font_medium, bg="#FFFCF1").place(x=515.0657958984375, y=262)
 
+
+    Label(master, text=user_data.get("Nume", ""), font=font_small, bg="#FFFCF1").place(x=262.03289794921875, y=215)
+    Label(master, text=user_data.get("Prenume", ""), font=font_small, bg="#FFFCF1").place(x=262.0657958984375, y=284)
+    Label(master, text=user_details_data.get("Vârstă", ""), font=font_small, bg="#FFFCF1").place(x=515.0657958984375,
+                                                                                                  y=353)
+    Label(master, text=user_data.get("Parola", ""), font=font_small, bg="#FFFCF1").place(x=515.0328979492188, y=215)
+    Label(master, text=user_data.get("Email", ""), font=font_small, bg="#FFFCF1").place(x=262.0657958984375, y=353)
+    Label(master, text=user_data.get("Utilizator", ""), font=font_small, bg="#FFFCF1").place(x=515.06579589, y=284)
+
     return canvas
-def show_profile_page(master):
+
+def show_profile_page(master, user_key):
     for widget in master.winfo_children():
         widget.destroy()
-    setup_profile_page(master)
-def setup_profile2_page(master):
+    setup_profile_page(master, user_key)
+
+def setup_profile2_page(master, user_key):
+    user_details_ref = db.collection("UserDetails").where("UserKey", "==", user_key).limit(1).get()
+
+    if user_details_ref:
+        user_details_data = user_details_ref[0].to_dict()
+    else:
+        messagebox.showerror("Eroare", "Utilizatorul nu a fost găsit.")
+        return
+
     master.configure(bg="#DAE6E4")
 
     canvas = Canvas(
@@ -1176,7 +1212,7 @@ def setup_profile2_page(master):
 
     image_details = [
         ("Back.png", 14.0, 18.0, 55.0, 36.0, lambda: show_SeeMore_page(master)),
-        ("back_page.png", 182.94596222486825, 255.9999878536811, 32.0, 38.0, lambda: show_profile_page(master)),
+        ("back_page.png", 182.94596222486825, 255.9999878536811, 32.0, 38.0, lambda: show_profile_page(master,user_key)),
         ("image_1.png", 80.0, 20.0),
         ("image_2.png", -10.0, 66.0),
         ("image_3.png", 161.0, 470.0),
@@ -1211,8 +1247,10 @@ def setup_profile2_page(master):
             button.image = img
         else:
             canvas.create_image(x, y, image=img, anchor='nw')
+
     font_large = Font(family="Consolas", slant="italic", size=20)
     font_medium = Font(family="Consolas", slant="italic", size=16)
+    font_small = Font(family="Consolas", slant="italic", size=12)
 
     Label(master, text="My Profile", font=font_large, bg="#FFFCF1").place(x=260, y=95)
     Label(master, text="Weight", font=font_medium, bg="#FFFCF1").place(x=262.0657958984375, y=193)
@@ -1220,17 +1258,29 @@ def setup_profile2_page(master):
     Label(master, text="BMI", font=font_medium, bg="#FFFCF1").place(x=262.0657958984375, y=262)
     Label(master, text="Goal", font=font_medium, bg="#FFFCF1").place(x=515.0657958984375, y=262)
 
-    return canvas
-def show_profile2_page(master):
-    for widget in master.winfo_children():
-        widget.destroy()
-    setup_profile2_page(master)
+    Label(master, text=user_details_data.get("Greutate", ""), font=font_small, bg="#FFFCF1").place(x=262.0657958984375, y=215)
+    Label(master, text=user_details_data.get("Înălțime", ""), font=font_small, bg="#FFFCF1").place(x=515.032958984375, y=215)
+    Label(master, text=user_details_data.get("BMI", ""), font=font_small, bg="#FFFCF1").place(x=262.0657958984375,y=284)
+    Label(master, text=user_details_data.get("Goal", ""), font=font_small, bg="#FFFCF1").place(x=515.0657958984375, y=284)
 
-def show_profile_page(master):
+    return canvas
+
+def show_profile2_page(master, user_key):
     for widget in master.winfo_children():
         widget.destroy()
-    setup_profile_page(master)
-def setup_EditProfile_page(master):
+    setup_profile2_page(master, user_key)
+
+def setup_EditProfile_page(master, user_key):
+    user_ref = db.collection("users").where("UserKey", "==", user_key).limit(1).get()
+    user_details_ref = db.collection("UserDetails").where("UserKey", "==", user_key).limit(1).get()
+
+    if user_ref and user_details_ref:
+        user_data = user_ref[0].to_dict()
+        user_details_data = user_details_ref[0].to_dict()
+    else:
+        messagebox.showerror("Eroare", "Utilizatorul nu a fost găsit.")
+        return
+
     master.configure(bg="#DAE6E4")
 
     canvas = Canvas(
@@ -1247,8 +1297,8 @@ def setup_EditProfile_page(master):
     master.images = []
 
     image_details = [
-        ("Save.png", 701.0, 410.0, 89.0, 33.0, lambda: save(master)),
-        ("Back.png", 14.0, 18.0, 59.0, 37.0, lambda: show_settings_page(master)),
+        ("Save.png", 701.0, 410.0, 89.0, 33.0, lambda: save(master, user_key, first_name_entry, last_name_entry, age_entry, password_entry, email_entry, username_entry)),
+        ("Back.png", 14.0, 18.0, 59.0, 37.0, lambda: show_settings_page(master, user_key)),
         ("edit_firstn.png", 405.0, 211.0, 27.0, 23.0, lambda: enter_firstn(master)),
         ("edit_email.png", 713.0, 211.0, 27.0, 23.0, lambda: enter_email(master)),
         ("edit_lastn.png", 405.0, 262.0, 27.0, 23.0, lambda: enter_lastn(master)),
@@ -1260,7 +1310,6 @@ def setup_EditProfile_page(master):
         ("image_1.png", 406.0, 73.0),
         ("image_2.png", 100.0, 115.0),
         ("image_3.png", 568.0, 10.0),
-
     ]
 
     for details in image_details:
@@ -1280,12 +1329,72 @@ def setup_EditProfile_page(master):
     font_large = Font(family="Consolas", slant="italic", size=24)
 
     canvas.create_text(475, 55, text="Edit Profile", font=font_large, fill="black")
+
+    first_name_entry = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+    first_name_entry.insert(0, user_data.get("Prenume", ""))
+    first_name_entry.place(x=262.0657958984375, y=284, width=200, height=20)
+
+    last_name_entry = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+    last_name_entry.insert(0, user_data.get("Nume", ""))
+    last_name_entry.place(x=262.03289794921875, y=215, width=200, height=20)
+
+    age_entry = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+    age_entry.insert(0, user_details_data.get("Vârstă", ""))
+    age_entry.place(x=515.0657958984375, y=353, width=200, height=20)
+
+    password_entry = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0, show="*")
+    password_entry.insert(0, user_data.get("Parola", ""))
+    password_entry.place(x=515.0328979492188, y=215, width=200, height=20)
+
+    email_entry = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+    email_entry.insert(0, user_data.get("Email", ""))
+    email_entry.place(x=262.0657958984375, y=353, width=200, height=20)
+
+    username_entry = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+    username_entry.insert(0, user_data.get("Utilizator", ""))
+    username_entry.place(x=515.0657958984375, y=284, width=200, height=20)
+
     return canvas
 
-def show_EditProfile_page(master):
+def show_EditProfile_page(master, user_key):
     for widget in master.winfo_children():
         widget.destroy()
-    setup_EditProfile_page(master)
+    setup_EditProfile_page(master, user_key)
+
+def save(master, user_key, first_name_entry, last_name_entry, age_entry, password_entry, email_entry, username_entry):
+    first_name = first_name_entry.get()
+    last_name = last_name_entry.get()
+    age = age_entry.get()
+    password = password_entry.get()
+    email = email_entry.get()
+    username = username_entry.get()
+
+    user_ref = db.collection("users").where("UserKey", "==", user_key).limit(1)
+    user_docs = user_ref.get()
+
+    if user_docs:
+        for doc in user_docs:
+            doc_ref = db.collection("users").document(doc.id)
+            doc_ref.update({
+                "Prenume": first_name,
+                "Nume": last_name,
+                "Parola": password,
+                "Email": email,
+                "Utilizator": username
+            })
+
+    user_details_ref = db.collection("UserDetails").where("UserKey", "==", user_key).limit(1)
+    user_details_docs = user_details_ref.get()
+
+    if user_details_docs:
+        for doc in user_details_docs:
+            doc_ref = db.collection("UserDetails").document(doc.id)
+            doc_ref.update({
+                "Vârstă": age
+            })
+
+    messagebox.showinfo("Success", "Profilul a fost actualizat cu succes!")
+    show_profile_page(master)
 
 
 ###SETTINGS
