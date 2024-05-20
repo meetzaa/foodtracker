@@ -6,30 +6,12 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 from gui_common import show_gravity_check_page
-from gui_common import setup_signup_page, show_signup,show_gravity_check_page
+from gui_common import setup_signup_page, show_signup,show_gravity_check_page,relative_to_assets,login
 cred = credentials.Certificate('serviceAccountKey.json')
 db = firestore.client()
 from gui_common import login
 
-# def login(username, password,master):
-#     # Access the 'users' collection in Firestore
-#     users_ref = db.collection('users')
-#     # Query the database for the provided username and password
-#     query = users_ref.where('Utilizator', '==', username).where('Parola', '==', password).stream()
-#     # Check if the query result is not empty
-#     if len(list(query)) > 0:
-#         messagebox.showinfo("Success", "Login successful!")
-#         show_gravity_check_page(master) # Assuming you have a function to show the next page after successful login
-#     else:
-#         messagebox.showerror("Error", "Invalid username or password")
 def setup_login_page(master):
-    OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / "assets/frame1"
-
-    def relative_to_assets(path: str) -> str:
-        """Returnează calea completă a unui asset relativ la directorul de assets."""
-        return str(ASSETS_PATH / path)
-
     master.configure(bg="#DAE6E4")
 
     canvas = Canvas(
@@ -44,6 +26,7 @@ def setup_login_page(master):
     canvas.place(x=0, y=0)
 
     master.images = []
+
     image_details = [
         ("image_1.png", 467.0, 283.0),
         ("user.png", 468.5, 199.0),
@@ -69,18 +52,18 @@ def setup_login_page(master):
     ]
 
     for image_name, x, y in image_details:
-        img = PhotoImage(file=relative_to_assets(image_name))
+        img = PhotoImage(file=relative_to_assets(image_name, "assets/frame1"))
         if "SignUp.png" in image_name:
             button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
             button.image = img
             if "SignUp.png" == image_name:
-                button.config(command=lambda m=master: show_signup(m))
+                button.config(command=lambda: show_signup(master))
                 button.place(x=x, y=y, width=71.0, height=19.0)
         elif "LogIn.png" in image_name:
             button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
             button.image = img
             if "LogIn.png" == image_name:
-                button.config(command=lambda: login(entry_Username.get(), entry_Password.get(),master))
+                button.config(command=lambda: login(master, entry_Username.get(), entry_Password.get()))
                 button.place(x=x, y=y, width=273.0, height=41.365234375)
         else:
             canvas.create_image(x, y, image=img)
@@ -89,10 +72,9 @@ def setup_login_page(master):
     entry_Username = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
     entry_Username.place(x=294.0, y=177.0, width=349.0, height=43.0)
 
-    entry_Password = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0,show="***")
+    entry_Password = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0, show="***")
     entry_Password.place(x=294.0, y=300.0, width=349.0, height=43.0)
 
-    # Fonturile
     TitluFont = Font(family="Consolas", slant="italic", size=26)
     TextFont = Font(family="Consolas", slant="italic", size=13)
     TextRFont = Font(family="Consolas", slant="italic", size=11)
@@ -101,4 +83,3 @@ def setup_login_page(master):
     Label(master, text="Username", font=TextFont, bg="#FFFCF1").place(x=280, y=142)
     Label(master, text="Password", font=TextFont, bg="#FFFCF1").place(x=280, y=265)
     Label(master, text="Don't have an account?", font=TextRFont, bg="#FFFCF1", fg="#5E5858").place(x=335, y=455)
-    return canvas

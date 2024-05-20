@@ -3,8 +3,8 @@ from tkinter.font import Font
 from pathlib import Path
 from LogIn import setup_login_page
 from SignUp import setup_signup_page
-from tkinter import Tk, Canvas, Frame, Label, Entry, Text, Button, PhotoImage
-import tkinter as tk
+from tkinter import Tk, Canvas, Label, Button, PhotoImage
+
 
 
 OUTPUT_PATH = Path(__file__).parent
@@ -25,38 +25,26 @@ def blink_caret(caret, canvas, delay_ms=600):
     canvas.after(delay_ms, blink_caret, caret, canvas)
 
 
-def blink_caret(caret, canvas, delay_ms=600):
-    current_state = canvas.itemcget(caret, "state")
-    new_state = "hidden" if current_state == "normal" else "normal"
-    canvas.itemconfig(caret, state=new_state)
-    canvas.after(delay_ms, blink_caret, caret, canvas, delay_ms)
-
-def add_delete_text(word_list, label, caret, canvas, delay_ms=150, is_adding=True):
+def add_delete_text(word_list, label, canvas, delay_ms=150, is_adding=True, index=0):
     if not word_list:
         return
-    word = word_list[0]
-    if is_adding:
-        current_text = label['text']
-        if len(current_text) < len(word):
-            label.config(text=current_text + word[len(current_text)])
-            caret_x_position = label.winfo_x() + label.winfo_width()
-            canvas.coords(caret, caret_x_position, 129, caret_x_position + 2, 154)
-            window.after(delay_ms, add_delete_text, word_list, label, caret, canvas, delay_ms, True)
-        else:
-            if len(word_list) > 1:
-                window.after(delay_ms, add_delete_text, word_list, label, caret, canvas, delay_ms, False)
-            else:
-                canvas.itemconfig(caret, state='hidden')
-    else:
-        if label['text']:
-            label.config(text=label['text'][:-1])
-            caret_x_position = label.winfo_x() + label.winfo_width()
-            canvas.coords(caret, 475 + len(label['text']) * 7, 129, 475 + len(label['text']) * 7 + 2, 154)
-            window.after(delay_ms, add_delete_text, word_list, label, caret, canvas, delay_ms, False)
-        else:
-            new_word_list = word_list[1:]
-            window.after(delay_ms, add_delete_text, new_word_list, label, caret, canvas, delay_ms, True)
 
+    word = word_list[index] if index < len(word_list) else ""
+
+    if is_adding:
+        label_text = label.cget("text")
+        if len(label_text) < len(word):
+            label.config(text=word[:len(label_text) + 1])
+            canvas.after(delay_ms, add_delete_text, word_list, label, canvas, delay_ms, True, index)
+        else:
+            next_index = (index + 1) % len(word_list)
+            canvas.after(delay_ms, add_delete_text, word_list, label, canvas, delay_ms, False, next_index)
+    else:
+        if label.cget("text"):
+            label.config(text=label.cget("text")[:-1])
+            canvas.after(delay_ms, add_delete_text, word_list, label, canvas, delay_ms, False, index)
+        else:
+            canvas.after(delay_ms, add_delete_text, word_list, label, canvas, delay_ms, True, index)
 def show_login():
     for widget in window.winfo_children():
         widget.destroy()
@@ -113,10 +101,7 @@ button_SignUp.place(x=695.0, y=210.0, width=214.0, height=49.0)
 text_label = Label(window, font=EatFont, bg="#FFFCF1", fg="#649089", text="")
 text_label.place(x=480, y=119)
 
-caret = canvas.create_line(475, 129, 477, 154, width=2, fill="#FFFCF1")
-
-blink_caret(caret, canvas)
-window.after(1000, add_delete_text, ["Healthy", "Better", "Smart"], text_label, caret, canvas)
+window.after(700, add_delete_text, ["Healthy", "Better", "Smart"], text_label, canvas)
 
 window.resizable(False, False)
 window.mainloop()

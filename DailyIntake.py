@@ -37,13 +37,12 @@ class DailyIntake:
         if response.status_code == 200:
             data = response.json()
             if 'foods' in data and len(data['foods']) > 0:
-                # Taking the portion size of the first result
                 food_data = data['foods'][0]
-                portion_size = food_data['serving_weight_grams']
-                return food_name, portion_size
+                portion_size = food_data.get('serving_weight_grams', None)
+                if portion_size is not None:
+                    return food_name, portion_size
         print("Portion size not found for this food.")
         return None, None
-
     def add_meal(self, meal_type):
         while True:
             food_name = input("Enter the name of the food: ")

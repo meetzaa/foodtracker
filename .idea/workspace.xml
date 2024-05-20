@@ -5,27 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfcd64a2-c1be-40d5-9a6a-780433b66d36" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/foodtracker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/foodtracker.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BMI_inputs.py" beforeDir="false" afterPath="$PROJECT_DIR$/BMI_inputs.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CaloriesCalc.py" beforeDir="false" afterPath="$PROJECT_DIR$/CaloriesCalc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code_review Front End" beforeDir="false" afterPath="$PROJECT_DIR$/Code_review Front End" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DailyIntake.py" beforeDir="false" afterPath="$PROJECT_DIR$/DailyIntake.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Loading.py" beforeDir="false" afterPath="$PROJECT_DIR$/Loading.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LogIn.py" beforeDir="false" afterPath="$PROJECT_DIR$/LogIn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ReadyGo.py" beforeDir="false" afterPath="$PROJECT_DIR$/ReadyGo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SignUp.py" beforeDir="false" afterPath="$PROJECT_DIR$/SignUp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Update" beforeDir="false" afterPath="$PROJECT_DIR$/Update" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bmi.py" beforeDir="false" afterPath="$PROJECT_DIR$/bmi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/food.csv" beforeDir="false" afterPath="$PROJECT_DIR$/food.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui_common.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui_common.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_page.py" afterDir="false" />
     </list>
@@ -44,21 +27,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "JustEdward01"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;JustEdward01&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubDefaultAccount">
-    <option name="defaultAccountId" value="f5631f50-47bf-4fbd-b3b8-9090fc1e0410" />
+    <option name="defaultAccountId" value="a463f8f2-cf84-4d0f-91f8-4cc02771829b" />
   </component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/meetzaa/foodtracker.git",
-    "accountId": "a463f8f2-cf84-4d0f-91f8-4cc02771829b"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/meetzaa/foodtracker.git&quot;,
+    &quot;accountId&quot;: &quot;a463f8f2-cf84-4d0f-91f8-4cc02771829b&quot;
   }
-}]]></component>
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -70,27 +53,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.DailyIntake.executor": "Run",
-    "Python.gui.executor": "Run",
-    "Python.loginpage.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.main_page.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.DailyIntake.executor&quot;: &quot;Run&quot;,
+    &quot;Python.gui.executor&quot;: &quot;Run&quot;,
+    &quot;Python.loginpage.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main_page.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Daria\Desktop\foodtr\foodtracker\assets\frame14" />
@@ -226,6 +209,11 @@
       <workItem from="1714755134948" duration="1644000" />
       <workItem from="1715472380942" duration="985000" />
       <workItem from="1715503001707" duration="611000" />
+      <workItem from="1715789513585" duration="326000" />
+      <workItem from="1715789910246" duration="776000" />
+      <workItem from="1715952773213" duration="3001000" />
+      <workItem from="1716043171366" duration="12652000" />
+      <workItem from="1716056912451" duration="27607000" />
     </task>
     <servers />
   </component>
@@ -248,7 +236,7 @@
     <SUITE FILE_PATH="coverage/CaloriesCalc_py$gui.coverage" NAME="gui Coverage Results" MODIFIED="1714557486938" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/CaloriesCalc_py$main.coverage" NAME="main Coverage Results" MODIFIED="1714756689350" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/foodtracker$main.coverage" NAME="main Coverage Results" MODIFIED="1711803602448" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/CaloriesCalc_py$main_page.coverage" NAME="main_page Coverage Results" MODIFIED="1715503587513" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CaloriesCalc_py$main_page.coverage" NAME="main_page Coverage Results" MODIFIED="1716205847413" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/foodtracker$loginpage.coverage" NAME="loginpage Coverage Results" MODIFIED="1711294460543" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
