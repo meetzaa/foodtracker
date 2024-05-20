@@ -9,3 +9,5 @@ Edward:29 aprilie-Am facut legatura la baza de date pentru pagian de sign up,cu 
                 -verifica daca exista un utilizator cu acelasi email
                 -verifica daca emailul este itnr un format corect nume_utilizator@domeniu.sufix
       Pentru baza de data am folosit Firebase      
+
+meetza - 1.05 - Am facut calculatorul de intake pe zi, unde introducem alimentele si calculeaza la final de zi cate calorii au fost consumate.

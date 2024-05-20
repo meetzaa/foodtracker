@@ -1,72 +1,53 @@
-from tkinter import *
-from tkinter.font import Font
-from pathlib import Path
-
-<<<<<<< Updated upstream
-def setup_login_page(master):
-=======
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import firestore
+import uuid
 import re
+from pathlib import Path
+import tkinter as tk
+from tkinter import (
+    Toplevel,font, Entry, Label, Button, Listbox, Scrollbar, END, Tk, Canvas, PhotoImage, messagebox, ttk
+)
+from tkinter.font import Font
+import firebase_admin
+from firebase_admin import credentials, firestore
+import CaloriesCalc
+from CaloriesCalc import daily_intake, calculate_calories
 cred = credentials.Certificate('serviceAccountKey.json')
 firebase_admin.initialize_app(cred,{
     'databaseURL': 'https://foodtracker-8fe6b-default-rtdb.europe-west1.firebasedatabase.app/'
 })
 db = firestore.client()
+def generate_user_key():
+    """
+    Generate a unique key for a user.
+    """
+    return str(uuid.uuid4())
 
+def save_user_details(master, weight, height, age, user_key):
+    user_details_ref = db.collection("UserDetails").where("UserKey", "==", user_key)
+    user_details = user_details_ref.get()
 
-<<<<<<< Updated upstream
-def save_user_details(master, weight, height, age, username):
-    # Actualizarea datelor utilizatorului cu greutatea, înălțimea și vârsta
-    user_ref = db.collection("users").where("Utilizator", "==", username)
-    user = user_ref.get()
-    for doc in user:
-        user_data = doc.to_dict()
-        user_data["Greutate"] = weight
-        user_data["Inaltime"] = height
-        user_data["Varsta"] = age
-        db.collection("users").document(doc.id).set(user_data)
+    for doc in user_details:
+        user_details_data = doc.to_dict()
+        user_details_data["Greutate"] = weight
+        user_details_data["Înălțime"] = height
+        user_details_data["Vârstă"] = age
+        db.collection("UserDetails").document(doc.id).set(user_details_data)
+
+        # Adăugați un print pentru a verifica dacă bucla este parcursă la fiecare iterație
+        print("Date actualizate pentru documentul:", doc.id)
+
     messagebox.showinfo("Success", "Date actualizate cu succes!")
     show_login(master)
-def login(username, password, master):
-    # Access the 'users' collection in Firestore
-    users_ref = db.collection('users')
 
-    # Query the database for the provided username and password
-    query = users_ref.where('Utilizator', '==', username).where('Parola', '==', password).stream()
-
-    # Check if the query result is not empty
-    query_results = list(query)
-
-    if query_results:
-        # Retrieve the first document from the query results
-        for user_doc in query_results:
-            # Convert the document to a dictionary
-            user_data = user_doc.to_dict()
-
-            # Check if any of the fields (greutate/inaltime/varsta) is None
-            if (user_data.get('Greutate') is None or
-                user_data.get('Inaltime') is None or
-                user_data.get('Varsta') is None):
-                messagebox.showinfo("Informație", "Completarea detaliilor este necesară!")
-                test_user = users_ref.where('utilizator', '==', username).limit(1).get()
-                show_gravity_check_page(master)
-            else:
-                # All details are present, redirect to the main page
-                show_app_page1(master)
-    else:
-        # No user found with the provided credentials
-        messagebox.showerror("Error", "Invalid username or password")
-
-=======
 def login(master, username, password):
     # Interogare pentru a găsi utilizatorul cu numele specificat
-    user_ref = db.collection("users").where("Utilizator", "==", username).limit(1)
+    user_ref = db.collection("users").where(field_path="Utilizator", op_string="==", value=username).limit(1)
+
     user = user_ref.get()
+
     for doc in user:
         user_data = doc.to_dict()
         stored_password = user_data.get("Parola")
+
         if stored_password == password:
             messagebox.showinfo("Success", "Autentificare reușită!")
             show_app_page1(master)
@@ -79,21 +60,6 @@ def login(master, username, password):
     messagebox.showerror("Eroare", "Nume de utilizator sau parolă incorecte.")
     return False
 
-
-def save_user_details(master, weight, height, age, user_key):
->>>>>>> Stashed changes
-
-    # Actualizarea datelor utilizatorului cu greutatea, înălțimea și vârsta
-    user_details_ref = db.collection("UserDetails").where("UserKey", "==", user_key)
-    user_details = user_details_ref.get()
-    for doc in user_details:
-        user_details_data = doc.to_dict()
-        user_details_data["Greutate"] = weight
-        user_details_data["Înălțime"] = height
-        user_details_data["Vârstă"] = age
-        db.collection("UserDetails").document(doc.id).set(user_details_data)
-        print("Date actualizate pentru documentul:", doc.id)
-    show_login(master)
 def is_valid_email(email):
     # Definiți expresia regulată pentru validarea adresei de e-mail
     regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -111,18 +77,19 @@ def check_existing_user(username, email):
     return len(query_username) > 0 or len(query_email) > 0
 def relative_to_assets(path: str, frame_directory: str) -> Path:
     """Returnează calea completă a unui asset relativ la directorul de assets specificat."""
->>>>>>> Stashed changes
     OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / "assets/frame1"
+    ASSETS_PATH = OUTPUT_PATH / frame_directory
+    return ASSETS_PATH / Path(path)
+
+def setup_signup_page(master):
+    OUTPUT_PATH = Path(__file__).parent
+    ASSETS_PATH = OUTPUT_PATH / "assets/frame2"
 
     def relative_to_assets(path: str) -> str:
-        """Returnează calea completă a unui asset relativ la directorul de assets."""
         return str(ASSETS_PATH / path)
 
     master.configure(bg="#DAE6E4")
 
-<<<<<<< Updated upstream
-=======
 
     canvas = Canvas(
         master,
@@ -160,29 +127,29 @@ def relative_to_assets(path: str, frame_directory: str) -> Path:
             messagebox.showerror("Eroare", "Parolele nu coincid")
             return
         if check_existing_user(username_value, email_value):
-            messagebox.showerror("Eroare", "Un utilizator cu același nume sau aceeași adresă de e-mail există deja!")
+            messagebox.showerror("Eroare", "Un utilizator cu același nume  sau aceeași adresă de e-mail există deja!")
             return
         if not is_valid_email(email_value):
             messagebox.showerror("Eroare", "Adresa de e-mail nu este într-un format corect")
             return
+        user_key = generate_user_key()
         user_data = {
             "Utilizator": username_value,
             "Nume": last_name_value,
             "Prenume": first_name_value,
             "Email": email_value,
             "Parola": password_value,
-            "Greutate": None,  # Adăugați aici și alte câmpuri pentru varsta, inaltime, etc.
-            "Inaltime": None,
-            "Varsta": None
+            "UserKey": user_key
         }
-        assert isinstance(db, object)
         db.collection("users").add(user_data)
-        messagebox.showinfo("Titlu", "Inregistrare cu succes!")
-<<<<<<< Updated upstream
-        show_gravity_check_page(master,username_value)
-=======
+        user_details_data = {
+            "UserKey": user_key,
+            "Greutate": None,
+            "Înălțime": None,
+            "Vârstă": None
+        }
+        db.collection("UserDetails").add(user_details_data)
         show_gravity_check_page(master,user_key)
->>>>>>> Stashed changes
     for image_name, x, y in image_details:
         img = PhotoImage(file=relative_to_assets(image_name))
         if "Submit.png" == image_name:  # Modificați numele imaginii pentru butonul "Submit"
@@ -244,7 +211,6 @@ def relative_to_assets(path: str, frame_directory: str) -> Path:
 def setup_login_page(master):
     master.configure(bg="#DAE6E4")
 
->>>>>>> Stashed changes
     canvas = Canvas(
         master,
         bg="#DAE6E4",
@@ -256,16 +222,14 @@ def setup_login_page(master):
     )
     canvas.place(x=0, y=0)
 
-    # Păstrarea imaginilor într-o listă de referințe
     master.images = []
 
-    # Încărcarea și plasarea imaginilor specifice
     image_details = [
         ("image_1.png", 467.0, 283.0),
-        ("entry_1.png", 468.5, 199.0),  # Fundal pentru primul Entry
-        ("entry_2.png", 468.5, 323.0),  # Fundal pentru al doilea Entry
-        ("button_1.png", 337.0, 410.6),
-        ("button_2.png", 540.0, 458.0),
+        ("user.png", 468.5, 199.0),
+        ("psswrd.png", 468.5, 323.0),
+        ("LogIn.png", 337.0, 410.6),
+        ("SignUp.png", 540.0, 458.0),
         ("image_2.png", 55.0, 457),
         ("image_3.png", 110.0, 338.0),
         ("image_4.png", 128.0, 411.0),
@@ -284,20 +248,6 @@ def setup_login_page(master):
         ("image_17.png", 856.0, 409.0)
     ]
 
-<<<<<<< Updated upstream
-    for img_name, x, y in image_details:
-        img = PhotoImage(file=relative_to_assets(img_name))
-        if "button" in img_name:
-            if img_name == "button_2.png":
-                button = Button(master, image=img, borderwidth=0, highlightthickness=0,
-                                command=lambda: show_signup(master),
-                                relief="flat")
-            else:
-                button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
-            button.place(x=x, y=y, width=273.0 if "button_1" in img_name else 71.0,
-                         height=41.365234375 if "button_1" in img_name else 19.0)
-            button.image = img  # Keep a reference to prevent garbage collection
-=======
     for image_name, x, y in image_details:
         img = PhotoImage(file=relative_to_assets(image_name, "assets/frame1"))
         if "SignUp.png" in image_name:
@@ -310,140 +260,27 @@ def setup_login_page(master):
             button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
             button.image = img
             if "LogIn.png" == image_name:
-                button.config(command=lambda: login(master,entry_Username.get(), entry_Password.get()))
+                button.config(command=lambda: login(master, entry_Username.get(), entry_Password.get()))
                 button.place(x=x, y=y, width=273.0, height=41.365234375)
->>>>>>> Stashed changes
         else:
             canvas.create_image(x, y, image=img)
         master.images.append(img)
-    # Crearea și plasarea Entry-urilor
-    entry_1 = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-    entry_1.place(x=294.0, y=177.0, width=349.0, height=43.0)
 
-    entry_2 = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-    entry_2.place(x=294.0, y=300.0, width=349.0, height=43.0)
+    entry_Username = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+    entry_Username.place(x=294.0, y=177.0, width=349.0, height=43.0)
 
-    # Fonturile pentru texte
+    entry_Password = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0, show="***")
+    entry_Password.place(x=294.0, y=300.0, width=349.0, height=43.0)
+
     TitluFont = Font(family="Consolas", slant="italic", size=26)
     TextFont = Font(family="Consolas", slant="italic", size=13)
     TextRFont = Font(family="Consolas", slant="italic", size=11)
 
-    # Adăugarea textelor pe ecran
     Label(master, text="Welcome back, gourmet guru!", font=TitluFont, bg="#DAE6E4").place(x=228, y=20)
     Label(master, text="Username", font=TextFont, bg="#FFFCF1").place(x=280, y=142)
     Label(master, text="Password", font=TextFont, bg="#FFFCF1").place(x=280, y=265)
     Label(master, text="Don't have an account?", font=TextRFont, bg="#FFFCF1", fg="#5E5858").place(x=335, y=455)
-
-
-def setup_signup_page(master):
-    OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / "assets/frame2"
-
-    def relative_to_assets(path: str) -> str:
-        return str(ASSETS_PATH / path)
-
-    master.configure(bg="#DAE6E4")
-
-    # Crearea unui canvas pentru plasarea imaginilor
-    canvas = Canvas(
-        master,
-        bg="#DAE6E4",
-        height=503,
-        width=937,
-        bd=0,
-        highlightthickness=0,
-        relief="ridge"
-    )
-    canvas.place(x=0, y=0)
-
-    # Păstrarea imaginilor într-o listă de referințe
-    master.images = []
-
-    # Încărcarea și plasarea imaginilor
-    image_details = [
-        ("image_1.png", 469.0, 282.0),
-        ("entry_1.png", 273.5, 164.0),  # Fundal pentru primul Entry
-        ("entry_2.png", 676.5, 164.0),  # Fundal pentru al doilea Entry
-        ("entry_3.png", 274.0, 247.6),
-        ("entry_4.png", 676.5, 247.0),
-        ("entry_5.png", 275.0, 330),
-        ("entry_6.png", 676.5, 330.0),
-        ("button_1.png", 326.0, 392.0),  # Locația butonului 1
-        ("button_2.png", 545.0, 441.0)  # Locația butonului 2
-    ]
-
-    for image_name, x, y in image_details:
-        img = PhotoImage(file=relative_to_assets(image_name))
-        if "button" in image_name:
-            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
-            button.image = img  # Keep a reference to prevent garbage collection
-            if "button_1.png" == image_name:
-                button.config(command=lambda: print("button_1 clicked"))
-                button.place(x=x, y=y, width=296.0, height=43.0)
-            elif "button_2.png" == image_name:
-                button.config(command=lambda m=master: show_login(m))  # Correctly capturing master
-                button.place(x=x, y=y, width=62.0, height=20.0)
-        else:
-            canvas.create_image(x, y, image=img)
-        master.images.append(img)
-
-    # Fonturile pentru texte
-    Titlu1Font = Font(family="Consolas", slant="italic", size=20)
-    Titlu2Font = Font(family="Consolas", slant="italic", size=20, weight="bold")
-    InputFont = Font(family="Consolas", slant="italic", size=12)
-    AccFont = Font(family="Consolas", slant="italic", size=11)
-
-    # Crearea și plasarea Entry-urilor
-    entry_1 = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-    entry_1.place(x=143.0, y=149.0, width=261.0, height=27.0)
-
-    entry_2 = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-    entry_2.place(x=546.0, y=149.0, width=261.0, height=27.0)
-
-    entry_3 = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-    entry_3.place(x=144.0, y=232.0, width=261.0, height=27.0)
-
-    entry_4 = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-    entry_4.place(x=546.0, y=232.0, width=261.0, height=27.0)
-
-    entry_5 = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-    entry_5.place(x=148.0, y=314.0, width=261.0, height=27.0)
-
-    entry_6 = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-    entry_6.place(x=546.0, y=314.0, width=261.0, height=27.0)
-
-    # Adăugarea textelor pe ecran
-    Label(master, text="Bite-sized", font=Titlu1Font, bg="#DAE6E4").place(x=170, y=18)
-    Label(master, text="sign-up", font=Titlu2Font, bg="#DAE6E4").place(x=330, y=18)
-    Label(master, text="for your", font=Titlu1Font, bg="#DAE6E4").place(x=445, y=18)
-    Label(master, text="mega appetite", font=Titlu2Font, bg="#DAE6E4").place(x=575, y=18)
-    Label(master, text="!", font=Titlu1Font, bg="#DAE6E4").place(x=773, y=18)
-
-    Label(master, text="First Name", font=InputFont, bg="#FFFCF1").place(x=137, y=117)
-    Label(master, text="Username", font=InputFont, bg="#FFFCF1").place(x=539, y=117)
-    Label(master, text="Password", font=InputFont, bg="#FFFCF1").place(x=539, y=200)
-    Label(master, text="Confirm Password", font=InputFont, bg="#FFFCF1").place(x=539, y=283)
-    Label(master, text="Last Name", font=InputFont, bg="#FFFCF1").place(x=137, y=200)
-    Label(master, text="E-mail", font=InputFont, bg="#FFFCF1").place(x=137, y=283)
-
-    Label(master, text="Already have an account?", font=AccFont, bg="#FFFCF1", fg="#5E5858").place(x=345, y=440)
-
-
-def show_login(master):
-    for widget in master.winfo_children():
-        widget.destroy()
-    setup_login_page(master)
-
-def show_signup(master):
-    for widget in master.winfo_children():
-        widget.destroy()
-    setup_signup_page(master)
-<<<<<<< Updated upstream
-=======
-
-
-# Definirea paginii pentru inputurile BMI-ului
-def setup_gravity_check_page(master,username_value):
+def setup_gravity_check_page(master,user_key):
     master.configure(bg="#DAE6E4")
 
     canvas = Canvas(
@@ -484,12 +321,11 @@ def setup_gravity_check_page(master,username_value):
                 button.config(command=lambda: show_login(master))
                 button.place(x=x, y=y, width=100.0, height=20.0)
         elif "NextStep.png" in image_name:
-            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
-            button.image = img
-            if "NextStep.png" == image_name:
-                button.config(command=lambda: save_user_details(master, entry_kg.get(), entry_cm.get(), entry_age.get(),
-                                                                username_value))
-                button.place(x=x, y=y, width=120.0, height=30.0)
+                button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
+                button.image = img
+                if "NextStep.png" == image_name:
+                    button.config(command=lambda: save_user_details(master, entry_kg.get(), entry_cm.get(), entry_age.get(),user_key))
+                    button.place(x=x, y=y, width=120.0, height=30.0)
         else:
             canvas.create_image(x, y, image=img)
         master.images.append(img)
@@ -515,10 +351,27 @@ def setup_gravity_check_page(master,username_value):
     Label(master, text="Age", font=font_medium, bg="#FFFCF1").place(x=750, y=225)
 
 
-def show_gravity_check_page(master,username_value):
+# Definrea paginii de Sign Up
+
+def show_login(master):
     for widget in master.winfo_children():
         widget.destroy()
-    setup_gravity_check_page(master,username_value)
+    setup_login_page(master)
+
+
+def show_signup(master):
+    for widget in master.winfo_children():
+        widget.destroy()
+    setup_signup_page(master)
+
+
+# Definirea paginii pentru inputurile BMI-ului
+
+
+def show_gravity_check_page(master,user_key):
+    for widget in master.winfo_children():
+        widget.destroy()
+    setup_gravity_check_page(master,user_key)
 
 
 # Definirea paginii de Loading
@@ -582,6 +435,8 @@ def setup_loading_page(master):
         if progress['value'] >= 100:
             show_ready_page(master)
             break
+
+
 
 
 def show_loading_page(master):
@@ -658,7 +513,7 @@ def setup_app_page1(master):
     master.images = []
 
     image_details = [
-        ("Profile.png", 870.0, 25.0, 43.0, 45.0, lambda: show_profile_page(master)),
+        ("Profile.png", 25.0, 25.0, 43.0, 45.0, lambda: show_profile_page(master)),
         ("LogFood.png", 125.0, 102.0, 185.0, 160.0, lambda: show_LogFood_page(master)),
         ("TodayActivity.png", 381.0, 102.0, 198.0, 154.0, lambda: show_TodayActivity_page(master)),
         ("Goals.png", 640.0, 102.0, 198.0, 154.0, lambda: show_SetGoal_page(master)),
@@ -685,7 +540,7 @@ def setup_app_page1(master):
     font_large = Font(family="Consolas", slant="italic", size=20)
     font_medium = Font(family="Consolas", slant="italic", size=14)
 
-    Label(master, text="Welcome, ", font=font_large, bg="#DAE6E4").place(x=661, y=33)
+    Label(master, text="Welcome, ", font=font_large, bg="#DAE6E4").place(x=80, y=33)
     Label(master, text="Log Food", font=font_medium, bg="#DAE6E4").place(x=171, y=255)
     Label(master, text="Today's Activity", font=font_medium, bg="#DAE6E4").place(x=398, y=255)
     Label(master, text="Goals", font=font_medium, bg="#DAE6E4").place(x=715, y=255)
@@ -718,15 +573,14 @@ def setup_SeeMore_page(master):
 
     image_details = [
         ("Back.png", -50.0, 369.0, 203.0, 67.0, lambda: show_app_page1(master)),
-        ("AddWater.png", 589.0, 74.0, 50.0, 40.0, lambda: placeholder_function("AddWater")),
-        ("RemoveWater.png", 398.0, 80.0, 50.0, 30.0, lambda: placeholder_function("RemoveWater")),
-        ("MyProfile.png", 223.0, 298.0, 160.0, 131.0, lambda: show_profile_page(master)),
-        ("MyMeals.png", 432.0, 298.0, 160.0, 131.0, lambda: show_MyMeals(master)),
-        ("Settings.png", 642.0, 298.0, 160.0, 131.0, lambda: show_settings_page(master)),
-        ("image_1.png", 320.0, 10.0, None, None, None),
-        ("image_2.png", 485.0, 39.0, None, None, None),
-        ("image_3.png", 380.0, 215.0, None, None, None),
-        ("entry_Water.png", 483.0, 136.5, 47.0, 30.0, None)
+        ("AddWater.png", 509.0, 174.0, 50.0, 40.0, lambda: placeholder_function("AddWater")),
+        ("RemoveWater.png", 318.0, 180.0, 50.0, 30.0, lambda: placeholder_function("RemoveWater")),
+        ("MyProfile.png", 700.0, 68.0, 160.0, 131.0, lambda: show_profile_page(master)),
+        ("Settings.png", 700.0, 268.0, 160.0, 131.0, lambda: show_settings_page(master)),
+        ("image_1.png", 240.0, 115.0, None, None, None),
+        ("image_2.png", 405.0, 139.0, None, None, None),
+        ("image_3.png", 295.0, 315.0, None, None, None),
+        ("entry_Water.png", 403.0, 236.5, 47.0, 30.0, None)
     ]
 
     for details in image_details:
@@ -749,15 +603,14 @@ def setup_SeeMore_page(master):
 
     font_medium = Font(family="Consolas", slant="italic", size=15)
 
-    Label(master, text="My Profile", font=font_medium, bg="#DAE6E4").place(x=250, y=428)
-    Label(master, text="My Meals", font=font_medium, bg="#DAE6E4").place(x=473, y=428)
-    Label(master, text="Settings", font=font_medium, bg="#DAE6E4").place(x=681, y=428)
+    Label(master, text="My Profile", font=font_medium, bg="#DAE6E4").place(x=725, y=193)
+    Label(master, text="Settings", font=font_medium, bg="#DAE6E4").place(x=735, y=393)
     Label(master, text="Streak", font=font_medium, bg="#DAE6E4").place(x=92, y=21)
     Label(master, text="days", font=font_medium, bg="#DAE6E4").place(x=101, y=96)
-    Label(master, text="Liters", font=font_medium, bg="#FFFCF1").place(x=572, y=144)
+    Label(master, text="Liters", font=font_medium, bg="#FFFCF1").place(x=492, y=244)
 
     entry_Water = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-    entry_Water.place(x=500.0, y=145.0, width=53.0, height=22.5)
+    entry_Water.place(x=420.0, y=245.0, width=53.0, height=22.5)
 
     return canvas
 
@@ -766,15 +619,28 @@ def show_SeeMore_page(master):
     for widget in master.winfo_children():
         widget.destroy()
     setup_SeeMore_page(master)
+#def search_action():
+    #query = search_entry.get()
+   #print(f"Searching for: {query}")
 
 
 
 
 ###LOG FOOD PAGE
-def setup_LogFood_page(master):
+def setup_LogFood_page(master, relative_to_assets, selected_foods=None, selected_meal=None):
     master.configure(bg="#DAE6E4")
 
-    canvas = Canvas(
+    def add_food_to_menu(food_data, meal_type):
+        if meal_type == "Breakfast" and 'breakfast_listbox' in globals():
+            breakfast_listbox.insert(END, food_data)
+        elif meal_type == "Lunch" and 'lunch_listbox' in globals():
+            lunch_listbox.insert(END, food_data)
+        elif meal_type == "Dinner" and 'dinner_listbox' in globals():
+            dinner_listbox.insert(END, food_data)
+        elif meal_type == "Snack" and 'snack_listbox' in globals():
+            snack_listbox.insert(END, food_data)
+
+    canvas = tk.Canvas(
         master,
         bg="#DAE6E4",
         height=503,
@@ -792,37 +658,158 @@ def setup_LogFood_page(master):
         ("image_2.png", 321.0, 70.0, None, None, None),
         ("image_3.png", 612.0, 70.0, None, None, None),
         ("image_4.png", 184.0, 329.0, None, None, None),
-        ("AddF_Breakfast.png", 79.0, 145.0, 110.0, 23.0, lambda: Add_Breakfast(master)),
-        ("AddF_Lunch.png", 372.0, 145.0, 110.0, 23.0, lambda: Add_Lunch(master)),
-        ("AddF_Dinner.png", 663.0, 145.0, 110.0, 23.0, lambda: Add_Dinner(master)),
+        ("AddF_Breakfast.png", 79.0, 145.0, 110.0, 23.0, lambda: show_Add_Food(master, "Breakfast")),
+        ("AddF_Lunch.png", 372.0, 145.0, 110.0, 23.0, lambda: show_Add_Food(master, "Lunch")),
+        ("AddF_Dinner.png", 663.0, 145.0, 110.0, 23.0, lambda: show_Add_Food(master, "Dinner")),
         ("Back.png", 14.0, 18.0, 59.0, 35.0, lambda: show_app_page1(master)),
-        ("Add_Snack.png", 280.0, 380.0, 118.0, 15.0, lambda: Add_Snack(master))
-
+        ("Add_Snack.png", 280.0, 380.0, 118.0, 15.0, lambda: show_Add_Food(master, "Snack"))
     ]
 
     for details in image_details:
         image_name, x, y, width, height, command = details
-        img = PhotoImage(file=relative_to_assets(image_name, "assets/frame8"))
+        img = tk.PhotoImage(file=relative_to_assets(image_name, "assets/frame8"))
         master.images.append(img)
 
         if width is None or height is None:
             width, height = 100, 100
 
         if command:
-            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat", command=command,
-                            bg="#FFFCF1")
+            button = tk.Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat", command=command, bg="#FFFCF1")
             button.place(x=x, y=y, width=width, height=height)
             button.image = img
         else:
             canvas.create_image(x, y, image=img, anchor='nw')
 
+    # Stil pentru listbox-uri
+    listbox_bg = "#FFFCF1"
+    listbox_fg = "#000000"
+    listbox_font = ("Consolas", 12)
+
+    # Creăm listbox-uri pentru fiecare masă, încadrate în casetele lor
+    global breakfast_listbox, lunch_listbox, dinner_listbox, snack_listbox
+    breakfast_listbox = tk.Listbox(master, width=23, height=5, bg=listbox_bg, fg=listbox_fg, font=listbox_font, bd=0, highlightthickness=0, relief="flat")
+    breakfast_listbox.place(x=79, y=170)
+
+    lunch_listbox = tk.Listbox(master, width=23, height=5, bg=listbox_bg, fg=listbox_fg, font=listbox_font, bd=0, highlightthickness=0, relief="flat")
+    lunch_listbox.place(x=372, y=170)
+
+    dinner_listbox = tk.Listbox(master, width=23, height=5, bg=listbox_bg, fg=listbox_fg, font=listbox_font, bd=0, highlightthickness=0, relief="flat")
+    dinner_listbox.place(x=663, y=170)
+
+    snack_listbox = tk.Listbox(master, width=23, height=5, bg=listbox_bg, fg=listbox_fg, font=listbox_font, bd=0, highlightthickness=0, relief="flat")
+    snack_listbox.place(x=280, y=380)
+
+    if selected_foods and selected_meal:
+        for food_data in selected_foods:
+            add_food_to_menu(food_data, selected_meal)
+
     return canvas
 
 
-def show_LogFood_page(master):
+def show_LogFood_page(master, selected_foods=None, selected_meal=None):
     for widget in master.winfo_children():
         widget.destroy()
-    setup_LogFood_page(master)
+    setup_LogFood_page(master, relative_to_assets, selected_foods, selected_meal)
+def add_food_to_menu(food_data, meal_type):
+    if meal_type == "Breakfast":
+        breakfast_listbox.insert(END, food_data)
+    elif meal_type == "Lunch":
+        lunch_listbox.insert(END, food_data)
+    elif meal_type == "Dinner":
+        dinner_listbox.insert(END, food_data)
+    elif meal_type == "Snack":
+        snack_listbox.insert(END, food_data)
+
+def setup_Add_Food(master, show_LogFood_page, relative_to_assets, selected_meal):
+    master.configure(bg="#DAE6E4")
+
+    canvas = tk.Canvas(
+        master,
+        bg="#DAE6E4",
+        height=503,
+        width=937,
+        bd=0,
+        highlightthickness=0,
+        relief="ridge"
+    )
+    canvas.place(x=0, y=0)
+
+    customFont = font.Font(family="Consolas", size=15)
+
+    # Listbox pentru alimentele selectate
+    selected_foods_listbox = tk.Listbox(master, width=50, height=10, bg="#FFFCF1", fg="#000000", font=customFont, bd=0,
+                                        highlightthickness=0, relief="flat")
+    selected_foods_listbox.place(x=230, y=50)
+
+    # Entry pentru căutare
+    search_entry = tk.Entry(master, bd=4, relief="sunken", font=customFont, width=35)
+    search_entry.place(x=230, y=230)
+
+    # Listbox pentru sugestii
+    suggestion_listbox = tk.Listbox(master, width=50, height=10, bg="#FFFCF1", fg="#000000", font=customFont, bd=0,
+                                    highlightthickness=0, relief="flat")
+    suggestion_listbox.place(x=230, y=270)
+
+    def update_suggestions(event):
+        search_text = search_entry.get().lower()
+        suggestion_listbox.delete(0, END)
+        suggestions = daily_intake.find_food_suggestions(search_text)
+        for suggestion in suggestions:
+            suggestion_listbox.insert(END, suggestion.description)
+
+    search_entry.bind("<KeyRelease>", update_suggestions)
+
+    def add_food_to_list(event):
+        selected_food_index = suggestion_listbox.curselection()
+        if selected_food_index:
+            selected_food_name = suggestion_listbox.get(selected_food_index)
+            selected_food = daily_intake.find_food(selected_food_name)
+            if selected_food:
+                # Extragem numele mâncării până la prima virgulă, dacă există
+                display_name = selected_food_name.split(',')[0]
+                selected_foods_listbox.insert(END, display_name)
+
+    suggestion_listbox.bind("<<ListboxSelect>>", add_food_to_list)
+
+    def search_action():
+        food_name = search_entry.get().lower().strip()
+        found_food = daily_intake.find_food(food_name)
+        if found_food:
+            messagebox.showinfo("Găsit", f"Alimentul '{food_name}' a fost găsit.")
+        else:
+            messagebox.showerror("Negăsit", f"Alimentul '{food_name}' nu a fost găsit.")
+
+    add_button = tk.Button(master, text="Search", command=search_action)
+    add_button.place(x=500, y=230)
+
+    # Buton de "Back" cu imagine
+    back_img = tk.PhotoImage(file=relative_to_assets("back.png", "assets/frame15"))
+    master.images.append(back_img)
+    back_button = tk.Button(master, image=back_img, borderwidth=0, highlightthickness=0, relief="flat",
+                            command=lambda: show_LogFood_page(master, selected_foods_listbox.get(0, END),
+                                                              selected_meal))
+    back_button.place(x=22, y=17, width=42, height=36)
+    back_button.image = back_img
+
+    return canvas
+def show_Add_Food(master, selected_meal):
+    for widget in master.winfo_children():
+        widget.destroy()
+    setup_Add_Food(master, show_LogFood_page, relative_to_assets, selected_meal)
+def add_food_to_menu(food_data, meal_type):
+    if meal_type == "Breakfast":
+        breakfast_listbox.insert(END, food_data)
+    elif meal_type == "Lunch":
+        lunch_listbox.insert(END, food_data)
+    elif meal_type == "Dinner":
+        dinner_listbox.insert(END, food_data)
+    elif meal_type == "Snack":
+        snack_listbox.insert(END, food_data)
+
+def relative_to_assets(path, asset_dir):
+    return f"{asset_dir}/{path}"
+
+
 
 
 
@@ -845,8 +832,7 @@ def setup_TodayActivity_page(master):
     master.images = []
 
     image_details = [
-        ("button_1.png", 657.0, 225.0, 30.0, 31.0, lambda: show_nextpage(master)),
-        ("button_2.png", 14.0, 18.0, 59.0, 38.0, lambda: show_app_page1(master)),
+        ("Back.png", 14.0, 18.0, 59.0, 38.0, lambda: show_app_page1(master)),
         ("image_1.png", 464.0, 257.0, None, None, None),
         ("image_2.png", 468.0, 176.99999999999994, None, None, None),
         ("image_3.png", 468.0, 244.99999999999994, None, None, None),
@@ -945,27 +931,6 @@ def show_SetGoal_page(master):
 
 
 goal_info_texts = {
-    "Weight Loss": {
-        "kcal": "1200 to 1500 kcal",
-        "fats": "~0.3 to 0.5 grams per kg of fats",
-        "protein": "1.0/1.2 grams of protein per kg of body weight",
-        "carbs": "50 to 100 grams of carbohydrates",
-        "reminder": "Increase your water intake to aid in fat loss!"
-    },
-    "Muscle Build": {
-        "kcal": "2500 to 3000 kcal",
-        "fats": "0.8 to 1 grams per kg of fats",
-        "protein": "2.0/2.5 grams of protein per kg of body weight",
-        "carbs": "300 to 350 grams of carbohydrates",
-        "reminder": "Protein is crucial for muscle repair and growth!"
-    },
-    "Maintenance": {
-        "kcal": "2000 to 2500 kcal",
-        "fats": "0.6 to 0.8 grams per kg of fats",
-        "protein": "1.5/2.0 grams of protein per kg of body weight",
-        "carbs": "150 to 200 grams of carbohydrates",
-        "reminder": "Maintaining balance is key to long-term health!"
-    }
 }
 
 
@@ -989,7 +954,7 @@ def setup_GoalInfo_page(master):
     master.images = []
 
     image_details = [
-        ("PlanReady.png", 646.0, 433.0, 265.0, 39.0, lambda: show_GoalFinal_page(master)),
+        ("SeeMore.png", 760.0, 433.0, 165.0, 39.0, lambda: show_GoalFinal_page(master)),
         ("image_1.png", 150.0, 154.0, None, None, None),
         ("image_2.png", 150.0, 190.0, None, None, None),
         ("image_3.png", 150.0, 226.0, None, None, None),
@@ -1069,7 +1034,7 @@ def setup_GoalFinal_page(master):
     master.images = []
 
     image_details = [
-        ("Back.png", 14.0, 18.0, 63.0, 41.0, lambda: show_app_page1(master)),
+        ("Back.png", 14.0, 18.0, 58.0, 36.0, lambda: show_app_page1(master)),
         ("image_1.png", 70.0, 70.0, None, None, None),
         ("image_2.png", 70.0, 280.0, None, None, None),
         ("image_3.png", 500.0, 280.0, None, None, None),
@@ -1137,30 +1102,32 @@ def setup_profile_page(master):
     master.images = []
 
     image_details = [
-        ("Back.png", 14.0, 18.0, 55.0, 35.0, lambda: show_SeeMore_page(master)),
-        ("next.png", 744.0, 268.0, 32.0, 39.0, lambda: show_next_page(master)),
-        ("image_1.png", 90.0, 35.0),
-        ("image_2.png", 47.0, 65.0),
-        ("image_3.png", 161.0, 459.0),
-        ("image_4.png", 581.0, 42.0),
+        ("Back.png", 14.0, 18.0, 55.0, 36.0, lambda: show_SeeMore_page(master)),
+        ("next.png", 738.0, 268.0, 32.0, 39.0, lambda: show_profile2_page(master)),
+        ("image_1.png", 80.0, 20.0),
+
+        ("image_2.png", -10.0, 66.0),
+        ("image_3.png", 161.0, 470.0),
+        ("image_4.png", 581.0, 22.0),
         ("image_5.png", 935.0, 354.0),
-        ("image_6.png", 891.0, 300.0),
-        ("image_7.png", 741.0, 82.0),
-        ("image_8.png", 830.0, 5.0),
-        ("image_9.png", 10.0, 354.0),
+        ("image_6.png", 870.0, 265.0),
+        ("image_7.png", 790.0, -15.0),
+        ("image_8.png", 152.0, 45.0),
+        ("image_9.png", 12.0, 404.0),
         ("image_10.png", 548.0, 491.0),
-        ("image_11.png", 52.0, 180.0),
-        ("image_12.png", 240.0, -75.0),
+        ("image_11.png", 42.0, 227.0),
+        ("image_12.png", 333.0, -70.0),
         ("image_13.png", 818.0, 429.0),
-        ("image_14.png", 912.0, 85.0),
-        ("image_15.png", 430.0, 50.0),
-        ("image_16.png", 430.0, 50.0),
-        ("image_17.png", 270.0, 230.0),
-        ("image_18.png", 523.0, 230.0),
-        ("image_19.png", 270.0, 299.0),
-        ("image_20.png", 523.0, 299.0),
-        ("image_21.png", 270.0, 368.0),
-        ("image_22.png", 523.0, 368.0)
+        ("image_14.png", 890.0, 85.0),
+
+        ("image_15.png", 420.0, 35.0),
+        ("image_16.png", 420.0, 35.0),
+        ("image_17.png", 254.0, 242.51307678222656),
+        ("image_18.png", 507.0, 242.51307678222656),
+        ("image_19.png", 254.0, 311.5130615234375),
+        ("image_20.png", 507.0, 311.5130615234375),
+        ("image_21.png", 254.0, 380.5130615234375),
+        ("image_22.png", 507.0, 380.5130615234375)
     ]
 
     for details in image_details:
@@ -1175,26 +1142,150 @@ def setup_profile_page(master):
             button.image = img
         else:
             canvas.create_image(x, y, image=img, anchor='nw')
+    font_large = Font(family="Consolas", slant="italic", size=20)
+    font_medium = Font(family="Consolas", slant="italic", size=16)
 
-    font_large = Font(family="Consolas", slant="italic", size=15)
-    font_medium = Font(family="Consolas", slant="italic", size=12)
+    Label(master, text="Last Name", font=font_medium, bg="#FFFCF1").place(x=262.03289794921875, y=193)
+    Label(master, text="First Name", font=font_medium, bg="#FFFCF1").place(x=262.0657958984375, y=262)
+    Label(master, text="My Profile", font=font_large, bg="#FFFCF1").place(x=260, y=95)
+    Label(master, text="Age", font=font_medium, bg="#FFFCF1").place(x=515.0657958984375, y=331)
+    Label(master, text="Password", font=font_medium, bg="#FFFCF1").place(x=515.0328979492188, y=193)
+    Label(master, text="Email", font=font_medium, bg="#FFFCF1").place(x=262.0657958984375, y=331)
+    Label(master, text="Username", font=font_medium, bg="#FFFCF1").place(x=515.0657958984375, y=262)
 
-    Label(master, text="My Profile", font=font_large, bg="#FFFCF1").place(x=310, y=110)
-    Label(master, text="First Name", font=font_medium, bg="#FFFCF1").place(x=274, y=183)
-    Label(master, text="Password", font=font_medium, bg="#FFFCF1").place(x=527, y=183)
-    Label(master, text="Last Name", font=font_medium, bg="#FFFCF1").place(x=274, y=252)
-    Label(master, text="Username", font=font_medium, bg="#FFFCF1").place(x=527, y=252)
-    Label(master, text="Email", font=font_medium, bg="#FFFCF1").place(x=274, y=321)
-    Label(master, text="Age", font=font_medium, bg="#FFFCF1").place(x=527, y=321)
     return canvas
+def show_profile_page(master):
+    for widget in master.winfo_children():
+        widget.destroy()
+    setup_profile_page(master)
+def setup_profile2_page(master):
+    master.configure(bg="#DAE6E4")
 
+    canvas = Canvas(
+        master,
+        bg="#DAE6E4",
+        height=503,
+        width=937,
+        bd=0,
+        highlightthickness=0,
+        relief="ridge"
+    )
+    canvas.place(x=0, y=0)
+
+    master.images = []
+
+    image_details = [
+        ("Back.png", 14.0, 18.0, 55.0, 36.0, lambda: show_SeeMore_page(master)),
+        ("back_page.png", 182.94596222486825, 255.9999878536811, 32.0, 38.0, lambda: show_profile_page(master)),
+        ("image_1.png", 80.0, 20.0),
+        ("image_2.png", -10.0, 66.0),
+        ("image_3.png", 161.0, 470.0),
+        ("image_4.png", 581.0, 22.0),
+        ("image_5.png", 935.0, 354.0),
+        ("image_6.png", 870.0, 265.0),
+        ("image_7.png", 790.0, -15.0),
+        ("image_8.png", 152.0, 45.0),
+        ("image_9.png", 12.0, 404.0),
+        ("image_10.png", 548.0, 491.0),
+        ("image_11.png", 42.0, 227.0),
+        ("image_12.png", 333.0, -70.0),
+        ("image_13.png", 818.0, 429.0),
+        ("image_14.png", 890.0, 85.0),
+        ("image_15.png", 420.0, 35.0),
+        ("image_16.png", 420.0, 35.0),
+        ("image_17.png", 254.0, 242.51307678222656),
+        ("image_18.png", 507.0, 242.51307678222656),
+        ("image_19.png", 254.03289794921875, 311.5130615234375),
+        ("image_20.png", 507.0328979492188, 311.5130615234375)
+    ]
+
+    for details in image_details:
+        image_name, x, y, *args = details
+        img = PhotoImage(file=relative_to_assets(image_name, "assets/frame131"))
+        master.images.append(img)
+
+        if len(args) == 3:
+            width, height, command = args
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief='flat', command=command)
+            button.place(x=x, y=y, width=width, height=height)
+            button.image = img
+        else:
+            canvas.create_image(x, y, image=img, anchor='nw')
+    font_large = Font(family="Consolas", slant="italic", size=20)
+    font_medium = Font(family="Consolas", slant="italic", size=16)
+
+    Label(master, text="My Profile", font=font_large, bg="#FFFCF1").place(x=260, y=95)
+    Label(master, text="Weight", font=font_medium, bg="#FFFCF1").place(x=262.0657958984375, y=193)
+    Label(master, text="Height", font=font_medium, bg="#FFFCF1").place(x=515.032958984375, y=193)
+    Label(master, text="BMI", font=font_medium, bg="#FFFCF1").place(x=262.0657958984375, y=262)
+    Label(master, text="Goal", font=font_medium, bg="#FFFCF1").place(x=515.0657958984375, y=262)
+
+    return canvas
+def show_profile2_page(master):
+    for widget in master.winfo_children():
+        widget.destroy()
+    setup_profile2_page(master)
 
 def show_profile_page(master):
     for widget in master.winfo_children():
         widget.destroy()
     setup_profile_page(master)
+def setup_EditProfile_page(master):
+    master.configure(bg="#DAE6E4")
 
+    canvas = Canvas(
+        master,
+        bg="#DAE6E4",
+        height=503,
+        width=937,
+        bd=0,
+        highlightthickness=0,
+        relief="ridge"
+    )
+    canvas.place(x=0, y=0)
 
+    master.images = []
+
+    image_details = [
+        ("Save.png", 701.0, 410.0, 89.0, 33.0, lambda: save(master)),
+        ("Back.png", 14.0, 18.0, 59.0, 37.0, lambda: show_settings_page(master)),
+        ("edit_firstn.png", 405.0, 211.0, 27.0, 23.0, lambda: enter_firstn(master)),
+        ("edit_email.png", 713.0, 211.0, 27.0, 23.0, lambda: enter_email(master)),
+        ("edit_lastn.png", 405.0, 262.0, 27.0, 23.0, lambda: enter_lastn(master)),
+        ("edit_age.png", 713.0, 262.0, 27.0, 23.0, lambda: enter_age(master)),
+        ("edit_username.png", 405.0, 313.0, 27.0, 23.0, lambda: enter_username(master)),
+        ("edit_weight.png", 713.0, 313.0, 27.0, 23.0, lambda: enter_weight(master)),
+        ("edit_password.png", 405.0, 364.0, 27.0, 23.0, lambda: enter_password(master)),
+        ("edit_height.png", 713.0, 364.0, 27.0, 23.0, lambda: enter_height(master)),
+        ("image_1.png", 406.0, 73.0),
+        ("image_2.png", 100.0, 115.0),
+        ("image_3.png", 568.0, 10.0),
+
+    ]
+
+    for details in image_details:
+        if len(details) == 6:
+            image_name, x, y, width, height, command = details
+            img = PhotoImage(file=relative_to_assets(image_name, "assets/frame16"))
+            master.images.append(img)
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat", command=command)
+            button.place(x=x, y=y, width=width, height=height)
+            button.image = img  # This keeps a reference to avoid garbage collection
+        else:
+            image_name, x, y = details
+            img = PhotoImage(file=relative_to_assets(image_name, "assets/frame16"))
+            master.images.append(img)
+            canvas.create_image(x, y, image=img, anchor='nw')
+
+    font_large = Font(family="Consolas", slant="italic", size=24)
+
+    canvas.create_text(475, 55, text="Edit Profile", font=font_large, fill="black")
+    return canvas
+
+def show_EditProfile_page(master):
+    for widget in master.winfo_children():
+        widget.destroy()
+    setup_EditProfile_page(master)
 
 
 ###SETTINGS
@@ -1260,4 +1351,53 @@ def show_settings_page(master):
     for widget in master.winfo_children():
         widget.destroy()
     setup_settings_page(master)
->>>>>>> Stashed changes
+def setup_AppDetails_page(master):
+    master.configure(bg="#DAE6E4")
+
+    canvas = Canvas(
+        master,
+        bg="#DAE6E4",
+        height=503,
+        width=937,
+        bd=0,
+        highlightthickness=0,
+        relief="ridge"
+    )
+    canvas.place(x=0, y=0)
+
+    master.images = []
+
+    image_details = [
+        ("Back.png", 14.0, 18.0, 58.0, 36.0, lambda: show_settings_page(master)),
+        ("image_1.png", 70.0, 80.0, None, None, None),
+        ("image_2.png", 880.0, 10.0, None, None, None),
+        ("image_3.png", 911.0, 225.0, None, None, None),
+        ("image_4.png", 864.0, 366.0, None, None, None),
+        ("image_5.png", 760.0, 83.0, None, None, None),
+        ("image_6.png", 718.0, 448.0, None, None, None),
+        ("image_7.png", 586.0, 27.0, None, None, None),
+        ("image_8.png", 421.0, 55.0, None, None, None),
+        ("image_9.png", 372.0, 470.0, None, None, None),
+        ("image_10.png", 8.0, 134.0, None, None, None),
+        ("image_11.png", 182.0, 23.0, None, None, None),
+        ("image_12.png", 52.0, 385.0, None, None, None)
+    ]
+
+    for details in image_details:
+        if len(details) == 6:
+            image_name, x, y, width, height, command = details
+        else:
+            image_name, x, y = details
+            width, height, command = None, None, None
+
+        img = PhotoImage(file=relative_to_assets(image_name, "assets/frame17"))
+        master.images.append(img)
+
+        if command:
+            button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat", command=command)
+            button.place(x=x, y=y, width=width, height=height)
+            button.image = img
+        else:
+            canvas.create_image(x, y, image=img, anchor='nw')
+
+    return canvas

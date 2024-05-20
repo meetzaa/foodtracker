@@ -5,14 +5,12 @@ from pathlib import Path
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-from gui_common import show_gravity_check_page, relative_to_assets,setup_signup_page, show_signup,show_gravity_check_page,login
-
+from gui_common import show_gravity_check_page
+from gui_common import setup_signup_page, show_signup,show_gravity_check_page,relative_to_assets,login
 cred = credentials.Certificate('serviceAccountKey.json')
 db = firestore.client()
-<<<<<<< Updated upstream
-=======
 from gui_common import login
->>>>>>> Stashed changes
+
 def setup_login_page(master):
     master.configure(bg="#DAE6E4")
 
@@ -65,7 +63,7 @@ def setup_login_page(master):
             button = Button(master, image=img, borderwidth=0, highlightthickness=0, relief="flat")
             button.image = img
             if "LogIn.png" == image_name:
-                button.config(command=lambda: login(master,entry_Username.get(), entry_Password.get()))
+                button.config(command=lambda: login(master, entry_Username.get(), entry_Password.get()))
                 button.place(x=x, y=y, width=273.0, height=41.365234375)
         else:
             canvas.create_image(x, y, image=img)
@@ -74,7 +72,7 @@ def setup_login_page(master):
     entry_Username = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
     entry_Username.place(x=294.0, y=177.0, width=349.0, height=43.0)
 
-    entry_Password = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0,show="***")
+    entry_Password = Entry(master, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0, show="***")
     entry_Password.place(x=294.0, y=300.0, width=349.0, height=43.0)
 
     TitluFont = Font(family="Consolas", slant="italic", size=26)
