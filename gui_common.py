@@ -504,6 +504,16 @@ def show_ready_page(master):
 
 ####PAGINA PRINCIPALA A APLICATIEI
 def setup_app_page1(master,user_key):
+    user_ref = db.collection("users").where("UserKey", "==", user_key).limit(1).get()
+    user_details_ref = db.collection("UserDetails").where("UserKey", "==", user_key).limit(1).get()
+
+    if user_ref and user_details_ref:
+        user_data = user_ref[0].to_dict()
+        user_details_data = user_details_ref[0].to_dict()
+    else:
+        messagebox.showerror("Eroare", "Utilizatorul nu a fost găsit.")
+        return
+
     master.configure(bg="#DAE6E4")
 
     canvas = Canvas(
@@ -548,6 +558,7 @@ def setup_app_page1(master,user_key):
     font_medium = Font(family="Consolas", slant="italic", size=14)
 
     Label(master, text="Welcome, ", font=font_large, bg="#DAE6E4").place(x=80, y=33)
+    Label(master, text=user_data.get("Utilizator", ""), font=font_large, bg="#DAE6E4").place(x=200, y=33)
     Label(master, text="Log Food", font=font_medium, bg="#DAE6E4").place(x=171, y=255)
     Label(master, text="Today's Activity", font=font_medium, bg="#DAE6E4").place(x=398, y=255)
     Label(master, text="Goals", font=font_medium, bg="#DAE6E4").place(x=715, y=255)
