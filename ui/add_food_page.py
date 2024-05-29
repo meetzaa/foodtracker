@@ -1,16 +1,9 @@
-# ui/add_food_page.py
-import tkinter as tk
 from tkinter import Canvas, Label, Button, Entry, PhotoImage, Listbox, END, messagebox, font
 from .base_page import BasePage
 from logic.calories_calc import DailyIntake, calculate_calories
+from google.cloud import firestore
+from firebase_config import db  # Ensure this is correctly importing your Firestore configuration
 from pathlib import Path
-
-# Define the paths for the assets
-OUTPUT_PATH = Path(__file__).resolve().parent.parent
-ASSETS_PATH = OUTPUT_PATH / "assets/frame15"
-
-def relative_to_assets(path: str) -> Path:
-    return ASSETS_PATH / Path(path)
 
 class AddFoodPage(BasePage):
     def __init__(self, master, controller, user_key=None, selected_meal=None):
@@ -27,13 +20,12 @@ class AddFoodPage(BasePage):
         self.images = []
 
         image_details = [
-            ("back.png", 22, 17, 42, 36, lambda: controller.show_page("LogFoodPage", self.user_key)),
+            ("back.png", 22, 17, 42, 36, lambda: self.go_back()),
         ]
 
         for details in image_details:
             image_name, x, y, width, height, command = details
-            img_path = relative_to_assets(image_name)
-            img = PhotoImage(file=img_path)
+            img = PhotoImage(file=self.relative_to_assets(image_name))
             self.images.append(img)
 
             button = Button(self, image=img, borderwidth=0, highlightthickness=0, relief="flat", command=command, bg="#DAE6E4")
@@ -90,7 +82,40 @@ class AddFoodPage(BasePage):
         if selected_index:
             self.selected_foods_listbox.delete(selected_index)
 
+    def go_back(self):
+        food_items = []
+        for item in self.selected_foods_listbox.get(0, END):
+            description, calories = item.rsplit(' - ', 1)
+            calories = float(calories.split()[0])
+            food_items.append({"description": description, "calories": calories})
+
+        try:
+            # Query to find the user document with the specified user_key
+            users_ref = db.collection('users')
+            query = users_ref.where('user_key', '==', self.user_key).stream()
+
+            user_doc = None
+            for doc in query:
+                user_doc = doc
+                break
+
+            if user_doc is None:
+                raise Exception("User not found")
+
+            user_id = user_doc.id
+            user_ref = db.collection('users').document(user_id).collection('meals').document(self.selected_meal)
+            for food in food_items:
+                user_ref.collection('items').add(food)
+
+            messagebox.showinfo("Success", "Food added successfully")
+            self.controller.show_page("LogFoodPage", self.user_key)
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to add food: {e}")
+
     def update(self, user_key, selected_meal):
         self.user_key = user_key
         self.selected_meal = selected_meal
         # Additional update logic if needed
+
+    def relative_to_assets(self, path: str) -> str:
+        return str(Path(__file__).parent.parent / 'assets' / 'frame15' / path)

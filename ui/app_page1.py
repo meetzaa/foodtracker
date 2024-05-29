@@ -1,11 +1,7 @@
 from tkinter import Canvas, Label, Button, PhotoImage
 from tkinter.font import Font
 from .base_page import BasePage
-from utils.utils import get_user_details_by_user_key
-import concurrent.futures
 from pathlib import Path
-
-executor = concurrent.futures.ThreadPoolExecutor(max_workers=5)
 
 # Define the paths for the assets
 OUTPUT_PATH = Path(__file__).resolve().parent.parent
@@ -55,8 +51,7 @@ class AppPage1(BasePage):
         font_large = Font(family="Consolas", slant="italic", size=20)
         font_medium = Font(family="Consolas", slant="italic", size=14)
 
-        self.welcome_label = Label(self, text="Welcome, ", font=font_large, bg="#DAE6E4")
-        self.welcome_label.place(x=80, y=33)
+        Label(self, text="Welcome, ", font=font_large, bg="#DAE6E4").place(x=80, y=33)
         Label(self, text="Log Food", font=font_medium, bg="#DAE6E4").place(x=171, y=255)
         Label(self, text="Today's Activity", font=font_medium, bg="#DAE6E4").place(x=398, y=255)
         Label(self, text="Goals", font=font_medium, bg="#DAE6E4").place(x=715, y=255)
@@ -66,16 +61,3 @@ class AppPage1(BasePage):
 
     def update(self, user_key):
         self.user_key = user_key
-        executor.submit(self._fetch_user_details)
-
-    def _fetch_user_details(self):
-        user_details = get_user_details_by_user_key(self.user_key)
-        self._update_ui_with_user_details(user_details)
-
-    def _update_ui_with_user_details(self, user_details):
-        if not user_details:
-            print(f"No user details found for key {self.user_key}")
-            return
-
-        username = user_details.get('Utilizator', 'User')
-        self.welcome_label.config(text=f"Welcome, {username}")

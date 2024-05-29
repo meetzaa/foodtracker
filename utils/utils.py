@@ -1,8 +1,7 @@
 import uuid
 import re
 from firebase_config import db
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+
 import os
 from tkinter import messagebox
 def check_existing_user(username, email):
