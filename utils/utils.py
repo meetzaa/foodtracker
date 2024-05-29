@@ -121,3 +121,9 @@ def authenticate_user(username, password):
     except Exception as e:
         print(f"Error authenticating user: {e}")
         return None
+
+def get_user_physical_details_by_user_key(user_key):
+    user_details = get_user_details_by_user_key(user_key)
+    if user_details and 'details' in user_details:
+        return user_details['details']
+    return None
