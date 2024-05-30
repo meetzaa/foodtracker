@@ -1,0 +1,39 @@
+{
+    "mancare": [
+        {
+            "name": "Milk, whole",
+            "calories": 60.6
+        },
+        {
+            "name": "Milk, low sodium, whole",
+            "calories": 61.38
+        },
+        {
+            "name": "Milk, calcium fortified, whole",
+            "calories": 60.6
+        },
+        {
+            "name": "Whipped topping",
+            "calories": 324.99
+        }
+    ],
+    "breakfast": [
+        {
+            "name": "Topping from cheese pizza",
+            "calories": 229.95
+        },
+        {
+            "name": "Milk, low sodium, whole",
+            "calories": 61.38
+        },
+        {
+            "name": "Milk, calcium fortified, low fat (1%)",
+            "calories": 42.83
+        },
+        {
+            "name": "Milk, calcium fortified, whole",
+            "calories": 60.6
+        }
+    ],
+    "cals": 164.81
+}

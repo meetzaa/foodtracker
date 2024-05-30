@@ -5,10 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfcd64a2-c1be-40d5-9a6a-780433b66d36" name="Changes" comment="">
+<<<<<<< Updated upstream
       <change afterPath="$PROJECT_DIR$/Update" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/services/firebase_helpers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/add_food_popup.py" afterDir="false" />
+>>>>>>> Stashed changes
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/firebase_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/firebase_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic/authentication.py" beforeDir="false" afterPath="$PROJECT_DIR$/logic/authentication.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/readme" beforeDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/ui/add_food_page.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/app_page1.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/app_page1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/log_food_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/log_food_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/login_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/login_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/today_activity_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/today_activity_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/firebase_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/firebase_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/utils.py" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,6 +139,33 @@
       <workItem from="1711294297713" duration="71000" />
       <workItem from="1711294376930" duration="710000" />
       <workItem from="1711803596839" duration="881000" />
+<<<<<<< Updated upstream
+=======
+      <workItem from="1714556172272" duration="1439000" />
+      <workItem from="1714755134948" duration="1644000" />
+      <workItem from="1715472380942" duration="985000" />
+      <workItem from="1715503001707" duration="611000" />
+      <workItem from="1715789513585" duration="326000" />
+      <workItem from="1715789910246" duration="776000" />
+      <workItem from="1715952773213" duration="3001000" />
+      <workItem from="1716043171366" duration="12652000" />
+      <workItem from="1716056912451" duration="27607000" />
+      <workItem from="1716290009456" duration="555000" />
+      <workItem from="1716978027934" duration="8827000" />
+      <workItem from="1716991500329" duration="2182000" />
+      <workItem from="1716994029474" duration="1116000" />
+      <workItem from="1717052661929" duration="79000" />
+      <workItem from="1717052849460" duration="604000" />
+      <workItem from="1717055968853" duration="304000" />
+      <workItem from="1717056443378" duration="226000" />
+      <workItem from="1717066572770" duration="1268000" />
+      <workItem from="1717068282850" duration="1491000" />
+      <workItem from="1717069931825" duration="544000" />
+      <workItem from="1717070516250" duration="593000" />
+      <workItem from="1717071207511" duration="20606000" />
+      <workItem from="1717092720484" duration="6045000" />
+      <workItem from="1717100471884" duration="103000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
@@ -139,6 +184,12 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+<<<<<<< Updated upstream
+=======
+    <SUITE FILE_PATH="coverage/CaloriesCalc_py$DailyIntake.coverage" NAME="DailyIntake Coverage Results" MODIFIED="1714557565123" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CaloriesCalc_py$gui.coverage" NAME="gui Coverage Results" MODIFIED="1714557486938" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CaloriesCalc_py$main.coverage" NAME="main Coverage Results" MODIFIED="1717100517001" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+>>>>>>> Stashed changes
     <SUITE FILE_PATH="coverage/foodtracker$main.coverage" NAME="main Coverage Results" MODIFIED="1711803602448" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/foodtracker$loginpage.coverage" NAME="loginpage Coverage Results" MODIFIED="1711294460543" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>

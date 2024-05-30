@@ -1,0 +1,17 @@
+{
+    "breakfast": [
+        {
+            "name": "Topping from cheese pizza",
+            "calories": 229.95
+        },
+        {
+            "name": "Topping from vegetable pizza",
+            "calories": 251.57
+        },
+        {
+            "name": "Milk, calcium fortified, whole",
+            "calories": 60.6
+        }
+    ],
+    "cals": 542.12
+}
