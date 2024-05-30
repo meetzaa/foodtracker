@@ -1,0 +1,36 @@
+{
+    "meals": {
+        "breakfast": [
+            {
+                "description": "Fruit smoothie juice drink, with dairy",
+                "calories": 64.9
+            },
+            {
+                "description": "Milk, human",
+                "calories": 71.10000000000001
+            },
+            {
+                "description": "Milk, calcium fortified, whole",
+                "calories": 60.6
+            },
+            {
+                "description": "Milk, calcium fortified, whole",
+                "calories": 60.6
+            },
+            {
+                "description": "Milk, whole",
+                "calories": 60.6
+            },
+            {
+                "description": "Soy milk, light",
+                "calories": 30.49
+            }
+        ],
+        "lunch": [
+            {
+                "description": "Milk, NFS",
+                "calories": 50.75
+            }
+        ]
+    }
+}
