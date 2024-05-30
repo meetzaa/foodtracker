@@ -7,10 +7,8 @@ from pathlib import Path
 OUTPUT_PATH = Path(__file__).resolve().parent.parent
 ASSETS_PATH = OUTPUT_PATH / "assets/frame14"
 
-
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
-
 
 class SettingsPage(BasePage):
     def __init__(self, master, controller, user_key=None):
@@ -28,14 +26,10 @@ class SettingsPage(BasePage):
 
         image_details = [
             ("Back.png", 14.0, 18.0, 59.0, 37.0, lambda: self.controller.show_page("SeeMorePage", self.user_key)),
-            ("Edit_profile.png", 333.0, 161.0, 284.0, 47.0,
-             lambda: self.controller.show_page("ProfilePage", self.user_key)),
-            (
-            "Change_goal.png", 342.0, 223.0, 275.0, 40.0, lambda: self.controller.show_page("GoalPage", self.user_key)),
-            ("Info_goal.png", 299.0, 274.0, 359.0, 34.0,
-             lambda: self.controller.show_page("GoalInfoPage", self.user_key)),
-            (
-            "App_details.png", 338.0, 328.0, 285.0, 43.0, lambda: self.controller.show_page("AppPage1", self.user_key)),
+            ("Edit_profile.png", 333.0, 161.0, 284.0, 47.0, lambda: self.controller.show_page("ProfilePage", self.user_key)),
+            ("Change_goal.png", 342.0, 223.0, 275.0, 40.0, lambda: self.controller.show_page("GoalPage", self.user_key)),
+            ("Info_goal.png", 299.0, 274.0, 359.0, 34.0, lambda: self.controller.show_page("GoalInfoPage", self.user_key)),
+            ("App_details.png", 338.0, 328.0, 285.0, 43.0, lambda: self.controller.show_page("AppPage1", self.user_key)),
             ("SignOut.png", 340.0, 381.0, 277.0, 43.0, lambda: self.controller.show_page("LoginPage")),
             ("image_1.png", 225.0, 120.0),
             ("image_2.png", 350.0, 43.0),

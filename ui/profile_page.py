@@ -1,13 +1,12 @@
 from tkinter import Label, Entry, Button, Canvas, PhotoImage
 from tkinter.font import Font
 from .base_page import BasePage
-from utils.utils import get_user_details_by_user_key
+from utils.utils import get_user_details_by_user_key, update_user_details
 import concurrent.futures
 from pathlib import Path
 
 executor = concurrent.futures.ThreadPoolExecutor(max_workers=5)
 
-# Define the paths for the assets
 OUTPUT_PATH = Path(__file__).resolve().parent.parent
 ASSETS_PATH = OUTPUT_PATH / "assets/frame13"
 
@@ -77,27 +76,64 @@ class ProfilePage(BasePage):
         Label(self, text="Email", font=font_medium, bg="#FFFCF1").place(x=262.0657958984375, y=331)
         Label(self, text="Username", font=font_medium, bg="#FFFCF1").place(x=515.0657958984375, y=262)
 
-        self.first_name_entry = Entry(self, bd=0, bg="#FFFCF1", fg="#000716", highlightthickness=0, readonlybackground="#FFFCF1", state='readonly')
+        self.first_name_entry = Entry(self, bd=0, bg="#FFFCF1", fg="#000716", highlightthickness=0, state='readonly')
         self.first_name_entry.place(x=262.0657958984375, y=282.0, width=200.0, height=20.0)
 
-        self.last_name_entry = Entry(self, bd=0, bg="#FFFCF1", fg="#000716", highlightthickness=0, readonlybackground="#FFFCF1", state='readonly')
+        self.last_name_entry = Entry(self, bd=0, bg="#FFFCF1", fg="#000716", highlightthickness=0, state='readonly')
         self.last_name_entry.place(x=262.0657958984375, y=213.0, width=200.0, height=20.0)
 
-        self.username_entry = Entry(self, bd=0, bg="#FFFCF1", fg="#000716", highlightthickness=0, readonlybackground="#FFFCF1", state='readonly')
+        self.username_entry = Entry(self, bd=0, bg="#FFFCF1", fg="#000716", highlightthickness=0, state='readonly')
         self.username_entry.place(x=515.0657958984375, y=282.0, width=200.0, height=20.0)
 
-        self.email_entry = Entry(self, bd=0, bg="#FFFCF1", fg="#000716", highlightthickness=0, readonlybackground="#FFFCF1", state='readonly')
+        self.email_entry = Entry(self, bd=0, bg="#FFFCF1", fg="#000716", highlightthickness=0, state='readonly')
         self.email_entry.place(x=262.0657958984375, y=351.0, width=200.0, height=20.0)
 
-        self.age_entry = Entry(self, bd=0, bg="#FFFCF1", fg="#000716", highlightthickness=0, readonlybackground="#FFFCF1", state='readonly')
+        self.age_entry = Entry(self, bd=0, bg="#FFFCF1", fg="#000716", highlightthickness=0, state='readonly')
         self.age_entry.place(x=515.0657958984375, y=351.0, width=200.0, height=20.0)
+
+        self.edit_button = Button(self, text="Edit", command=self.enable_editing, bg="#FFFCF1")
+        self.edit_button.place(x=350, y=400, width=100, height=30)
+
+        self.save_button = Button(self, text="Save", command=self.save_changes, bg="#FFFCF1")
+        self.save_button.place(x=500, y=400, width=100, height=30)
+        self.save_button.config(state='disabled')
+
+    def enable_editing(self):
+        self.first_name_entry.config(state='normal')
+        self.last_name_entry.config(state='normal')
+        self.username_entry.config(state='normal')
+        self.email_entry.config(state='normal')
+        self.age_entry.config(state='normal')
+        self.save_button.config(state='normal')
+
+    def save_changes(self):
+        user_details = {
+            "Email": self.email_entry.get(),
+            "Nume": self.last_name_entry.get(),
+            "Parola": "Parola!",  # Handle password separately if needed
+            "Prenume": self.first_name_entry.get(),
+            "Utilizator": self.username_entry.get(),
+            "details": {"Age": self.age_entry.get()}
+        }
+        update_user_details(self.user_key, user_details)
+        self.disable_editing()
+
+    def disable_editing(self):
+        self.first_name_entry.config(state='readonly')
+        self.last_name_entry.config(state='readonly')
+        self.username_entry.config(state='readonly')
+        self.email_entry.config(state='readonly')
+        self.age_entry.config(state='readonly')
+        self.save_button.config(state='disabled')
 
     def update(self, user_key=None):
         self.user_key = user_key or self.user_key
+        print(f"Updating ProfilePage with user_key: {self.user_key}")  # Debug statement
         executor.submit(self._fetch_user_details)
 
     def _fetch_user_details(self):
         user_details = get_user_details_by_user_key(self.user_key)
+        print(f"Fetched user details: {user_details}")  # Debug statement
         self._update_ui_with_user_details(user_details)
 
     def _update_ui_with_user_details(self, user_details):

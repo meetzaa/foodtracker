@@ -1,9 +1,20 @@
 import uuid
 import re
 from firebase_config import db
-
+import firebase_admin
+from firebase_admin import credentials, firestore, auth
 import os
 from tkinter import messagebox
+
+def initialize_firebase():
+    if not firebase_admin._apps:
+        cred_path = os.path.join(os.path.dirname(__file__), './serviceAccountKey.json')
+        cred = credentials.Certificate(cred_path)
+        firebase_admin.initialize_app(cred)
+
+initialize_firebase()
+db = firestore.client()
+
 def check_existing_user(username, email):
     users_ref = db.collection('users')
     query_username = users_ref.where('Utilizator', '==', username).get()
@@ -12,6 +23,7 @@ def check_existing_user(username, email):
     if query_username or query_email:
         return True
     return False
+
 def is_strong_password(password):
     if len(password) < 8:
         return False, "Password must be at least 8 characters long"
@@ -24,32 +36,20 @@ def is_strong_password(password):
     if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
         return False, "Password must contain at least one special character"
     return True, ""
+
 def is_valid_email(email):
     regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
     if re.match(regex, email):
         return True
     return False
 
-
-def check_existing_user(username, email):
-    query_username = db.collection("users").where("Utilizator", "==", username).limit(1).get()
-    query_email = db.collection("users").where("Email", "==", email).limit(1).get()
-    return bool(query_username) or bool(query_email)
-
-def is_valid_email(email):
-    """
-    Validate the format of an email address using a regular expression.
-    """
-    regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-    return re.match(regex, email) is not None
 def is_username_available(username):
     query_username = db.collection("users").where("Utilizator", "==", username).limit(1).get()
     return not bool(query_username)
+
 def generate_user_key():
-    """
-    Generate a unique key for a user.
-    """
     return str(uuid.uuid4())
+
 def save_user_details(controller, user_key, weight, height, age):
     try:
         weight = float(weight)
@@ -80,6 +80,7 @@ def save_user_details(controller, user_key, weight, height, age):
         return
 
     raise Exception(f"User with key {user_key} not found")
+
 def verify_login_credentials(username, password):
     query = db.collection("users").where("Utilizator", "==", username).limit(1).get()
     if not query:
@@ -89,6 +90,7 @@ def verify_login_credentials(username, password):
         if user_data["Parola"] == password:
             return user_data["UserKey"]
     return None
+
 def get_username_by_user_key(user_key):
     users_ref = db.collection("users")
     query = users_ref.where("UserKey", "==", user_key).limit(1).get()
@@ -96,7 +98,6 @@ def get_username_by_user_key(user_key):
         user_data = query[0].to_dict()
         return user_data.get("Utilizator", "Unknown")
     return "Unknown"
-
 
 def get_user_details_by_user_key(user_key):
     try:
@@ -109,6 +110,7 @@ def get_user_details_by_user_key(user_key):
     except Exception as e:
         print(f"Error getting user details: {e}")
         return None
+
 def authenticate_user(username, password):
     try:
         user_ref = db.collection("users").where("Utilizator", "==", username).where("Parola", "==", password).limit(1).get()
@@ -127,3 +129,38 @@ def get_user_physical_details_by_user_key(user_key):
     if user_details and 'details' in user_details:
         return user_details['details']
     return None
+
+def get_user_uid(id_token):
+    try:
+        decoded_token = auth.verify_id_token(id_token)
+        uid = decoded_token['uid']
+        return uid
+    except Exception as e:
+        print(f"Error verifying ID token: {e}")
+        return None
+
+def get_user_details_by_uid(uid):
+    try:
+        user_ref = db.collection('users').document(uid)
+        user_doc = user_ref.get()
+        if user_doc.exists:
+            return user_doc.to_dict()
+        else:
+            print(f"No user found with UID: {uid}")
+            return None
+    except Exception as e:
+        print(f"Error getting user details: {e}")
+        return None
+
+def update_user_details(user_key, user_details):
+    try:
+        user_ref = db.collection('users').where("UserKey", "==", user_key).limit(1).get()
+        if user_ref:
+            user_doc_id = user_ref[0].id
+            user_ref = db.collection('users').document(user_doc_id)
+            user_ref.set(user_details, merge=True)
+            print(f"User details updated for key: {user_key}")
+        else:
+            print(f"No user found with key: {user_key}")
+    except Exception as e:
+        print(f"Error updating user details: {e}")

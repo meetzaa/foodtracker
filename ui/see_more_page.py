@@ -30,7 +30,7 @@ class SeeMorePage(BasePage):
             ("frame7/RemoveWater.png", 398.0, 80.0, 50.0, 30.0, lambda: self.placeholder_function("RemoveWater")),
             ("frame7/MyProfile.png", 223.0, 298.0, 160.0, 131.0, lambda: self.controller.show_page("ProfilePage", self.user_key)),
             ("frame7/MyMeals.png", 432.0, 298.0, 160.0, 131.0, lambda: self.placeholder_function("MyMeals")),
-            ("frame7/Settings.png", 642.0, 298.0, 160.0, 131.0, lambda: self.placeholder_function("Settings")),
+            ("frame7/Settings.png", 642.0, 298.0, 160.0, 131.0, lambda: self.controller.show_page("SettingsPage", self.user_key)),
             ("frame7/image_1.png", 320.0, 10.0, None, None, None),
             ("frame7/image_2.png", 485.0, 39.0, None, None, None),
             ("frame7/image_3.png", 380.0, 215.0, None, None, None),
