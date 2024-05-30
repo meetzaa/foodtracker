@@ -5,14 +5,10 @@ class Controller:
         self.current_page = None
 
     def show_page(self, page_name, *args):
-        if self.current_page is not None:
-            self.current_page.place_forget()  # Hide the current page
         page = self.pages[page_name]
         page.lift()
         if args:
             page.update(*args)
-        page.place(x=0, y=0, relwidth=1, relheight=1)
-        self.current_page = page
 
     def add_page(self, page_name, page_class, *args):
         page = page_class(self.root, self, *args)

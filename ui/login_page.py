@@ -4,6 +4,7 @@ from .base_page import BasePage
 from utils.utils import authenticate_user, get_user_details_by_user_key
 from pathlib import Path
 import concurrent.futures
+
 class LoginPage(BasePage):
     def __init__(self, master, controller):
         super().__init__(master, controller)
@@ -70,11 +71,8 @@ class LoginPage(BasePage):
         self.entry_Username.bind("<Return>", self.login)
 
         self.entry_Password = Entry(self, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0, show="*")
-        self.entry_Password.place(x=294.0, y=300.0, width=295.0, height=43.0)
+        self.entry_Password.place(x=294.0, y=300.0, width=349.0, height=43.0)
         self.entry_Password.bind("<Return>", self.login)
-
-        self.show_password_button = Button(self, text="Show", command=self.toggle_password_visibility)
-        self.show_password_button.place(x=650.0, y=300.0, width=70.0, height=43.0)
 
     def login(self, event=None):
         username = self.entry_Username.get()
@@ -88,15 +86,6 @@ class LoginPage(BasePage):
             self.controller.show_page("AppPage1", user_key)
         else:
             messagebox.showerror("Error", "Invalid username or password")
-
-    def toggle_password_visibility(self):
-        current_show_state = self.show_password_button.cget("text")
-        new_show_state = "Show" if current_show_state == "Hide" else "Hide"
-        self.show_password_button.config(text=new_show_state)
-        if new_show_state == "Show":
-            self.entry_Password.config(show="*")
-        else:
-            self.entry_Password.config(show="")
 
     def relative_to_assets(self, path: str) -> str:
         full_path = Path(__file__).parent.parent / 'assets' / 'frame1' / path

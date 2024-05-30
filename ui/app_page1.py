@@ -1,19 +1,17 @@
 from tkinter import Canvas, Label, Button, PhotoImage
 from tkinter.font import Font
 from .base_page import BasePage
-from utils.utils import get_user_details_by_user_key, get_user_physical_details_by_user_key, get_user_document_by_key
-from pathlib import Path
+from utils.utils import get_user_details_by_user_key, get_user_physical_details_by_user_key
 import concurrent.futures
+from pathlib import Path
 
 executor = concurrent.futures.ThreadPoolExecutor(max_workers=5)
 
 OUTPUT_PATH = Path(__file__).resolve().parent.parent
 ASSETS_PATH = OUTPUT_PATH / "assets/frame6"
 
-
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
-
 
 class AppPage1(BasePage):
     def __init__(self, master, controller, user_key=""):
@@ -30,13 +28,11 @@ class AppPage1(BasePage):
 
         image_details = [
             ("Profile.png", 25.0, 25.0, 43.0, 45.0, lambda: self.controller.show_page("ProfilePage", self.user_key)),
-            (
-            "LogFood.png", 125.0, 102.0, 185.0, 160.0, lambda: self.controller.show_page("LogFoodPage", self.user_key)),
-            ("TodayActivity.png", 381.0, 102.0, 198.0, 154.0,
-             lambda: self.controller.show_page("TodayActivityPage", self.user_key)),
+            ("LogFood.png", 125.0, 102.0, 185.0, 160.0, lambda: self.controller.show_page("LogFoodPage", self.user_key)),
+            ("TodayActivity.png", 381.0, 102.0, 198.0, 154.0, lambda: self.controller.show_page("TodayActivityPage", self.user_key)),
             ("Goals.png", 640.0, 102.0, 198.0, 154.0, lambda: self.controller.show_page("GoalPage", self.user_key)),
             ("SeeMore.png", 759.0, 369.0, 206.0, 69.0, lambda: self.controller.show_page("SeeMorePage", self.user_key)),
-            ("Calories.png", 531.0, 341.0, 100.0, 33.0, lambda: self.display_total_calories()),
+            ("Calories.png", 531.0, 341.0, 100.0, 33.0, lambda: self.placeholder_function("Calories")),
             ("BMI.png", 531.0, 382.0, 100.0, 33.0, lambda: self.calculate_bmi()),
             ("Macros.png", 531.0, 423.0, 100.0, 33.0, lambda: self.placeholder_function("Macros")),
             ("image_1.png", 98.0, 325.0, None, None, None)
@@ -67,14 +63,10 @@ class AppPage1(BasePage):
         self.bmi_result_label = Label(self, text="", font=font_medium, bg="#fffcf1")
         self.bmi_result_label.place(x=165, y=370)
 
-        self.total_calories_label = Label(self, text="", font=font_medium, bg="#fffcf1")
-        self.total_calories_label.place(x=165, y=410)
-
     def placeholder_function(self, button_name):
         print(f"{button_name} button pressed. Functionality under construction.")
 
     def calculate_bmi(self):
-        self.clear_labels()
         executor.submit(self._fetch_and_calculate_bmi)
 
     def _fetch_and_calculate_bmi(self):
@@ -99,29 +91,6 @@ class AppPage1(BasePage):
 
     def _update_bmi_result(self, result):
         self.bmi_result_label.config(text=result)
-
-    def display_total_calories(self):
-        self.clear_labels()
-        executor.submit(self._fetch_and_display_total_calories)
-
-    def _fetch_and_display_total_calories(self):
-        user_doc_id, user_data = get_user_document_by_key(self.user_key)
-        if not user_data:
-            print(f"No user data found for key {self.user_key}")
-            self._update_total_calories_label("No data available")
-            return
-
-        total_calories = sum(
-            food['calories'] for meal in ['breakfast', 'lunch', 'dinner', 'snacks'] for food in user_data.get(meal, [])
-        )
-        self._update_total_calories_label(f"Total Calories: {total_calories:.2f} kcal")
-
-    def _update_total_calories_label(self, text):
-        self.total_calories_label.config(text=text)
-
-    def clear_labels(self):
-        self.bmi_result_label.config(text="")
-        self.total_calories_label.config(text="")
 
     def update(self, user_key):
         self.user_key = user_key
