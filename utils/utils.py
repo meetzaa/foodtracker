@@ -5,6 +5,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore, auth
 import os
 from tkinter import messagebox
+import datetime
 
 def initialize_firebase():
     if not firebase_admin._apps:
@@ -164,3 +165,35 @@ def update_user_details(user_key, user_details):
             print(f"No user found with key: {user_key}")
     except Exception as e:
         print(f"Error updating user details: {e}")
+
+def save_water_data(user_key, water_consumed):
+    today = datetime.date.today()
+    user_ref = db.collection("users").where("UserKey", "==", user_key).limit(1).get()
+    if user_ref:
+        user_doc_id = user_ref[0].id
+        doc_ref = db.collection("users").document(user_doc_id).collection("water").document(str(today))
+        doc_ref.set({"date": today.strftime("%Y-%m-%d"), "water_consumed": water_consumed}, merge=True)
+    else:
+        print(f"No user found with key: {user_key}")
+
+def load_water_data(user_key):
+    today = datetime.date.today()
+    user_ref = db.collection("users").where("UserKey", "==", user_key).limit(1).get()
+    if user_ref:
+        user_doc_id = user_ref[0].id
+        doc_ref = db.collection("users").document(user_doc_id).collection("water").document(str(today))
+        doc = doc_ref.get()
+        if doc.exists:
+            data = doc.to_dict()
+            return data.get("water_consumed", 0.0)
+    return 0.0
+
+def reset_water_data(user_key):
+    today = datetime.date.today()
+    user_ref = db.collection("users").where("UserKey", "==", user_key).limit(1).get()
+    if user_ref:
+        user_doc_id = user_ref[0].id
+        doc_ref = db.collection("users").document(user_doc_id).collection("water").document(str(today))
+        doc_ref.set({"date": today.strftime("%Y-%m-%d"), "water_consumed": 0.0}, merge=True)
+    else:
+        print(f"No user found with key: {user_key}")

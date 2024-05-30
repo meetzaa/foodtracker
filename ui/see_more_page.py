@@ -2,6 +2,8 @@ from tkinter import Canvas, Label, Button, Entry, PhotoImage
 from tkinter.font import Font
 from .base_page import BasePage
 from pathlib import Path
+from utils.utils import save_water_data, load_water_data, reset_water_data
+import datetime
 
 # Define the paths for the assets
 OUTPUT_PATH = Path(__file__).resolve().parent.parent
@@ -14,7 +16,11 @@ class SeeMorePage(BasePage):
     def __init__(self, master, controller, user_key=None):
         super().__init__(master, controller)
         self.user_key = user_key
+        self.water_consumed = 0.0
+        self.last_updated = datetime.date.today()
         self.create_widgets()
+        self.load_water_data()
+        self.check_new_day()
 
     def create_widgets(self):
         self.configure(bg="#DAE6E4")
@@ -26,8 +32,8 @@ class SeeMorePage(BasePage):
 
         image_details = [
             ("frame7/Back.png", -50.0, 369.0, 203.0, 67.0, lambda: self.controller.show_page("AppPage1", self.user_key)),
-            ("frame7/AddWater.png", 589.0, 74.0, 50.0, 40.0, lambda: self.placeholder_function("AddWater")),
-            ("frame7/RemoveWater.png", 398.0, 80.0, 50.0, 30.0, lambda: self.placeholder_function("RemoveWater")),
+            ("frame7/AddWater.png", 589.0, 74.0, 50.0, 40.0, self.add_water),
+            ("frame7/RemoveWater.png", 398.0, 80.0, 50.0, 30.0, self.remove_water),
             ("frame7/MyProfile.png", 223.0, 298.0, 160.0, 131.0, lambda: self.controller.show_page("ProfilePage", self.user_key)),
             ("frame7/MyMeals.png", 432.0, 298.0, 160.0, 131.0, lambda: self.placeholder_function("MyMeals")),
             ("frame7/Settings.png", 642.0, 298.0, 160.0, 131.0, lambda: self.controller.show_page("SettingsPage", self.user_key)),
@@ -62,11 +68,55 @@ class SeeMorePage(BasePage):
         Label(self, text="days", font=font_medium, bg="#DAE6E4").place(x=101, y=96)
         Label(self, text="Liters", font=font_medium, bg="#FFFCF1").place(x=572, y=144)
 
-        entry_Water = Entry(self, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
-        entry_Water.place(x=500.0, y=145.0, width=53.0, height=22.5)
+        self.liters_label = Label(self, text="0.0", font=font_medium, bg="#FFFCF1")
+        self.liters_label.place(x=500, y=144)
+
+        self.entry_Water = Entry(self, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0)
+        self.entry_Water.place(x=500.0, y=145.0, width=53.0, height=22.5)
+
+        self.liters_today_label = Label(self, text="0.0", font=font_medium, bg="#FFFCF1")
+        self.liters_today_label.place(x=423, y=225)
 
     def placeholder_function(self, button_name):
         print(f"{button_name} button pressed. Functionality under construction.")
 
     def update(self, user_key):
         self.user_key = user_key
+        self.load_water_data()
+
+    def add_water(self):
+        try:
+            amount = float(self.entry_Water.get())
+            self.water_consumed += amount
+            save_water_data(self.user_key, self.water_consumed)
+        except ValueError:
+            print("Invalid input for water amount.")
+        self.update_water_display()
+
+    def remove_water(self):
+        try:
+            amount = float(self.entry_Water.get())
+            self.water_consumed -= amount
+            save_water_data(self.user_key, self.water_consumed)
+        except ValueError:
+            print("Invalid input for water amount.")
+        self.update_water_display()
+
+    def update_water_display(self):
+        self.liters_label.config(text=f"{self.water_consumed:.1f}")
+        self.liters_today_label.config(text=f"{self.water_consumed:.1f}")
+
+    def load_water_data(self):
+        self.water_consumed = load_water_data(self.user_key)
+        self.update_water_display()
+
+    def reset_water_data(self):
+        self.water_consumed = 0.0
+        save_water_data(self.user_key, self.water_consumed)
+        self.update_water_display()
+
+    def check_new_day(self):
+        today = datetime.date.today()
+        if today != self.last_updated:
+            self.reset_water_data()
+            self.last_updated = today
