@@ -1,4 +1,4 @@
-from tkinter import Canvas, Label, Button, PhotoImage
+from tkinter import Canvas, Label, Button, PhotoImage, Toplevel
 from tkinter.font import Font
 from .base_page import BasePage
 from pathlib import Path
@@ -7,10 +7,8 @@ from pathlib import Path
 OUTPUT_PATH = Path(__file__).resolve().parent.parent
 ASSETS_PATH = OUTPUT_PATH / "assets/frame14"
 
-
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
-
 
 class SettingsPage(BasePage):
     def __init__(self, master, controller, user_key=None):
@@ -28,14 +26,10 @@ class SettingsPage(BasePage):
 
         image_details = [
             ("Back.png", 14.0, 18.0, 59.0, 37.0, lambda: self.controller.show_page("SeeMorePage", self.user_key)),
-            ("Edit_profile.png", 333.0, 161.0, 284.0, 47.0,
-             lambda: self.controller.show_page("ProfilePage", self.user_key)),
-            (
-            "Change_goal.png", 342.0, 223.0, 275.0, 40.0, lambda: self.controller.show_page("GoalPage", self.user_key)),
-            ("Info_goal.png", 299.0, 274.0, 359.0, 34.0,
-             lambda: self.controller.show_page("GoalInfoPage", self.user_key)),
-            (
-            "App_details.png", 338.0, 328.0, 285.0, 43.0, lambda: self.controller.show_page("AppPage1", self.user_key)),
+            ("Edit_profile.png", 333.0, 161.0, 284.0, 47.0, lambda: self.controller.show_page("ProfilePage", self.user_key)),
+            ("Change_goal.png", 342.0, 223.0, 275.0, 40.0, lambda: self.controller.show_page("GoalPage", self.user_key)),
+            ("Info_goal.png", 299.0, 274.0, 359.0, 34.0, lambda: self.controller.show_page("GoalInfoPage", self.user_key)),
+            ("App_details.png", 338.0, 328.0, 285.0, 43.0, self.show_app_details),
             ("SignOut.png", 340.0, 381.0, 277.0, 43.0, lambda: self.controller.show_page("LoginPage")),
             ("image_1.png", 225.0, 120.0),
             ("image_2.png", 350.0, 43.0),
@@ -69,6 +63,16 @@ class SettingsPage(BasePage):
 
         font_large = Font(family="Consolas", slant="italic", size=32)
         Label(self, text="Settings", font=font_large, bg="#DAE6E4").place(x=413, y=42)
+
+    def show_app_details(self):
+        popup = Toplevel(self)
+        popup.title("App Details")
+        popup.geometry("400x200")
+        Label(popup, text="Proiect facut de:", font=("Consolas", 14)).pack(pady=10)
+        Label(popup, text="Patru Eduard", font=("Consolas", 12)).pack()
+        Label(popup, text="Rotaru Daria", font=("Consolas", 12)).pack()
+        Label(popup, text="Popescu Vlad", font=("Consolas", 12)).pack()
+        Label(popup, text="Calculatoare anul 3", font=("Consolas", 12)).pack(pady=10)
 
     def update(self, user_key=None):
         self.user_key = user_key or self.user_key

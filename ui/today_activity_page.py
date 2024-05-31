@@ -1,8 +1,17 @@
 from tkinter import Canvas, Label, Button, PhotoImage
 from tkinter.font import Font
-from pathlib import Path
 from .base_page import BasePage
-from logic.meal_manager import MealManager
+from utils.utils import get_user_document_by_key,get_user_physical_details_by_user_key
+from pathlib import Path
+import concurrent.futures
+
+executor = concurrent.futures.ThreadPoolExecutor(max_workers=5)
+
+OUTPUT_PATH = Path(__file__).resolve().parent.parent
+ASSETS_PATH = OUTPUT_PATH / "assets/frame9"
+
+def relative_to_assets(path: str) -> Path:
+    return ASSETS_PATH / Path(path)
 
 class TodayActivityPage(BasePage):
     def __init__(self, master, controller, user_key=None):
@@ -28,7 +37,7 @@ class TodayActivityPage(BasePage):
 
         for details in image_details:
             image_name, x, y, width, height, command = details
-            img_path = self.relative_to_assets(image_name)
+            img_path = relative_to_assets(image_name)
             img = PhotoImage(file=img_path)
             self.images.append(img)
             if command is not None:
@@ -41,32 +50,60 @@ class TodayActivityPage(BasePage):
                 else:
                     canvas.create_image(x, y, image=img)
 
-        font_large = Font(family="Consolas", slant="italic", size=20, underline=1)
-        font_medium = Font(family="Consolas", slant="italic", size=16)
+        font_large = Font(family="Consolas", slant="italic", size=18, underline=1)
+        font_medium = Font(family="Consolas", slant="italic", size=12)
 
         Label(self, text="Today's Activity", font=font_large, bg="#FFFCF1").place(x=360, y=73)
-        Label(self, text="Breakfast Meal:", font=font_medium, bg="#FFFCF1").place(x=324, y=146)
-        Label(self, text="Lunch Meal:", font=font_medium, bg="#FFFCF1").place(x=324, y=214)
-        Label(self, text="Dinner Meal:", font=font_medium, bg="#FFFCF1").place(x=324, y=282)
-        Label(self, text="Water:", font=font_medium, bg="#FFFCF1").place(x=324, y=350)
+        self.breakfast_label = Label(self, text="Breakfast Meal:", font=font_medium, bg="#FFFCF1")
+        self.breakfast_label.place(x=284, y=146)
+        self.lunch_label = Label(self, text="Lunch Meal:", font=font_medium, bg="#FFFCF1")
+        self.lunch_label.place(x=284, y=214)
+        self.dinner_label = Label(self, text="Dinner Meal:", font=font_medium, bg="#FFFCF1")
+        self.dinner_label.place(x=284, y=282)
+        self.snacks_label = Label(self, text="Snacks:", font=font_medium, bg="#FFFCF1")
+        self.snacks_label.place(x=284, y=350)
 
-        meal_manager = MealManager(self.user_key)
+        self.bmi_result_label = Label(self, text="", font=font_medium, bg="#FFFCF1")
+        self.bmi_result_label.place(x=324, y=418)
 
-        breakfast_foods, breakfast_calories = meal_manager.get_meal('breakfast')
-        lunch_foods, lunch_calories = meal_manager.get_meal('lunch')
-        dinner_foods, dinner_calories = meal_manager.get_meal('dinner')
-        snack_foods, snack_calories = meal_manager.get_meal('snacks')
-
-        Label(self, text=f"Total Calories: {breakfast_calories:.2f} kcal", font=font_medium, bg="#FFFCF1").place(x=324, y=176)
-        Label(self, text=f"Total Calories: {lunch_calories:.2f} kcal", font=font_medium, bg="#FFFCF1").place(x=324, y=244)
-        Label(self, text=f"Total Calories: {dinner_calories:.2f} kcal", font=font_medium, bg="#FFFCF1").place(x=324, y=312)
-        Label(self, text=f"Total Calories: {snack_calories:.2f} kcal", font=font_medium, bg="#FFFCF1").place(x=324, y=380)
+        self.calories_label = Label(self, text="", font=font_medium, bg="#FFFCF1")
+        self.calories_label.place(x=324, y=486)
 
     def update(self, user_key):
         self.user_key = user_key
-        # Add any necessary logic to update the page with new data
+        self.fetch_and_display_meal_data()
 
-    def relative_to_assets(self, path: str) -> str:
-        base_path = Path(__file__).resolve().parent.parent
-        full_path = base_path / 'assets' / 'frame9' / path
-        return str(full_path)
+    def fetch_and_display_meal_data(self):
+        user_doc_id, user_data = get_user_document_by_key(self.user_key)
+        if not user_data:
+            print(f"No user data found for key {self.user_key}")
+            self._update_labels("No data available", "No data available")
+            return
+
+        breakfast_calories = sum(food['calories'] for food in user_data.get('breakfast', []))
+        lunch_calories = sum(food['calories'] for food in user_data.get('lunch', []))
+        dinner_calories = sum(food['calories'] for food in user_data.get('dinner', []))
+        snacks_calories = sum(food['calories'] for food in user_data.get('snacks', []))
+
+        self.breakfast_label.config(text=f"Breakfast Meal: Total Calories: {breakfast_calories:.2f} kcal")
+        self.lunch_label.config(text=f"Lunch Meal: Total Calories: {lunch_calories:.2f} kcal")
+        self.dinner_label.config(text=f"Dinner Meal: Total Calories: {dinner_calories:.2f} kcal")
+        self.snacks_label.config(text=f"Snacks: Total Calories: {snacks_calories:.2f} kcal")
+    def _fetch_and_display_total_calories(self):
+        user_doc_id, user_data = get_user_document_by_key(self.user_key)
+        if not user_data:
+            print(f"No user data found for key {self.user_key}")
+            self._update_calories_label("No data available")
+            return
+
+        total_calories = sum(
+            food['calories'] for meal in ['breakfast', 'lunch', 'dinner', 'snacks'] for food in user_data.get(meal, [])
+        )
+        self._update_calories_label(f"Total Calories: {total_calories:.2f} kcal")
+
+    def _update_calories_label(self, text):
+        self.calories_label.config(text=text)
+
+    def _clear_labels(self):
+        self.bmi_result_label.config(text="")
+        self.calories_label.config(text="")

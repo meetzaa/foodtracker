@@ -35,7 +35,7 @@ class SignupPage(BasePage):
             ("password.png", 275.0, 330),
             ("mail.png", 676.5, 330.0),
             ("Submit.png", 326.0, 392.0),
-            ("Log_In.png", 545.0, 441.0)
+            ("Log_In.png", 565, 440)
         ]
 
         for image_name, x, y in image_details:
@@ -47,11 +47,10 @@ class SignupPage(BasePage):
                     button.image = img
                     button.config(command=self.submit_button_pressed)
                     button.place(x=x, y=y, width=296.0, height=43.0)
-                elif "Log_in.png" == image_name:
-                    button = Button(self, image=img, borderwidth=0, highlightthickness=0, relief="flat")
+                elif "Log_In.png" == image_name:
+                    button = Button(self, image=img, borderwidth=0, highlightthickness=0, relief="flat", command=self.show_login)
                     button.image = img
-                    button.config(command=lambda: self.controller.show_page("LoginPage"))
-                    button.place(x=12, y=440, width=62.0, height=20.0)
+                    button.place(x=x, y=y, width=62.0, height=20.0)
                 else:
                     canvas.create_image(x, y, image=img)
                 self.images.append(img)
@@ -91,7 +90,7 @@ class SignupPage(BasePage):
 
         # Add "Show Password" button
         self.show_password_button = Button(self, text="Show", command=self.toggle_password_visibility)
-        self.show_password_button.place(x=820, y=232, width=50, height=27)
+        self.show_password_button.place(x=835, y=232, width=40, height=27)
 
         # Add labels
         Label(self, text="Bite-sized", font=Titlu1Font, bg="#DAE6E4").place(x=170, y=18)

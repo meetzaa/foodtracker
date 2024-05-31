@@ -1,7 +1,7 @@
 import uuid
 import re
 from firebase_config import db
-
+import datetime
 import os
 from tkinter import messagebox
 def check_existing_user(username, email):
@@ -127,3 +127,67 @@ def get_user_physical_details_by_user_key(user_key):
     if user_details and 'details' in user_details:
         return user_details['details']
     return None
+from firebase_config import db
+def get_user_document_by_key(user_key):
+    try:
+        user_ref = db.collection("users").where('UserKey', '==', user_key).limit(1)
+        users = user_ref.get()
+        for doc in users:
+            return doc.id, doc.to_dict()
+    except Exception as e:
+        print(f"Error finding user document by key: {e}")
+    return None, None
+def save_water_data(user_key, water_consumed):
+    today = datetime.date.today()
+    user_ref = db.collection("users").where("UserKey", "==", user_key).limit(1).get()
+    if user_ref:
+        user_doc_id = user_ref[0].id
+        doc_ref = db.collection("users").document(user_doc_id).collection("water").document(str(today))
+        doc_ref.set({"date": today.strftime("%Y-%m-%d"), "water_consumed": water_consumed}, merge=True)
+    else:
+        print(f"No user found with key: {user_key}")
+
+def load_water_data(user_key):
+    try:
+        today = datetime.date.today()
+        user_ref = db.collection("users").where("UserKey", "==", user_key).limit(1).get()
+
+        if not user_ref:
+            print(f"No user found with key: {user_key}")
+            return 0.0
+
+        user_doc_id = user_ref[0].id
+        doc_ref = db.collection("users").document(user_doc_id).collection("water").document(str(today))
+        doc = doc_ref.get()
+
+        if doc.exists:
+            data = doc.to_dict()
+            return data.get("water_consumed", 0.0)
+        else:
+            print(f"No water data found for user {user_key} on {today}")
+            return 0.0
+    except Exception as e:
+        print(f"An error occurred while loading water data: {e}")
+        return 0.0
+
+def reset_water_data(user_key):
+    today = datetime.date.today()
+    user_ref = db.collection("users").where("UserKey", "==", user_key).limit(1).get()
+    if user_ref:
+        user_doc_id = user_ref[0].id
+        doc_ref = db.collection("users").document(user_doc_id).collection("water").document(str(today))
+        doc_ref.set({"date": today.strftime("%Y-%m-%d"), "water_consumed": 0.0}, merge=True)
+    else:
+        print(f"No user found with key: {user_key}")
+def update_user_details(user_key, user_details):
+    try:
+        user_ref = db.collection('users').where("UserKey", "==", user_key).limit(1).get()
+        if user_ref:
+            user_doc_id = user_ref[0].id
+            user_ref = db.collection('users').document(user_doc_id)
+            user_ref.set(user_details, merge=True)
+            print(f"User details updated for key: {user_key}")
+        else:
+            print(f"No user found with key: {user_key}")
+    except Exception as e:
+        print(f"Error updating user details: {e}")

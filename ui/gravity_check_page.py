@@ -16,37 +16,40 @@ class GravityCheckPage(BasePage):
 
         self.images = []
 
-        self.load_image("assets/frame3/image_1.png", 750.0, 95.0)
-        self.load_image("assets/frame3/image_2.png", 187.0, 267.0)
-        self.load_image("assets/frame3/image_3.png", 184.0, 227.0)
-        self.load_image("assets/frame3/image_4.png", 478.0, 266.0)
-        self.load_image("assets/frame3/image_5.png", 479.0, 227.0)
-        self.load_image("assets/frame3/image_6.png", 772.0, 266.0)
+        self.load_image("assets/frame3/image_1.png", 735.0, 35.0)
+        self.load_image("assets/frame3/image_2.png", 107.0, 196.0)
+        self.load_image("assets/frame3/image_3.png", 150.0, 221.0)
+        self.load_image("assets/frame3/image_4.png", 398.0, 196.0)
+        self.load_image("assets/frame3/image_5.png", 464.0, 212.0)
+        self.load_image("assets/frame3/image_6.png", 692.0, 196.0)
+        self.load_image("assets/frame3/entry_age.png", 750.0, 298.0)
+        self.load_image("assets/frame3/entry_cm.png", 454.0, 298.0)
+        self.load_image("assets/frame3/entry_kg.png", 160.0, 298.0)
 
-        self.load_button("assets/frame3/GoBack.png", 80.0, 405.0, 100.0, 20.0, lambda: self.controller.show_page("LoginPage"))
+
         self.load_button("assets/frame3/NextStep.png", 750.0, 405.0, 120.0, 30.0, self.handle_save_user_details)
 
         self.entry_kg = Entry(self, bd=0, bg="#F9F8F8", fg="#000716", highlightthickness=0)
-        self.entry_kg.place(x=155.0, y=283.0, width=40.0, height=25.0)
+        self.entry_kg.place(x=170.0, y=305.0, width=40.0, height=25.0)
         self.entry_kg.bind("<Return>", self.handle_save_user_details)
 
         self.entry_cm = Entry(self, bd=0, bg="#F9F8F8", fg="#000716", highlightthickness=0)
-        self.entry_cm.place(x=454.0, y=283.0, width=40.0, height=25.0)
+        self.entry_cm.place(x=464.0, y=305.0, width=40.0, height=25.0)
         self.entry_cm.bind("<Return>", self.handle_save_user_details)
 
         self.entry_age = Entry(self, bd=0, bg="#F9F8F8", fg="#000716", highlightthickness=0)
-        self.entry_age.place(x=750.0, y=283.0, width=40.0, height=25.0)
+        self.entry_age.place(x=760.0, y=305.0, width=40.0, height=25.0)
         self.entry_age.bind("<Return>", self.handle_save_user_details)
 
         font_large = Font(family="Consolas", slant="italic", size=32)
         font_small = Font(family="Consolas", slant="italic", size=16)
-        font_medium = Font(family="Consolas", slant="italic", size=18)
+        font_medium = Font(family="Consolas", slant="italic", size=20)
 
         Label(self, text="Gravity Check!", font=font_large, bg="#DAE6E4").place(x=111, y=50)
         Label(self, text="Enter your details to keep your food in flight!", font=font_small, bg="#DAE6E4").place(x=111, y=115)
-        Label(self, text="kg", font=font_small, bg="#FFFCF1").place(x=218, y=278)
-        Label(self, text="cm", font=font_small, bg="#FFFCF1").place(x=511, y=278)
-        Label(self, text="Age", font=font_medium, bg="#FFFCF1").place(x=750, y=225)
+        Label(self, text="kg", font=font_small, bg="#FFFCF1").place(x=226, y=305)
+        Label(self, text="cm", font=font_small, bg="#FFFCF1").place(x=516, y=305)
+        Label(self, text="Age", font=font_medium, bg="#FFFCF1").place(x=755, y=235)
 
     def update(self, user_key):
         self.user_key = user_key

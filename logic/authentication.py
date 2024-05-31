@@ -1,6 +1,7 @@
 from tkinter import messagebox
 from services.user_service import user_service
 from ui.app_page1 import AppPage1
+from firebase_config import db
 def login(master, username, password, controller):
     user_ref = db.collection("users").where('username', '==', username).limit(1)
     user = user_ref.get()

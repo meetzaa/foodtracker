@@ -25,9 +25,9 @@ class GoalPage(BasePage):
         self.images = []
 
         image_details = [
-            ("frame10/Weight_Loss.png", 289.0, 193.0, 350.0, 81.0, lambda: self.controller.show_page("GoalInfoPage", self.user_key)),
-            ("frame10/Muscle_Build.png", 289.0, 283.0, 350.0, 81.0, lambda: self.controller.show_page("GoalInfoPage", self.user_key)),
-            ("frame10/Maintenance.png", 289.0, 373.0, 350.0, 81.0, lambda: self.controller.show_page("GoalInfoPage", self.user_key))
+            ("frame10/Weight_Loss.png", 289.0, 193.0, 350.0, 81.0, lambda: self.controller.show_goal_info_page(self.user_key, "Weight Loss")),
+            ("frame10/Muscle_Build.png", 289.0, 283.0, 350.0, 81.0, lambda: self.controller.show_goal_info_page(self.user_key, "Muscle Build")),
+            ("frame10/Maintenance.png", 289.0, 373.0, 350.0, 81.0, lambda: self.controller.show_goal_info_page(self.user_key, "Maintenance"))
         ]
 
         for details in image_details:
@@ -39,12 +39,11 @@ class GoalPage(BasePage):
             button.place(x=x, y=y, width=width, height=height)
             button.image = img
 
-        font_large = Font(family="Consolas", slant="italic", size=26, weight="bold")
-        font_medium = Font(family="Consolas", slant="italic", size=20)
+        font_large = Font(family="Consolas", size=26, weight="bold")
+        font_medium = Font(family="Consolas", size=20)
 
         Label(self, text="Let’s set your goals!", font=font_large, bg="#DAE6E4", fg="#000000").place(x=267, y=49)
-        Label(self, text="First thing first, what do you want to achieve?", font=font_medium, bg="#DAE6E4",
-              fg="#000000").place(x=147, y=108)
+        Label(self, text="First thing first, what do you want to achieve?", font=font_medium, bg="#DAE6E4", fg="#000000").place(x=147, y=108)
 
     def update(self, user_key):
         self.user_key = user_key
